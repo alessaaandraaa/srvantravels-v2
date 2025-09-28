@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { hash } from 'bcrypt';
+import { hash } from "bcrypt";
 
 export async function POST(req: Request) {
-  // REGISTER
   try {
     const body = await req.json();
     const { name, password, email, contact_number } = body;
@@ -22,23 +21,24 @@ export async function POST(req: Request) {
     const hashedPassword = await hash(password, 10);
 
     const newUser = await prisma.person.create({
-        data: {
-            name,
-            password: hashedPassword,
-            email
-        }
-    })
+      data: {
+        name,
+        password: hashedPassword,
+        email,
+      },
+    });
 
     const { password: _, ...noPassUser } = newUser;
 
     return NextResponse.json(
-        {person: noPassUser, message: "User successfully created."},
-        {status: 201}
+      { person: noPassUser, message: "User successfully created." },
+      { status: 201 }
     );
   } catch (error) {
     console.error("POST /register error:", error);
     return NextResponse.json(
-    {person: null, message: "Internal server error" },
-    { status: 500 }
-  );}
+      { person: null, message: "Internal server error" },
+      { status: 500 }
+    );
+  }
 }
