@@ -7,7 +7,7 @@ export default function ToastButton() {
   useEffect(() => {
     toast.warning(
       <div>
-        <p>You still haven't added your contact number!</p>
+        <p>You still haven&apos;t added your contact number!</p>
         <Link
           href="/test"
           className="bg-amber-200 text-black hover:bg-amber-400"
@@ -20,7 +20,7 @@ export default function ToastButton() {
 
   return (
     <>
-      <Toaster/>
+      <Toaster />
     </>
   );
 }

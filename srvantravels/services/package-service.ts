@@ -3,7 +3,7 @@ import { prisma } from "@/lib/db";
 class PackageService {
   async getPackages() {
     try {
-      const packages = await prisma.package_itinerary.findMany();
+      const packages = await prisma.package_Itinerary.findMany();
       return packages;
     } catch (error) {
       console.error("Error fetching packages:", error);

@@ -1,6 +1,18 @@
 import Image from "next/image";
 
-export default function Packages(props: any) {
+type Props = {
+  package_ID: number;
+  package_name: string;
+  inclusions: string;
+  number_of_PAX: number;
+  route: string;
+  description: string;
+  is_made_by_manager: number;
+  is_available: boolean;
+  package_picture: string;
+};
+
+export default function Packages(props: Props) {
   return (
     <li className="m-5 bg-gray-200">
       <Image
