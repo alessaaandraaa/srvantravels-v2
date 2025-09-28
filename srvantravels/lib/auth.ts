@@ -21,7 +21,7 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "text", placeholder: "user@gmail.com" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
@@ -44,9 +44,9 @@ export const authOptions: NextAuthOptions = {
         console.log("User success");
         return {
           id: user.person_ID + "",
-          name: user.name,
-          email: user.email,
-          contact_number: user.contact_number,
+          name: user.name ?? "",
+          email: user.email ?? "",
+          contact_number: user.contact_number ?? "",
         };
       },
     }),
