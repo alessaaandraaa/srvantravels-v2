@@ -20,7 +20,7 @@ export default function ToastButton() {
 
   return (
     <>
-      <Toaster />
+      <Toaster/>
     </>
   );
 }
