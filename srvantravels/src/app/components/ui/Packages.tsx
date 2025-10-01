@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 type Props = {
   package_ID: number;
@@ -25,6 +26,13 @@ export default function Packages(props: Props) {
       <p>{props.inclusions}</p>
       <p>Capacity: {props.number_of_PAX}</p>
       <p>Route: {props.route}</p>
+
+      <Link
+        href={`/packages/${props.package_ID}`}
+        className="bg-gray-700 text-amber-50 hover:bg-black"
+      >
+        Book this package
+      </Link>
     </li>
   );
 }

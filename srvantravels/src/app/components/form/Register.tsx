@@ -1,12 +1,15 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Register() {
-    const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState("");
 
-    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const router = useRouter();
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     const formData = new FormData(e.currentTarget);
     const body = Object.fromEntries(formData.entries());
 
@@ -15,16 +18,17 @@ export default function Register() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     });
 
     const data = await response.json();
     console.log("Response: ", data);
 
     if (response.ok) {
-        router.push("/login");
+      router.push("/login");
     } else {
-        console.error('Registration failed.');
+      setErrorMessage("Registration failed.");
+      console.error("Registration failed.");
     }
   };
 
@@ -34,7 +38,7 @@ export default function Register() {
         <h1>WELCOME TO SR VAN TRAVELS!</h1>
         <hr />
         <h1>REGISTER AN ACCOUNT</h1>
-        <form id="registerForm" onSubmit = {onSubmit} noValidate>
+        <form id="registerForm" onSubmit={onSubmit} noValidate>
           <div className="form-control">
             <label htmlFor="name">Username:</label>
             <input type="text" name="name" id="name" placeholder="name" />
@@ -52,11 +56,12 @@ export default function Register() {
             <label htmlFor="email">Email:</label>
             <input type="email" name="email" id="email" placeholder="Email" />
           </div>
-          <button type="submit" className = "mt-5 ">
+          <button type="submit" className="hover:bg-gray-300 mt-5">
             Register
           </button>
         </form>
       </div>
+      <p className="text-red-950"> {errorMessage} </p>
     </>
   );
 }

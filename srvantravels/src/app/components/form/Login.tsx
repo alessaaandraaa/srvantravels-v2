@@ -1,50 +1,45 @@
-"use client"
+"use client";
 
-import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Login() {
+  const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
-  const onSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
+
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-    const data = await signIn('credentials', {
+    const data = await signIn("credentials", {
       redirect: false,
       email: email,
       password: password,
     });
 
     console.log(data);
-    if(data?.error) {
-      console.log('Error');
+    if (data?.error) {
+      setErrorMessage("Login failed");
+      console.log("Error");
       console.log(data.error);
     } else {
-      console.log('Success');
-      router.push('/home');
+      console.log("Success");
+      router.push("/home");
     }
   };
 
-    return (
+  return (
     <div id="login">
       <h1>WELCOME TO SR VAN TRAVELS!</h1>
       <hr />
       <h1>LOGIN TO YOUR ACCOUNT</h1>
-      <form
-        id="loginForm"
-        onSubmit = {onSubmit}
-      >
+      <form id="loginForm" onSubmit={onSubmit}>
         <div className="form-control">
           <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Email"
-          />
+          <input type="email" name="email" id="email" placeholder="Email" />
         </div>
         <div className="form-control">
           <label htmlFor="password">Password:</label>
@@ -55,8 +50,9 @@ export default function Login() {
             placeholder="Password"
           />
         </div>
-        <button>Log In</button>
+        <button className="hover:bg-gray-300">Log In</button>
       </form>
+      <p className="text-red-950"> {errorMessage} </p>
     </div>
   );
-} 
+}

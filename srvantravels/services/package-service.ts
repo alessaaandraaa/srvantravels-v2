@@ -1,8 +1,14 @@
 import { prisma } from "@/lib/db";
 
 class PackageService {
-  async getPackages() {
+  async getPackages(id?: number) {
     try {
+      if (id) {
+        const pack = await prisma.package_Itinerary.findUnique({
+          where: { package_ID: id },
+        });
+        return pack;
+      }
       const packages = await prisma.package_Itinerary.findMany();
       return packages;
     } catch (error) {
