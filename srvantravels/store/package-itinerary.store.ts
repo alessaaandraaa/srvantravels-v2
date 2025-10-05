@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import type {} from "@redux-devtools/extension"; // required for devtools typing
+import type {} from "@redux-devtools/extension";
 
 interface Package {
   package_ID: number;
@@ -14,9 +14,25 @@ interface Package {
   package_picture: string;
 }
 
+interface Customer_Details {
+  customer_id: number;
+  itinerary_id: number | null; //package id btw
+  type: "PACKAGE";
+  number_of_PAX: number;
+  date_of_travel: Date;
+  number_of_luggage: number | null;
+  ID_picture: string | null;
+  // pickup_address: string,
+}
+
 interface PackageState {
   bookedPackage: Package | null;
   setBookedPackage: (pkg: Package) => void;
+}
+
+interface CustomerState {
+  customerDetails: Customer_Details | null;
+  setCustomerDetails: (pkg: Customer_Details) => void;
 }
 
 const usePackageStore = create<PackageState>()(
@@ -29,4 +45,14 @@ const usePackageStore = create<PackageState>()(
   )
 );
 
-export default usePackageStore;
+const useCustomerStore = create<CustomerState>()(
+  persist(
+    (set) => ({
+      customerDetails: null,
+      setCustomerDetails: (pkg) => set({ customerDetails: pkg }),
+    }),
+    { name: "customer-store" }
+  )
+);
+
+export { usePackageStore, useCustomerStore };

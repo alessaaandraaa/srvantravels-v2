@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import usePackageStore from "@store/package-itinerary.store";
+import { usePackageStore } from "@store/package-itinerary.store";
 
 export default function PB1PackageDisplay() {
   const params = useParams();
@@ -32,7 +32,7 @@ export default function PB1PackageDisplay() {
   }
 
   return (
-    <div className="border-amber-600">
+    <div className="border-amber-600 m-10">
       <h1>PACKAGE SUMMARY</h1>
       <hr />
       <p>

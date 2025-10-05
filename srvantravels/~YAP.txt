@@ -1,0 +1,10 @@
+
+I'M TRYING TO THINK ABOUT HOW TO IMPLEMENT THIS IDEA
+Basically if you quit in the middle of a package booking
+
+When you click Book Package, it redirects you to the package-id/booking page 
+With a notification that says 
+"You have an ongoing booking for a package. bla bla bla press back to start over"
+And like it keeps all data for that booking
+
+HANDLE THE EDGE CASE OF DIRECTLY JUMPING TO THE BOOKING PAGE LATER PLS ASKGBASTBABT
