@@ -47,6 +47,16 @@ export default function PBDetailsSummary() {
       <p>
         <b>Number of Luggage:</b> {customerDetails.number_of_luggage}
       </p>
+      {customerDetails.ID_picture && (
+        <div className="mt-4">
+          <b>ID Picture:</b>
+          <img
+            src={customerDetails.ID_picture}
+            alt="Uploaded ID"
+            className="w-40 h-auto mt-2 rounded shadow"
+          />
+        </div>
+      )}
     </div>
   );
 }

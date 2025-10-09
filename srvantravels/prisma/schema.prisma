@@ -23,7 +23,7 @@ model Customer {
   number_of_PAX     Int?
   date_of_travel    DateTime?       @db.Date
   number_of_luggage Int?
-  ID_Picture        Bytes?          @db.Blob
+  ID_Picture        String?         @db.VarChar(255)
   Person            Person          @relation(fields: [customer_ID], references: [person_ID], onDelete: NoAction, onUpdate: NoAction, map: "Customer_ibfk_1")
   Payment           Payment         @relation(fields: [payment_ID], references: [payment_ID], onDelete: NoAction, onUpdate: NoAction, map: "Customer_ibfk_2")
   Order_Details     Order_Details[]

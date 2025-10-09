@@ -25,6 +25,8 @@ interface Customer_Details {
   // pickup_address: string,
 }
 
+type payment_method = string;
+
 interface PackageState {
   bookedPackage: Package | null;
   setBookedPackage: (pkg: Package) => void;
@@ -34,6 +36,21 @@ interface CustomerState {
   customerDetails: Customer_Details | null;
   setCustomerDetails: (pkg: Customer_Details) => void;
 }
+
+interface PaymentState {
+  payment_method: payment_method | null;
+  setPayment: (pkg: payment_method) => void;
+}
+
+const usePaymentStore = create<PaymentState>()(
+  persist(
+    (set) => ({
+      payment_method: null,
+      setPayment: (pkg) => set({ payment_method: pkg }),
+    }),
+    { name: "payment-store" }
+  )
+);
 
 const usePackageStore = create<PackageState>()(
   persist(
@@ -55,4 +72,4 @@ const useCustomerStore = create<CustomerState>()(
   )
 );
 
-export { usePackageStore, useCustomerStore };
+export { usePackageStore, useCustomerStore, usePaymentStore };
