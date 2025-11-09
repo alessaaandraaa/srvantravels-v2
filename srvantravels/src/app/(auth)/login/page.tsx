@@ -5,9 +5,6 @@ export default function Page() {
   return (
     <>
       <Login />
-      <Link href="/register" className="hover:bg-amber-200">
-        No account? Register
-      </Link>
     </>
   );
 }

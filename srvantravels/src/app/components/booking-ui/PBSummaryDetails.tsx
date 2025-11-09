@@ -68,7 +68,9 @@ export default function PBSummaryDetails() {
     console.log("Response: ", data);
 
     if (response.ok) {
-      router.push(`/packages/${params.id}/booking/end`);
+      router.push(
+        `/packages/${params.id}/booking/end?order_id=${data.order_ID}`
+      );
     } else {
       setErrorMessage("Order failed.");
       console.error("Order failed.");
