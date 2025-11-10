@@ -407,7 +407,7 @@ export default function MapComponent() {
               </div>
             )}
             <GoogleMap
-              mapId="your-map-id"
+              mapId="dcf669e4cab82947df9e6903"
               defaultCenter={center}
               defaultZoom={17}
               className="w-full h-full rounded-2xl overflow-hidden"

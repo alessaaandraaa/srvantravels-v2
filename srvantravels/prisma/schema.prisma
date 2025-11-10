@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Custom_Itinerary {
-  custom_ID           Int               @id @default(autoincrement())
+  custom_ID           Int               @id
   is_made_by_customer Int?
   itinerary           Itinerary         @relation(fields: [custom_ID], references: [itinerary_ID], onUpdate: Restrict, map: "custom_itinerary_ibfk_1")
   person              Person?           @relation(fields: [is_made_by_customer], references: [person_ID], onDelete: Restrict, onUpdate: Restrict, map: "custom_itinerary_ibfk_2")
