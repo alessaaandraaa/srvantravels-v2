@@ -19,12 +19,19 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "types": ["google.maps"],
     "plugins": [
       {
         "name": "next"
       }
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "../map.tsx"
+  ],
   "exclude": ["node_modules"]
 }

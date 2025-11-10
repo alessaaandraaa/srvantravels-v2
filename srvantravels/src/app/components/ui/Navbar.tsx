@@ -22,9 +22,12 @@ export default async function Navbar() {
         </Link>
       </div>
       <div className="bg-gray-300">
-        <p className="hover:bg-amber-950 hover:text-amber-300">
+        <Link
+          href="/itinerary"
+          className="hover:bg-amber-950 hover:text-amber-300"
+        >
           Book Itinerary
-        </p>
+        </Link>
       </div>
       <div className="bg-gray-300">
         <p className="hover:bg-amber-950 hover:text-amber-300">Help</p>

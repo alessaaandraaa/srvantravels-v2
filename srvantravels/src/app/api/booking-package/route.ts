@@ -55,7 +55,10 @@ export async function POST(req: Request) {
       });
 
       console.log(newOrder);
-      return NextResponse.json({ message: "success" }, { status: 200 });
+      return NextResponse.json(
+        { message: "success", order_ID: newOrder.order_ID },
+        { status: 200 }
+      );
     } catch (error) {
       console.error("Error adding customer:", error);
       return NextResponse.json({ error: `${error}` }, { status: 500 });
