@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Packages from "../ui/Packages";
-import { usePackageStore } from "@store/package-itinerary.store";
+import { usePackageStore } from "@/store/package-itinerary.store";
 import Link from "next/link";
 
 interface Package {

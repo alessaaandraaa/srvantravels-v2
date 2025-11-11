@@ -8,7 +8,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = Number(params.id);
+    const id = await Number(params.id);
     const packageById = await packageService.getPackages(id);
     return NextResponse.json({ packageById }, { status: 200 });
   } catch (error) {

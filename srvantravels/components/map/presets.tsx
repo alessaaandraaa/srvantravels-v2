@@ -59,7 +59,6 @@ export default function Presets({
   }, [src]);
 
   const keyOf = (p: Place) => `${p.name}__${p.address}`;
-  console.log("ITEMS: ", items);
 
   return (
     <div className="w-[320px] bg-white h-full rounded-2xl p-4 overflow-y-auto shadow-md mr-4">

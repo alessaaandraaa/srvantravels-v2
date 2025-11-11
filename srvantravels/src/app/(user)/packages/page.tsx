@@ -1,6 +1,6 @@
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import PackageList from "../../components/ui/PackageList";
+import PackageList from "../../../../components/ui/PackageList";
 
 export default async function Packages() {
   const session = await getServerSession(authOptions);

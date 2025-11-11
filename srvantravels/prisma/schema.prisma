@@ -81,7 +81,7 @@ model Itinerary_Stops {
 
 model Locations {
   location_ID      Int               @id @default(autoincrement())
-  location_name    String?           @db.VarChar(255)
+  location_name    String?           @unique(map: "location_name") @db.VarChar(255)
   location_address String?           @db.VarChar(255)
   lng              Float             @db.Float
   lat              Float             @db.Float
@@ -140,7 +140,7 @@ model Package_Itinerary {
 
 model Payment {
   payment_ID     Int                    @id @default(autoincrement())
-  payment_method Payment_payment_method
+  payment_method payment_payment_method
   down_payment   Decimal?               @db.Decimal(10, 2)
   payment_status Payment_payment_status
   customer       Customer[]
@@ -175,11 +175,6 @@ model Van {
   @@map("van")
 }
 
-enum Payment_payment_method {
-  CASH
-  GCASH
-}
-
 enum itinerary_type {
   PACKAGE
   CUSTOM
@@ -195,5 +190,11 @@ enum order_details_status {
   ACCEPTED
   REJECTED
   IN_MODIFICATION @map("IN MODIFICATION")
+  PENDING
+}
+
+enum payment_payment_method {
+  CASH
+  GCASH
   PENDING
 }

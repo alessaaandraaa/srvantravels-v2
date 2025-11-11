@@ -1,10 +1,16 @@
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import Confirmation from "../../../../../components/booking-ui/Confirmation";
+import Confirmation from "../../../../../../../components/booking-ui/Confirmation";
 
-export default async function End({ searchParams }: any) {
+type Search = { order_id?: string };
+
+export default async function End({
+  searchParams,
+}: {
+  searchParams: Promise<Search>;
+}) {
   const session = await getServerSession(authOptions);
-  const order_id = await searchParams.order_id;
+  const { order_id } = await searchParams;
 
   if (!session?.user) {
     return <p>Session ended. Please log in again.</p>;
@@ -12,7 +18,7 @@ export default async function End({ searchParams }: any) {
 
   return (
     <div>
-      <Confirmation orderId={order_id} />
+      <Confirmation orderId={Number(order_id)} />
     </div>
   );
 }

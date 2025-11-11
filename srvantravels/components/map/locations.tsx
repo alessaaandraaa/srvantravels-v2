@@ -1,4 +1,5 @@
 "use client";
+import { useLocationsStore } from "@/store/custom-itinerary.store";
 import React from "react";
 
 export type MarkerData = {
@@ -7,6 +8,7 @@ export type MarkerData = {
   lng: number;
   name?: string;
   address: string;
+  isCustom: boolean;
 };
 
 type Props = {
@@ -43,7 +45,8 @@ export default function LocationsList({
 
       {locations.length === 0 && (
         <p className="text-gray-500 text-sm">
-          Click the map or use search to add markers
+          Click the map or use search to select <b>at least two</b> markers. By
+          default the first location you select is your pickup location.
         </p>
       )}
 
@@ -68,7 +71,13 @@ export default function LocationsList({
                       title="Set as starting location"
                     />
                   )}
-                  <p className="font-medium">
+                  <p
+                    className={
+                      l.isCustom
+                        ? "font-medium text-blue-600"
+                        : "font-medium text-green-800"
+                    }
+                  >
                     {l.name ?? "Unnamed Place"}
                     {isStart && (
                       <span className="ml-2 inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium">

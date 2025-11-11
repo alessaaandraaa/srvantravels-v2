@@ -17,6 +17,8 @@ class CustomItineraryService {
           is_made_by_customer,
         },
       });
+
+      return itinerary;
     } catch (error) {
       console.log("Error adding custom itinerary: ", error);
       throw new Error("Could not custom itinerary.");

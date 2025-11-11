@@ -1,20 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { useLocationsStore } from "@/store/custom-itinerary.store";
 import {
   APIProvider,
-  Map as GoogleMap, // alias so we can use ES6 Map() in code
+  Map as GoogleMap,
   AdvancedMarker,
   MapMouseEvent,
 } from "@vis.gl/react-google-maps";
 
-import Search from "../../components/map/search";
-import Directions from "../../components/map/directions";
-import RouteButton from "../../components/map/button";
-import LocationsList, {
-  MarkerData as ListMarkerData,
-} from "../../components/map/locations";
-import Presets from "../../components/map/presets";
+import Search from "./search";
+import Directions from "./directions";
+import RouteButton from "./button";
+import LocationsList, { MarkerData as ListMarkerData } from "./locations";
+import Presets from "./presets";
 
 const center = { lat: 10.2926, lng: 123.9022 };
 
@@ -116,7 +115,11 @@ const sameByNameAddress = (
 /* ---------------- component ---------------- */
 
 export default function MapComponent() {
-  const [markers, setMarkers] = useState<MarkerData[]>([]);
+  // STORE — single source of truth
+  const markers = useLocationsStore((s) => s.locations); // read all
+  const setLocation = useLocationsStore((s) => s.setLocation); // add ONE marker
+  const clear = useLocationsStore((s) => s.clear); // clear all
+
   const [startId, setStartId] = useState<string | null>(null);
   const [directions, setDirections] =
     useState<google.maps.DirectionsResult | null>(null);
@@ -130,14 +133,21 @@ export default function MapComponent() {
 
   /* ---------- add with Cebu gate ---------- */
   function addIfAllowed(
-    marker: { lat: number; lng: number; name?: string; address: string },
+    marker: {
+      lat: number;
+      lng: number;
+      name?: string;
+      address: string;
+      isCustom: boolean;
+    },
     comps: GComp[] | undefined
   ) {
     if (!isInCebuPH(comps)) {
       console.warn("Blocked: outside Cebu, Philippines");
       return false;
     }
-    setMarkers((prev) => [...prev, { id: uid(), ...marker }]);
+    // add to store
+    setLocation({ id: uid(), ...marker });
     setSavedOrderIds(null);
     return true;
   }
@@ -171,6 +181,7 @@ export default function MapComponent() {
           lng: place.location?.lng() ?? lng,
           name: place.displayName ?? "Unnamed Place",
           address: place.formattedAddress ?? "Unknown address",
+          isCustom: true,
         },
         place.addressComponents ?? []
       );
@@ -211,6 +222,7 @@ export default function MapComponent() {
                   name: pd.name ?? "Unnamed Place",
                   address:
                     pd.formatted_address ?? pd.vicinity ?? "Unknown address",
+                  isCustom: true,
                 },
                 (pd.address_components as unknown as GComp[]) ?? []
               );
@@ -229,6 +241,7 @@ export default function MapComponent() {
                   geoResults[0].address_components?.[0]?.long_name ??
                   "Unnamed Place",
                 address: geoResults[0].formatted_address ?? "Unknown address",
+                isCustom: true,
               },
               (geoResults[0].address_components as unknown as GComp[]) ?? []
             );
@@ -247,12 +260,18 @@ export default function MapComponent() {
     addressComponents?: GComp[];
   }) => {
     addIfAllowed(
-      { lat: p.lat, lng: p.lng, name: p.name, address: p.address },
+      {
+        lat: p.lat,
+        lng: p.lng,
+        name: p.name,
+        address: p.address,
+        isCustom: true,
+      },
       p.addressComponents ?? []
     );
   };
 
-  /* ---------- presets (admin list with name+address only) ---------- */
+  /* ---------- presets (admin list) ---------- */
   const alreadyInList = (p: Place) => {
     const r = (n: number) => Math.round(n * 1e6);
     const keySet = new Set(markers.map((m) => `${r(m.lat)},${r(m.lng)}`));
@@ -261,22 +280,29 @@ export default function MapComponent() {
 
   function handlePresetPick(p: Place) {
     if (alreadyInList(p)) return;
-    setMarkers((prev) => [
-      ...prev,
-      { id: uid(), lat: p.lat, lng: p.lng, name: p.name, address: p.address },
-    ]);
+    setLocation({
+      id: uid(),
+      lat: p.lat,
+      lng: p.lng,
+      name: p.name,
+      address: p.address,
+      isCustom: false,
+    });
     setSavedOrderIds(null);
   }
 
   /* ---------- list actions ---------- */
   const removeMarker = (id: string) => {
-    setMarkers((prev) => prev.filter((m) => m.id !== id));
+    // Fallback rewrite (since store has no remove API shown)
+    const next = markers.filter((m) => m.id !== id);
+    clear();
+    next.forEach((m) => setLocation(m));
     setStartId((curr) => (curr === id ? null : curr));
     setSavedOrderIds(null);
   };
 
   const clearAllMarkers = () => {
-    setMarkers([]);
+    clear();
     setStartId(null);
     setDirections(null);
     setSummary(null);
@@ -317,6 +343,12 @@ export default function MapComponent() {
     };
   }
 
+  function commitList(finalList: MarkerData[]) {
+    // If your store has replaceAll(finalList), use that instead of clear+loop
+    clear();
+    finalList.forEach((m) => setLocation(m));
+  }
+
   function route(optimize: boolean, markersOverride?: MarkerData[]) {
     if (!window.google) return;
     const source = markersOverride ?? markers;
@@ -340,20 +372,22 @@ export default function MapComponent() {
         setDirections(res);
         setSummary(summarizeDirections(res));
 
-        if (optimize) {
-          // save original order once, so user can restore it
-          if (!savedOrderIds) setSavedOrderIds(source.map((m) => m.id));
+        let finalList: MarkerData[] | null = null;
 
-          // reorder sidebar to match Google's optimized order
+        if (optimize) {
+          if (!savedOrderIds) setSavedOrderIds(source.map((m) => m.id));
           const order = res.routes[0].waypoint_order ?? [];
-          const optimizedList = [
+          finalList = [
             stops.origin,
             ...order.map((i) => stops.inBetween[i]),
             stops.destination,
           ];
-          setMarkers(optimizedList);
           setStartId(stops.origin.id);
+        } else {
+          finalList = [...stops.ordered];
         }
+
+        if (finalList) commitList(finalList);
       } else {
         console.warn("Directions failed:", status);
       }
@@ -364,7 +398,6 @@ export default function MapComponent() {
   const onMyOrder = () => {
     if (savedOrderIds) {
       const restored = rebuildByIds(savedOrderIds, markers);
-      setMarkers(restored);
       route(false, restored); // route immediately using restored order
       return;
     }
@@ -406,8 +439,9 @@ export default function MapComponent() {
                 </div>
               </div>
             )}
+
             <GoogleMap
-              mapId="dcf669e4cab82947df9e6903"
+              mapId="dcf669e4cab82947951b672b"
               defaultCenter={center}
               defaultZoom={17}
               className="w-full h-full rounded-2xl overflow-hidden"

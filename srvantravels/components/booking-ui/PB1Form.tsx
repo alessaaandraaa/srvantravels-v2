@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import {
   useCustomerStore,
   usePackageStore,
-} from "@store/package-itinerary.store";
+} from "@/store/package-itinerary.store";
 import Link from "next/link";
 
 type customerForm = {
@@ -16,7 +16,9 @@ type customerForm = {
   file_image: FileList;
 };
 
-export default function PB1Form() {
+type id = { user_id: number };
+
+export default function PB1Form({ user_id }: id) {
   const router = useRouter();
 
   const setCustomerDetails = useCustomerStore(
@@ -26,6 +28,7 @@ export default function PB1Form() {
   const itinerary_id = bookedPackage?.package_ID ?? null;
   const params = useParams();
   const id = Number(params.id);
+  const userId = { user_id };
 
   const { register, handleSubmit } = useForm<customerForm>();
 
@@ -40,7 +43,7 @@ export default function PB1Form() {
 
     // Save all form data to Zustand
     setCustomerDetails({
-      customer_id: id,
+      customer_id: Number(user_id),
       itinerary_id: itinerary_id,
       type: "PACKAGE",
       number_of_PAX: FormData.pax,

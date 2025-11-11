@@ -1,11 +1,9 @@
-import CustomForm from "../../components/custom-itinerary-ui/CustomForm";
-import MapComponent from "../../components/map/map";
+import CustomFormMap from "../../../../components/custom-itinerary-ui/CustomFormMap";
 
 export default function Itinerary() {
   return (
     <div>
-      <CustomForm />
-      <MapComponent />
+      <CustomFormMap />
     </div>
   );
 }
