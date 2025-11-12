@@ -5,11 +5,12 @@ const packageService = new PackageService();
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = await Number(params.id);
-    const packageById = await packageService.getPackages(id);
+    const { id } = await params;
+    const pkgId = Number(id);
+    const packageById = await packageService.getPackages(pkgId);
     return NextResponse.json({ packageById }, { status: 200 });
   } catch (error) {
     console.error("Error in fetching package: ", error);

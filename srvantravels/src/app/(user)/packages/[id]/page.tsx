@@ -5,7 +5,7 @@ export default async function Package({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await params; // ✅ await the Promise
+  const { id } = await params;
   const pkgId = Number(id);
   if (!Number.isFinite(pkgId)) return <div>Invalid package id.</div>;
   return (
