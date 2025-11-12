@@ -64,7 +64,7 @@ export default function CustomSummaryFull() {
 
     const data = await response.json();
     if (response.ok) {
-      router.push("/home");
+      router.push(`/itinerary/customer-details/end?order_id=${data.order_ID}`);
     } else {
       console.error("Order failed.");
     }

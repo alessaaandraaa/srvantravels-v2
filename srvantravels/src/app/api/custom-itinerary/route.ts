@@ -133,7 +133,7 @@ export async function POST(req: Request) {
               } else {
                 const newLocation = await locationsService.getLocation(l.name);
                 if (newLocation) {
-                  locIDarr.push(newLocation.location_ID);
+                  locIDarr.push(newLocation[0].location_ID);
                 } else {
                   console.error("Could not find preset location.");
                   return NextResponse.json(

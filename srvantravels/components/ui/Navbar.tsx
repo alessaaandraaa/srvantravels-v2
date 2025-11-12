@@ -7,40 +7,43 @@ export default async function Navbar() {
   const session = await getServerSession(authOptions);
 
   return (
-    <div className="flex gap-50 justify-center">
-      <div className="bg-gray-300">
-        <Link href="/home" className="hover:bg-amber-950 hover:text-amber-300">
+    <div className="flex justify-around p-5 bg-teal-500 shadow-2xs">
+      <div>
+        <Link
+          href="/home"
+          className="text-white hover:text-teal-800 hover:font-bold"
+        >
           Home
         </Link>
       </div>
-      <div className="bg-gray-300">
+      <div>
         <Link
           href="/packages"
-          className="hover:bg-amber-950 hover:text-amber-300"
+          className="text-white hover:text-teal-800 hover:font-bold"
         >
           Book Package
         </Link>
       </div>
-      <div className="bg-gray-300">
+      <div>
         <Link
           href="/itinerary"
-          className="hover:bg-amber-950 hover:text-amber-300"
+          className="text-white hover:text-teal-800 hover:font-bold"
         >
           Book Itinerary
         </Link>
       </div>
-      <div className="bg-gray-300">
+      <div>
         <p className="hover:bg-amber-950 hover:text-amber-300">Help</p>
       </div>
-      <div className="bg-gray-300">
+      <div>
         <p className="hover:bg-amber-950 hover:text-amber-300">About Us</p>
       </div>
-      <div className="bg-gray-300">
-        <p className="hover:bg-amber-950 hover:text-amber-300">
+      <div>
+        <p className="text-white hover:text-teal-800 hover:font-bold">
           {session?.user?.name}
         </p>
       </div>
-      <div className="bg-gray-300 pl-2">
+      <div className="text-white hover:text-teal-800 hover:font-bold">
         {session?.user ? <SignOut /> : <Link href="/login">Login</Link>}
       </div>
     </div>

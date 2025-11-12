@@ -81,7 +81,7 @@ model Itinerary_Stops {
 
 model Locations {
   location_ID      Int               @id @default(autoincrement())
-  location_name    String?           @unique(map: "location_name") @db.VarChar(255)
+  location_name    String?           @db.VarChar(255)
   location_address String?           @db.VarChar(255)
   lng              Float             @db.Float
   lat              Float             @db.Float
