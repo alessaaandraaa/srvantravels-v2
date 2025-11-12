@@ -17,14 +17,16 @@ type customerForm = {
 
 type id = { user_id: number };
 const pad = (n: number) => String(n).padStart(2, "0");
-const asDate = (v: unknown): Date | undefined => {
+const asDate = (
+  v: string | number | Date | null | undefined
+): Date | undefined => {
   if (!v) return undefined;
   if (v instanceof Date) return isNaN(v.getTime()) ? undefined : v;
-  const d = new Date(v as any);
+  const d = new Date(v);
   return isNaN(d.getTime()) ? undefined : d;
 };
 
-const toDateStr = (v?: unknown) => {
+const toDateStr = (v?: string | number | Date | null | undefined) => {
   const d = asDate(v);
   return d
     ? `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`

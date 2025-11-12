@@ -1,12 +1,42 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
+/* ----- Types ----- */
 type Place = {
   name: string;
   address: string;
   lat: number;
   lng: number;
 };
+
+type ApiPlace = {
+  location_name?: unknown;
+  location_address?: unknown;
+  lat?: unknown;
+  lng?: unknown;
+};
+
+type ApiResponse = {
+  locations?: unknown;
+};
+
+/* ----- Runtime guards (tiny & fast) ----- */
+const isObject = (x: unknown): x is Record<string, unknown> =>
+  typeof x === "object" && x !== null;
+
+const isApiPlace = (x: unknown): x is ApiPlace => isObject(x);
+
+const toPlace = (x: ApiPlace): Place => ({
+  name: String(x.location_name ?? ""),
+  address: String(x.location_address ?? ""),
+  lat: Number(x.lat),
+  lng: Number(x.lng),
+});
+
+const isValidPlace = (p: Place) =>
+  Boolean(
+    p.name && p.address && Number.isFinite(p.lat) && Number.isFinite(p.lng)
+  );
 
 export default function Presets({
   onPick,
@@ -28,23 +58,15 @@ export default function Presets({
       try {
         const res = await fetch(src, { cache: "no-store" });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json(); // { locations: [...] }
+        const data: ApiResponse = await res.json();
 
-        const arr = Array.isArray(data?.locations) ? data.locations : [];
-        const mapped: Place[] = arr
-          .map((x: any) => ({
-            name: String(x.location_name ?? ""),
-            address: String(x.location_address ?? ""),
-            lat: Number(x.lat),
-            lng: Number(x.lng),
-          }))
-          .filter(
-            (p: any) =>
-              p.name &&
-              p.address &&
-              Number.isFinite(p.lat) &&
-              Number.isFinite(p.lng)
-          );
+        const rawList = Array.isArray(data?.locations)
+          ? (data.locations as unknown[])
+          : [];
+        const mapped = rawList
+          .filter(isApiPlace)
+          .map(toPlace)
+          .filter(isValidPlace);
 
         if (alive) setItems(mapped);
       } catch (e) {

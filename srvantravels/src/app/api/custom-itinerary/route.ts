@@ -109,7 +109,7 @@ export async function POST(req: Request) {
 
             // insert into locations
             const locations = body.locations;
-            let locIDarr = [];
+            const locIDarr = [];
 
             for (const l of locations) {
               if (l.isCustom) {

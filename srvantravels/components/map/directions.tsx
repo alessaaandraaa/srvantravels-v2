@@ -25,7 +25,7 @@ export default function Directions({
 
     if (!directions) {
       // Safe clear without throwing InvalidValueError
-      (renderer as any).set("directions", null);
+      renderer.set("directions", null);
       return;
     }
 

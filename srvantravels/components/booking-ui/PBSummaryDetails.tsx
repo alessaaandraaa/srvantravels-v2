@@ -4,8 +4,6 @@ import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useCustomerStore } from "@/store/package-itinerary.store";
-import Link from "next/link";
-
 import PBDetailsSummary from "./PBDetailsSummary";
 import PBPackageDisplay from "./PBPackageDisplay";
 
@@ -20,6 +18,7 @@ export default function PBSummaryDetails() {
   const [hydrated, setHydrated] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const { register, handleSubmit } = useForm<payment>();
   useEffect(() => {
     setHydrated(true);
   }, []);
@@ -36,8 +35,6 @@ export default function PBSummaryDetails() {
   if (!customerDetails || customerDetails?.itinerary_id !== Number(params.id)) {
     return <p>Redirecting...</p>;
   }
-
-  const { register, handleSubmit } = useForm<payment>();
 
   const onSubmit = async (FormData: payment) => {
     const payment_method = FormData.payment_method;

@@ -72,7 +72,7 @@ function isGeocoderComp(c: GComp): c is google.maps.GeocoderAddressComponent {
   return "long_name" in c;
 }
 function compHasType(c: GComp, type: string) {
-  return Array.isArray((c as any).types) && (c as any).types.includes(type);
+  return Array.isArray(c.types) && c.types.includes(type);
 }
 function getLong(c?: GComp) {
   if (!c) return undefined;

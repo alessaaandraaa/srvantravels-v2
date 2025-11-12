@@ -28,7 +28,6 @@ export default function PB1Form({ user_id }: id) {
   const itinerary_id = bookedPackage?.package_ID ?? null;
   const params = useParams();
   const id = Number(params.id);
-  const userId = { user_id };
 
   const { register, handleSubmit } = useForm<customerForm>();
 

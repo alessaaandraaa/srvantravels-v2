@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Confirmation({ orderId }: any) {
+export default function Confirmation({ orderId }: { orderId: number }) {
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div>
