@@ -39,9 +39,12 @@ export default async function Navbar() {
         <p className="hover:bg-amber-950 hover:text-amber-300">About Us</p>
       </div>
       <div>
-        <p className="text-white hover:text-teal-800 hover:font-bold">
+        <Link
+          href="/profile"
+          className="text-white hover:text-teal-800 hover:font-bold"
+        >
           {session?.user?.name}
-        </p>
+        </Link>
       </div>
       <div className="text-white hover:text-teal-800 hover:font-bold">
         {session?.user ? <SignOut /> : <Link href="/login">Login</Link>}
