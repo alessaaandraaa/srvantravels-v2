@@ -10,8 +10,8 @@ datasource db {
 model Custom_Itinerary {
   custom_ID           Int               @id
   is_made_by_customer Int?
-  itinerary           Itinerary         @relation(fields: [custom_ID], references: [itinerary_ID], onDelete: NoAction, onUpdate: NoAction, map: "custom_itinerary_ibfk_1")
-  person              Person?           @relation(fields: [is_made_by_customer], references: [person_ID], onDelete: NoAction, onUpdate: NoAction, map: "custom_itinerary_ibfk_2")
+  itinerary           Itinerary         @relation(fields: [custom_ID], references: [itinerary_ID], onUpdate: Restrict, map: "custom_itinerary_ibfk_1")
+  person              Person?           @relation(fields: [is_made_by_customer], references: [person_ID], onDelete: Restrict, onUpdate: Restrict, map: "custom_itinerary_ibfk_2")
   itinerary_stops     Itinerary_Stops[]
 
   @@index([is_made_by_customer], map: "is_made_by_customer")
@@ -25,8 +25,8 @@ model Customer {
   date_of_travel    DateTime?       @db.Date
   number_of_luggage Int?
   ID_Picture        String?         @db.VarChar(255)
-  person            Person          @relation(fields: [customer_ID], references: [person_ID], onDelete: NoAction, onUpdate: NoAction, map: "customer_ibfk_1")
-  payment           Payment         @relation(fields: [payment_ID], references: [payment_ID], onDelete: NoAction, onUpdate: NoAction, map: "customer_ibfk_2")
+  person            Person          @relation(fields: [customer_ID], references: [person_ID], onUpdate: Restrict, map: "customer_ibfk_1")
+  payment           Payment         @relation(fields: [payment_ID], references: [payment_ID], onUpdate: Restrict, map: "customer_ibfk_2")
   order_details     Order_Details[]
   van               Van[]
 
@@ -39,7 +39,7 @@ model Driver {
   driver_ID     Int             @id
   plate_number  String?         @db.VarChar(20)
   Availability  Boolean?        @default(false)
-  employee      Employee        @relation(fields: [driver_ID], references: [employee_ID], onDelete: NoAction, onUpdate: NoAction, map: "driver_ibfk_1")
+  employee      Employee        @relation(fields: [driver_ID], references: [employee_ID], onUpdate: Restrict, map: "driver_ibfk_1")
   order_details Order_Details[]
   van           Van[]
 
@@ -49,7 +49,7 @@ model Driver {
 model Employee {
   employee_ID Int      @id
   driver      Driver?
-  person      Person   @relation(fields: [employee_ID], references: [person_ID], onDelete: NoAction, onUpdate: NoAction, map: "employee_ibfk_1")
+  person      Person   @relation(fields: [employee_ID], references: [person_ID], onUpdate: Restrict, map: "employee_ibfk_1")
   manager     Manager?
 
   @@map("employee")
@@ -71,8 +71,8 @@ model Itinerary_Stops {
   custom_ID        Int?
   stop_order       Int?
   location_ID      Int?
-  custom_itinerary Custom_Itinerary? @relation(fields: [custom_ID], references: [custom_ID], onDelete: NoAction, onUpdate: NoAction, map: "itinerary_stops_ibfk_1")
-  locations        Locations?        @relation(fields: [location_ID], references: [location_ID], onDelete: NoAction, onUpdate: NoAction, map: "itinerary_stops_ibfk_2")
+  custom_itinerary Custom_Itinerary? @relation(fields: [custom_ID], references: [custom_ID], onDelete: Restrict, onUpdate: Restrict, map: "itinerary_stops_ibfk_1")
+  locations        Locations?        @relation(fields: [location_ID], references: [location_ID], onDelete: Restrict, onUpdate: Restrict, map: "itinerary_stops_ibfk_2")
 
   @@index([custom_ID], map: "custom_ID")
   @@index([location_ID], map: "location_ID")
@@ -93,7 +93,7 @@ model Locations {
 
 model Manager {
   manager_ID        Int                 @id
-  employee          Employee            @relation(fields: [manager_ID], references: [employee_ID], onDelete: NoAction, onUpdate: NoAction, map: "manager_ibfk_1")
+  employee          Employee            @relation(fields: [manager_ID], references: [employee_ID], onUpdate: Restrict, map: "manager_ibfk_1")
   package_itinerary Package_Itinerary[]
 
   @@map("manager")
@@ -109,11 +109,11 @@ model Order_Details {
   date_of_travel      DateTime?             @db.Date
   time_for_pickup     DateTime?             @db.Time(0)
   time_for_dropoff    DateTime?             @db.Time(0)
-  date_of_transaction DateTime?             @db.Date
+  date_of_transaction DateTime?             @default(dbgenerated("(curdate())")) @db.Date
   status              order_details_status? @default(PENDING)
-  customer            Customer?             @relation(fields: [customer_ID, payment_ID], references: [customer_ID, payment_ID], onDelete: NoAction, onUpdate: NoAction, map: "order_details_ibfk_1")
-  driver              Driver?               @relation(fields: [driver_ID], references: [driver_ID], onDelete: NoAction, onUpdate: NoAction, map: "order_details_ibfk_2")
-  itinerary           Itinerary?            @relation(fields: [itinerary_ID], references: [itinerary_ID], onDelete: NoAction, onUpdate: NoAction, map: "order_details_ibfk_3")
+  customer            Customer?             @relation(fields: [customer_ID, payment_ID], references: [customer_ID, payment_ID], onDelete: Restrict, onUpdate: Restrict, map: "order_details_ibfk_1")
+  driver              Driver?               @relation(fields: [driver_ID], references: [driver_ID], onDelete: Restrict, onUpdate: Restrict, map: "order_details_ibfk_2")
+  itinerary           Itinerary?            @relation(fields: [itinerary_ID], references: [itinerary_ID], onDelete: Restrict, onUpdate: Restrict, map: "order_details_ibfk_3")
 
   @@index([customer_ID, payment_ID], map: "customer_ID")
   @@index([driver_ID], map: "driver_ID")
@@ -131,8 +131,8 @@ model Package_Itinerary {
   is_made_by_manager Int?
   is_available       Boolean?  @default(false)
   package_picture    String?   @db.VarChar(255)
-  itinerary          Itinerary @relation(fields: [package_ID], references: [itinerary_ID], onDelete: NoAction, onUpdate: NoAction, map: "package_itinerary_ibfk_1")
-  manager            Manager?  @relation(fields: [is_made_by_manager], references: [manager_ID], onDelete: NoAction, onUpdate: NoAction, map: "package_itinerary_ibfk_2")
+  itinerary          Itinerary @relation(fields: [package_ID], references: [itinerary_ID], onUpdate: Restrict, map: "package_itinerary_ibfk_1")
+  manager            Manager?  @relation(fields: [is_made_by_manager], references: [manager_ID], onDelete: Restrict, onUpdate: Restrict, map: "package_itinerary_ibfk_2")
 
   @@index([is_made_by_manager], map: "is_made_by_manager")
   @@map("package_itinerary")
@@ -167,8 +167,8 @@ model Van {
   customer_ID        Int?
   payment_ID         Int?
   passenger_capacity Int?
-  driver             Driver?   @relation(fields: [driver_ID], references: [driver_ID], onDelete: NoAction, onUpdate: NoAction, map: "van_ibfk_1")
-  customer           Customer? @relation(fields: [customer_ID, payment_ID], references: [customer_ID, payment_ID], onDelete: NoAction, onUpdate: NoAction, map: "van_ibfk_2")
+  driver             Driver?   @relation(fields: [driver_ID], references: [driver_ID], onDelete: Restrict, onUpdate: Restrict, map: "van_ibfk_1")
+  customer           Customer? @relation(fields: [customer_ID, payment_ID], references: [customer_ID, payment_ID], onDelete: Restrict, onUpdate: Restrict, map: "van_ibfk_2")
 
   @@index([customer_ID, payment_ID], map: "customer_ID")
   @@index([driver_ID], map: "driver_ID")

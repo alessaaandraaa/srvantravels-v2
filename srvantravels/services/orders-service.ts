@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/db";
-
+import { OrdersListType } from "@/types/order.types";
 class OrdersService {
-  async getOrders(customer_id: number) {
+  async getOrders(customer_id: number): Promise<OrdersListType> {
     try {
       const orders = await prisma.customer.findMany({
         where: {
@@ -24,6 +24,7 @@ class OrdersService {
 
           order_details: {
             select: {
+              order_ID: true,
               time_for_pickup: true,
               time_for_dropoff: true,
               status: true,

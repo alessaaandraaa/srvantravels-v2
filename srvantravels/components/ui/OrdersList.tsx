@@ -1,8 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
+import { OrdersListType } from "@/types/order.types";
+import Order from "./Order";
 
 export default function OrdersList(customer_id: { customer_id: number }) {
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState<OrdersListType>([]);
   const customerId = customer_id.customer_id;
   useEffect(() => {
     fetch(`/api/orders?customerId=${customerId}`)
@@ -11,5 +13,12 @@ export default function OrdersList(customer_id: { customer_id: number }) {
   }, []);
 
   console.log("ORDERS: ", orders);
-  return <div>Hi</div>;
+  return (
+    <div>
+      <h2 className="text-3xl">MY BOOKINGS</h2>
+      {orders.map((o) => (
+        <Order key={o.order_details[0].order_ID} {...o} />
+      ))}
+    </div>
+  );
 }

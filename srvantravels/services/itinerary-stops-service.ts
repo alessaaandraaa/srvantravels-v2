@@ -25,6 +25,29 @@ class ItineraryStopsService {
       throw new Error("Could not add itinerary stop.");
     }
   }
+
+  async getItineraryStops(itinerary_id: number) {
+    const stops = await prisma.itinerary_Stops.findMany({
+      where: {
+        custom_ID: itinerary_id,
+      },
+      select: {
+        location_ID: true,
+        locations: {
+          select: {
+            location_name: true,
+            location_address: true,
+          },
+        },
+        stop_order: true,
+      },
+      orderBy: {
+        stop_order: "asc",
+      },
+    });
+
+    return stops;
+  }
 }
 
 export default ItineraryStopsService;

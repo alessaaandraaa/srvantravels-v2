@@ -13,6 +13,7 @@ const paymentService = new PaymentService();
 export async function POST(req: Request) {
   const body = await req.json();
   try {
+    console.log("PACKAGE BODY: ", body);
     const newPayment = await paymentService.addPayment(body.payment);
     console.log(newPayment);
 

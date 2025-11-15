@@ -14,7 +14,7 @@ export default async function UserProfile(customer_id: {
           Welcome, {session?.user?.name}!
         </h1>
       </div>
-      <div className="border-2 border-black rounded-2xl ml-5 p-10">
+      <div className="border-2 border-black rounded-2xl ml-5 p-10 max-w-full">
         <OrdersList customer_id={customer_id.customer_id} />
       </div>
     </div>

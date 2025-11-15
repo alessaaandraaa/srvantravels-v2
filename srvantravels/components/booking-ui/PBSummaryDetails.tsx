@@ -18,6 +18,8 @@ export default function PBSummaryDetails() {
   const [hydrated, setHydrated] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  console.log("CUSTOMER DETAILS TEST 2: ", customerDetails?.itinerary_id);
+
   const { register, handleSubmit } = useForm<payment>();
   useEffect(() => {
     setHydrated(true);
@@ -50,6 +52,7 @@ export default function PBSummaryDetails() {
         date_of_travel: customerDetails.date_of_travel,
         number_of_luggage: Number(customerDetails.number_of_luggage),
         ID_PictureB64: customerDetails.ID_picture,
+        itinerary_ID: customerDetails.itinerary_id,
       },
     };
 
