@@ -25,10 +25,10 @@ class LocationsService {
     }
   }
 
-  async getLocation(id: number) {
+  async getLocation(name: string) {
     try {
-      const location = await prisma.locations.findUnique({
-        where: { location_ID: id },
+      const location = await prisma.locations.findMany({
+        where: { location_name: name },
       });
       return location;
     } catch (error) {
@@ -54,6 +54,7 @@ class LocationsService {
           is_custom_made,
         },
       });
+      return newLocation;
     } catch (error) {
       console.error("Error adding location: ", error);
       throw new Error("Could not add location.");

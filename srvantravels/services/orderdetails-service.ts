@@ -14,8 +14,8 @@ type CustomOrder_Details = {
   payment_ID: number;
   number_of_PAX: number;
   date_of_travel: Date;
-  time_for_pickup: Date;
-  time_for_dropoff: Date;
+  time_for_pickup: Date | null;
+  time_for_dropoff: Date | null;
 };
 
 class OrderDetailsService {

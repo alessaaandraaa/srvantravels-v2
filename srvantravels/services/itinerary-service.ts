@@ -15,6 +15,8 @@ class ItineraryService {
           type,
         },
       });
+
+      return itinerary;
     } catch (error) {
       console.log("Error adding itinerary: ", error);
       throw new Error("Could not add itinerary.");

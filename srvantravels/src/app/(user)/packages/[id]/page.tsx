@@ -1,10 +1,16 @@
-import PackageBooking from "../../../components/booking-ui/PackageBooking";
+import PackageBooking from "@/components/booking-ui/PackageBooking";
 
-export default function Package({ params }: { params: { id: string } }) {
-  const id = Number(params["id"]);
+export default async function Package({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const pkgId = Number(id);
+  if (!Number.isFinite(pkgId)) return <div>Invalid package id.</div>;
   return (
     <div>
-      <PackageBooking package_ID={id} />;
+      <PackageBooking package_ID={pkgId} />;
     </div>
   );
 }

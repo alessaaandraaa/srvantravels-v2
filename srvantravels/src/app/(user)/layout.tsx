@@ -1,5 +1,5 @@
-import Navbar from "../components/ui/Navbar";
-import ToastButton from "../components/ui/ToastButton";
+import Navbar from "../../../components/ui/Navbar";
+import ToastButton from "../../../components/ui/ToastButton";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 

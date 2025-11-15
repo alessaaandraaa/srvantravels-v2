@@ -1,5 +1,5 @@
 import React from "react";
-import Register from "../../components/form/Register";
+import Register from "../../../../components/form/Register";
 import Link from "next/link";
 export default function Page() {
   return (
