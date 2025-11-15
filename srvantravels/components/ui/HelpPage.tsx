@@ -8,7 +8,7 @@ export default function HelpPage() {
       <h1 className="text-2xl font-extrabold">
         Frequently Asked Questions (FAQs)
       </h1>
-      <hr className="text-teal-600 border-1 mt-3" />
+      <hr className="text-teal-600 border mt-3" />
       <div className="grid grid-cols-2 gap-2">
         <div className="bg-white p-5 rounded-2xl shadow-md">
           <h1 className="text-2xl text-teal-400 font-bold">
@@ -76,10 +76,10 @@ export default function HelpPage() {
       <h1 className="text-2xl font-extrabold mt-5">
         Tips for a Smooth Booking:
       </h1>
-      <hr className="text-teal-600 border-1 mt-3" />
+      <hr className="text-teal-600 border mt-3" />
       <div className="bg-white rounded-2xl shadow-md p-5">
         <ul className="list-disc p-3">
-          <li>Book at least 3–5 days before your intended travel date.</li>
+          <li>Book at least 3 to 5 days before your intended travel date.</li>
           <li>
             Review your selected itinerary and trip details before confirming.
           </li>
