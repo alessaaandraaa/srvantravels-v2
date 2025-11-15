@@ -33,10 +33,20 @@ export default async function Navbar() {
         </Link>
       </div>
       <div>
-        <p className="hover:bg-amber-950 hover:text-amber-300">Help</p>
+        <Link
+          href="/help"
+          className="text-white hover:text-teal-800 hover:font-bold"
+        >
+          Help
+        </Link>
       </div>
       <div>
-        <p className="hover:bg-amber-950 hover:text-amber-300">About Us</p>
+        <Link
+          href="/about"
+          className="text-white hover:text-teal-800 hover:font-bold"
+        >
+          About Us
+        </Link>
       </div>
       <div>
         <Link
