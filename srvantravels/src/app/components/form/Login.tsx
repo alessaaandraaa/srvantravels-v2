@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-<<<<<<< HEAD
 
 const images = [
   "/bg-images/bg1.jpg",
@@ -17,16 +16,11 @@ const images = [
   "/bg-images/bg9.jpg",
   "/bg-images/bg10.jpg",
 ];
-=======
-import { useState } from "react";
-import Link from "next/link";
->>>>>>> fbb521d5e0220a205b8280599bfde8302fcb734e
 
 export default function Login() {
   const [current, setCurrent] = useState(0);
   const router = useRouter();
 
-  // background fade logic
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % images.length);
@@ -50,9 +44,7 @@ export default function Login() {
   };
 
   return (
-<<<<<<< HEAD
     <div className="relative min-h-screen overflow-hidden font-sans">
-      {/* Background carousel */}
       {images.map((img, i) => (
         <img
           key={i}
@@ -64,23 +56,18 @@ export default function Login() {
         />
       ))}
 
-      {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-l from-[#00000099] to-transparent" />
 
-      {/* Login container */}
       <div className="absolute inset-0 flex items-center justify-center md:justify-end md:pr-20">
         <div className="animate-fadeInSlide bg-[#FFFFFFE6] backdrop-blur-md p-12 rounded-3xl shadow-2xl w-[90%] sm:w-[28rem] md:w-[34rem] lg:w-[38rem] text-gray-800 transform transition-all duration-700">
-          {/* Title */}
           <h1 className="text-3xl font-extrabold mb-3 text-[#36B9CB] text-center whitespace-nowrap">
             WELCOME TO SR VAN TRAVELS!
           </h1>
 
-          {/* Subtitle */}
           <p className="text-sm sm:text-base md:text-lg text-[#5F6C75] mb-6 text-center">
             Log in to your account
           </p>
 
-          {/* Form */}
           <form onSubmit={onSubmit} className="flex flex-col gap-4">
             <input
               type="email"
@@ -101,7 +88,6 @@ export default function Login() {
             </button>
           </form>
 
-          {/* Register text */}
           <p className="text-sm sm:text-base mt-4 text-gray-600 text-center">
             No account?{" "}
             <a
@@ -114,12 +100,10 @@ export default function Login() {
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[#FFFFFF] text-xs sm:text-sm">
         SR Van Travels © 2025
       </footer>
 
-      {/* Tailwind custom animation */}
       <style jsx global>{`
         @keyframes fadeInSlide {
           0% {
@@ -135,61 +119,6 @@ export default function Login() {
           animation: fadeInSlide 1s ease-out;
         }
       `}</style>
-=======
-    <div className="flex items-center justify-left min-h-screen bg-gray-100">
-      <div
-        id="login"
-        className="bg-white p-8 rounded-2xl shadow-lg w-full min-h-screenliiiiikmax-w-sm"
-      >
-        <h1 className="text-xl font-bold text-center mb-2">
-          WELCOME TO SR VAN TRAVELS!
-        </h1>
-        <hr className="mb-4" />
-        <h1 className="text-lg font-semibold text-center mb-6">
-          LOGIN TO YOUR ACCOUNT
-        </h1>
-
-        <form id="loginForm" onSubmit={onSubmit} className="space-y-4">
-          <div className="form-control flex flex-col">
-            <label htmlFor="email" className="mb-1 font-medium text-gray-700">
-              Email:
-            </label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Email"
-              className="border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div className="form-control flex flex-col">
-            <label
-              htmlFor="password"
-              className="mb-1 font-medium text-gray-700"
-            >
-              Password:
-            </label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Password"
-              className="border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors"
-          >
-            Log In
-          </button>
-        </form>
-
-        {errorMessage && (
-          <p className="text-red-600 text-center mt-4">{errorMessage}</p>
-        )}
-      </div>
->>>>>>> fbb521d5e0220a205b8280599bfde8302fcb734e
     </div>
   );
 }
