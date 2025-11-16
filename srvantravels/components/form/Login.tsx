@@ -60,7 +60,7 @@ export default function Login() {
 
       <div className="absolute inset-0 flex items-center justify-center md:justify-end md:pr-20">
         <div className="animate-fadeInSlide bg-[#FFFFFFE6] backdrop-blur-md p-12 rounded-3xl shadow-2xl w-[90%] sm:w-[28rem] md:w-[34rem] lg:w-[38rem] text-gray-800 transform transition-all duration-700">
-          <h1 className="text-3xl font-extrabold mb-3 text-[#36B9CB] text-center whitespace-nowrap">
+          <h1 className="text-3xl font-extrabold mb-3 text-[#36B9CB] text-center break-words">
             WELCOME TO SR VAN TRAVELS!
           </h1>
 
