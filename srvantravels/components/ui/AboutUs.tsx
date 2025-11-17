@@ -13,7 +13,7 @@ export default function AboutUs() {
         efficient, comfortable, and reliable travel across multiple
         destinations. With a fleet of well-maintained vans, experienced drivers,
         and a friendly team, SR Van Travels is more than just a transport
-        service — we’re your travel partner. Whether you're discovering Cebu for
+        service — we’re your travel partner. Whether you&apos;re discovering Cebu for
         the first time or exploring it all over again, we are here to take you
         there — safely, comfortably, and on time.
       </p>
