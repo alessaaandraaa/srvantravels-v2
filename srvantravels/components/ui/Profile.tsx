@@ -6,7 +6,6 @@ export default async function UserProfile(customer_id: {
   customer_id: number;
 }) {
   const session = await getServerSession(authOptions);
-  console.log("CUSTOMER ID: ", customer_id);
   return (
     <div className="flex items-start p-5">
       <div className="bg-white p-5 border-2 border-black rounded-2xl max-w-3xl">

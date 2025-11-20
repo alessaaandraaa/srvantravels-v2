@@ -41,7 +41,6 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        console.log("User success");
         return {
           id: user.person_ID + "",
           name: user.name ?? "",

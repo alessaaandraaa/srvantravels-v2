@@ -11,8 +11,6 @@ export default function OrdersList(customer_id: { customer_id: number }) {
       .then((response) => response.json())
       .then((json) => setOrders(json.orders));
   }, []);
-
-  console.log("ORDERS: ", orders);
   return (
     <div>
       <h2 className="text-3xl">MY BOOKINGS</h2>

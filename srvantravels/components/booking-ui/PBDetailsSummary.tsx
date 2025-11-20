@@ -13,8 +13,6 @@ export default function PBDetailsSummary() {
   const customerDetails = useCustomerStore((state) => state.customerDetails);
   const [hydrated, setHydrated] = useState(false);
 
-  console.log("ITINERARY ID TEST 1: ", customerDetails?.itinerary_id);
-
   useEffect(() => {
     setHydrated(true);
   }, []);

@@ -18,8 +18,6 @@ export default function PBSummaryDetails() {
   const [hydrated, setHydrated] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  console.log("CUSTOMER DETAILS TEST 2: ", customerDetails?.itinerary_id);
-
   const { register, handleSubmit } = useForm<payment>();
   useEffect(() => {
     setHydrated(true);

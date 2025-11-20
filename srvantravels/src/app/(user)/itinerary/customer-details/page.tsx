@@ -6,7 +6,5 @@ export default async function CustomerDetails() {
   const session = await getServerSession(authOptions);
   const id = session?.user?.id;
 
-  console.log("USER ID: ", id);
-
   return <CustomP2 user_id={id} />;
 }

@@ -26,7 +26,7 @@ export default function PB1Form({ user_id }: id) {
   );
   const bookedPackage = usePackageStore((state) => state.bookedPackage);
   const itinerary_id = bookedPackage?.package_ID ?? null;
-  console.log("ITINERARY ID: ", itinerary_id);
+
   const params = useParams();
   const id = Number(params.id);
 

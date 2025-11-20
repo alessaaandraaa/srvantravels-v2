@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { StopsListType } from "@/types/stops.types";
 import { OrderPayload } from "@/types/order.types";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import PDFDocument from "@/components/others/PDFDoc";
 
 export default function PackageOrder(props: OrderPayload) {
   const customer = props;
@@ -11,7 +13,6 @@ export default function PackageOrder(props: OrderPayload) {
 
   const [stops, setStops] = useState<StopsListType>([]);
   const itineraryId = itinerary?.itinerary_ID;
-  console.log("ITINERARY ID TESTTTT: ", itineraryId);
   useEffect(() => {
     // 💡 THE MODIFICATION: Add a check for a defined/truthy itineraryId
     if (itineraryId) {
@@ -74,6 +75,20 @@ export default function PackageOrder(props: OrderPayload) {
           </div>
         </div>
       </div>
+      <PDFDownloadLink
+        document={<PDFDocument {...props} />}
+        fileName="srvan-customitinerary.pdf"
+      >
+        {({ blob, url, loading, error }) =>
+          loading ? (
+            "Loading document..."
+          ) : (
+            <p className="bg-teal-500 rounded-2xl p-1 hover:bg-teal-700 text-white max-w-1/4 font-bold text-center">
+              Download your itinerary!
+            </p>
+          )
+        }
+      </PDFDownloadLink>
     </div>
   );
 }

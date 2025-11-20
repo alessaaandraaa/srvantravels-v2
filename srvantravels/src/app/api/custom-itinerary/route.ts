@@ -23,7 +23,6 @@ export async function POST(req: Request) {
   try {
     // insert to payment
     const newPayment = await paymentService.addPayment(body.payment);
-    console.log("NEW PAYMENT: ", newPayment);
 
     //insert to itinerary
     try {
@@ -31,8 +30,6 @@ export async function POST(req: Request) {
         price: body.itinerary.price,
         type: body.itinerary.type,
       });
-
-      console.log("NEW ITINERARY: ", newItinerary);
 
       //insert to customer
       const base64Data = body.customer.ID_PictureB64.replace(
@@ -62,8 +59,6 @@ export async function POST(req: Request) {
           ID_Picture: relativePath,
         });
 
-        console.log("NEW CUSTOMER: ", newCustomer);
-
         // insert to custom itinerary
         try {
           const newCustomItinerary =
@@ -71,8 +66,6 @@ export async function POST(req: Request) {
               custom_ID: newItinerary.itinerary_ID,
               is_made_by_customer: newCustomer.customer_ID,
             });
-
-          console.log("NEW CUSTOM ITINERARY: ", newCustomItinerary);
 
           const travelDate = new Date(body.customer.date_of_travel);
 
@@ -104,9 +97,6 @@ export async function POST(req: Request) {
               time_for_pickup: pickup,
               time_for_dropoff: dropoff,
             });
-
-            console.log("NEW ORDER: ", newOrder);
-
             // insert into locations
             const locations = body.locations;
             const locIDarr = [];

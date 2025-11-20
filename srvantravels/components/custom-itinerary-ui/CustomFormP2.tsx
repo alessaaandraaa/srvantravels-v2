@@ -42,8 +42,6 @@ export default function CustomFormP2({ user_id }: id) {
   const details = useCustomerDetailsStore((s) => s.customerDetails);
   const params = useParams();
 
-  console.log("USER ID TEST 2: ", user_id);
-
   const toBase64 = (file: File): Promise<string> =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();

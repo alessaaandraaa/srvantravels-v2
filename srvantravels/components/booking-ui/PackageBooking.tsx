@@ -27,8 +27,6 @@ export default function PackageBooking({ package_ID }: { package_ID: number }) {
       .then((json) => setPack(json.packageById));
   }, [package_ID]);
 
-  console.log("PACKAGE ID: ", package_ID);
-
   return (
     <div>
       {pack ? <Packages key={pack.package_ID} {...pack} /> : <p>Loading...</p>}

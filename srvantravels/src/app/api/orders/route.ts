@@ -9,7 +9,6 @@ export async function GET(req: Request) {
     const customerId = searchParams.get("customerId");
 
     const orders = await ordersService.getOrders(Number(customerId));
-    console.log("CUSTOMER'S ORDERS: ", orders);
 
     return NextResponse.json({ orders }, { status: 200 });
   } catch (error) {

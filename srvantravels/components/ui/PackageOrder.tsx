@@ -1,5 +1,11 @@
 import { OrderPayload } from "@/types/order.types";
 import { itinerary_type } from "@prisma/client";
+import { PDFDownloadLink, PDFViewer, StyleSheet } from "@react-pdf/renderer";
+import PDFDocument from "../others/PDFDoc";
+
+const styles = StyleSheet.create({
+  section: { color: "white", textAlign: "center", margin: 30 },
+});
 
 export default function PackageOrder(props: OrderPayload) {
   const customer = props;
@@ -42,6 +48,20 @@ export default function PackageOrder(props: OrderPayload) {
           </p>
         </div>
       </div>
+      <PDFDownloadLink
+        document={<PDFDocument {...props} />}
+        fileName="srvan-packageitinerary.pdf"
+      >
+        {({ blob, url, loading, error }) =>
+          loading ? (
+            "Loading document..."
+          ) : (
+            <p className="bg-teal-500 rounded-2xl p-1 hover:bg-teal-700 text-white max-w-1/4 font-bold text-center">
+              Download your itinerary!
+            </p>
+          )
+        }
+      </PDFDownloadLink>
     </div>
   );
 }

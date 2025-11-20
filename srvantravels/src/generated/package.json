@@ -1,0 +1,11 @@
+{
+  "name": "prisma-client-js-custom",
+  "main": "client.js", 
+  "types": "client.ts", 
+  "exports": {
+    ".": {
+      "types": "./client.ts",
+      "default": "./client.js"
+    }
+  }
+}
