@@ -1,5 +1,5 @@
 import { OrderPayload } from "@/types/order.types";
-import { itinerary_type } from "@prisma/client";
+import { ITINERARY_TYPES } from "@/types/db.types";
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import PackagePDF from "./PackagePDF";
 import CustomPDF from "./CustomPDF";
@@ -12,7 +12,7 @@ export default function PDFDocument(props: OrderPayload) {
         <View>
           <Text style={{ fontSize: 15 }}>YOUR SRVANTRAVELS ITINERARY</Text>
         </View>
-        {itinerary?.type === itinerary_type.PACKAGE ? (
+        {itinerary?.type === ITINERARY_TYPES.PACKAGE ? (
           <PackagePDF {...props} />
         ) : (
           <CustomPDF {...props} />

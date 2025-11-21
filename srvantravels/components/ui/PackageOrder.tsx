@@ -1,5 +1,4 @@
 import { OrderPayload } from "@/types/order.types";
-import { itinerary_type } from "@prisma/client";
 import { PDFDownloadLink, PDFViewer, StyleSheet } from "@react-pdf/renderer";
 import PDFDocument from "../others/PDFDoc";
 
