@@ -4,51 +4,48 @@ import { OrderPayload } from "@/types/order.types";
 import { StopsListType } from "@/types/stops.types";
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import { useEffect, useState } from "react";
-/*
-    <div className="bg-teal-50 border-2 border-teal-900 p-10 rounded-2xl mb-3">
-      <div className="flex items-start gap-5">
-        <h1 className="text-1xl text-cyan-800 font-bold">
-          CUSTOM ITINERARY #{itinerary?.itinerary_ID}
-        </h1>
-        <h3>
-          {" "}
-          <b>Travel Date:</b> {String(customer.date_of_travel)}
-        </h3>
-      </div>
-      <hr />
-      <div className="flex items-start gap-5 mt-3">
-        <div className="min-w-1/2">
-          <h2>
-            <b>Booking Details:</b>
-          </h2>
-          <p>Pickup Time: {String(order_details.time_for_pickup)}</p>
-          <p>Dropoff Time: {String(order_details.time_for_dropoff)}</p>
-          <p>Passengers: {customer.number_of_PAX}</p>
-          <p>Payment Method: {payment.payment_method}</p>
-          <p>Payment Status: {payment.payment_status}</p>
-          <p>Booking Status: {order_details.status}</p>
-        </div>
-        <div>
-          <h2>
-            <b>Itinerary:</b>
-          </h2>
-          <div>
-            {stops.map((stop, index) => (
-              <div
-                className="bg-white border-1 border-teal-950 p-3 mb-3 rounded-2xl"
-                key={index}
-              >
-                <h1>{stop.locations?.location_name}</h1>
-                <p>{stop.locations?.location_address}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-*/
+
+const styles = StyleSheet.create({
+  twoColumnContainer: {
+    flexDirection: "row",
+    width: "100%",
+    marginTop: 20,
+    paddingHorizontal: 20,
+  },
+
+  leftColumn: {
+    flexGrow: 0.4,
+    paddingRight: 10,
+  },
+
+  rightColumn: {
+    flexGrow: 0.6,
+    paddingLeft: 10,
+  },
+
+  itineraryBox: {
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
+    borderRadius: 8,
+    padding: 5,
+    marginBottom: 5,
+    backgroundColor: "#F7FCFF",
+  },
+
+  label: {
+    fontWeight: "bold",
+  },
+
+  headerText: {
+    fontSize: 12,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  detailText: {
+    fontSize: 10,
+    marginBottom: 2,
+  },
+});
 
 export default function CustomPDF(props: OrderPayload) {
   const customer = props;
@@ -75,29 +72,70 @@ export default function CustomPDF(props: OrderPayload) {
           setStops([]);
         });
     }
-    // If itineraryId is undefined, the function inside useEffect is skipped,
   }, [itineraryId]);
+
   return (
-    <View>
-      <View>
-        <Text>CUSTOM ITINERARY #{itinerary?.itinerary_ID}</Text>
-        <Text>Travel Date: {String(customer.date_of_travel)}</Text>
+    <View style={styles.twoColumnContainer}>
+      {/* LEFT COLUMN: Booking Details */}
+      <View style={styles.leftColumn}>
+        {/* Detail Header - Remains bold and large */}
+        <Text style={styles.headerText}>
+          CUSTOM ITINERARY #{order_details.itinerary?.itinerary_ID}
+        </Text>
+
+        {/* Travel Date */}
+        <Text style={styles.headerText}>
+          <Text style={styles.label}>Travel Date:</Text>{" "}
+          {String(customer.date_of_travel)}
+        </Text>
+
+        <View style={{ margin: 3 }}></View>
+
+        {/* Booking Details Section Header */}
+        <Text style={styles.headerText}>Booking Details:</Text>
+
+        {/* 👇 FIX: Use styles.detailText for base style and nested Text for bold label 👇 */}
+
+        <Text style={styles.detailText}>
+          <Text style={styles.label}>Pickup Time:</Text>{" "}
+          {String(order_details.time_for_pickup)}
+        </Text>
+
+        <Text style={styles.detailText}>
+          <Text style={styles.label}>Dropoff Time:</Text>{" "}
+        </Text>
+
+        <Text style={styles.detailText}>
+          <Text style={styles.label}>Passengers:</Text> {customer.number_of_PAX}
+        </Text>
+
+        <Text style={styles.detailText}>
+          <Text style={styles.label}>Payment Method:</Text>{" "}
+          {payment.payment_method}
+        </Text>
+
+        <Text style={styles.detailText}>
+          <Text style={styles.label}>Payment Status:</Text>{" "}
+          {payment.payment_status}
+        </Text>
+
+        <Text style={styles.detailText}>
+          <Text style={styles.label}>Booking Status:</Text>{" "}
+          {order_details.status}
+        </Text>
       </View>
-      <View>
-        <Text>Booking Details:</Text>
-        <Text>Pickup Time: {String(order_details.time_for_pickup)}</Text>
-        <Text>Dropoff Time: {String(order_details.time_for_dropoff)}</Text>
-        <Text>Passengers: {customer.number_of_PAX}</Text>
-        <Text>Payment Method: {payment.payment_method}</Text>
-        <Text>Payment Status: {payment.payment_status}</Text>
-        <Text>Booking Status: {order_details.status}</Text>
-      </View>
-      <View>
-        <Text>ITINERARY STOPS:</Text>
+
+      {/* RIGHT COLUMN: ITINERARY STOPS (Structure remains correct) */}
+      <View style={styles.rightColumn}>
+        <Text style={styles.headerText}>ITINERARY STOPS:</Text>
         {stops.map((stop, index) => (
-          <View key={index}>
-            <Text>{stop.locations?.location_name}</Text>
-            <Text>{stop.locations?.location_address}</Text>
+          <View key={index} style={styles.itineraryBox}>
+            <Text style={styles.detailText}>
+              {stop.locations?.location_name}
+            </Text>
+            <Text style={styles.detailText}>
+              {stop.locations?.location_address}
+            </Text>
           </View>
         ))}
       </View>

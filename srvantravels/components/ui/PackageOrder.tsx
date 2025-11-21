@@ -1,5 +1,5 @@
 import { OrderPayload } from "@/types/order.types";
-import { PDFDownloadLink, PDFViewer, StyleSheet } from "@react-pdf/renderer";
+import { PDFDownloadLink, StyleSheet } from "@react-pdf/renderer";
 import PDFDocument from "../others/PDFDoc";
 
 const styles = StyleSheet.create({
