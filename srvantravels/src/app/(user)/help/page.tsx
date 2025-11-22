@@ -1,4 +1,4 @@
-import HelpPage from "@/components/ui/HelpPage";
+import HelpPage from "@/components/user-ui/HelpPage";
 export default function Help() {
   return <HelpPage />;
 }

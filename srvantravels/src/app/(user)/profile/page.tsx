@@ -1,4 +1,4 @@
-import UserProfile from "@/components/ui/Profile";
+import UserProfile from "@/components/user-ui/Profile";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 

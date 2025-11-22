@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Packages from "../ui/Packages";
+import Packages from "../user-ui/Packages";
 import { usePackageStore } from "@/store/package-itinerary.store";
 import Link from "next/link";
 
