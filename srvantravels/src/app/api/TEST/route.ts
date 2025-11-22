@@ -2,7 +2,6 @@ import { prisma } from "@/lib/db";
 
 export async function GET() {
   const value = "/id-uploads/test.jpg";
-  console.log("Before:", value);
   try {
     await prisma.customer.create({
       data: {

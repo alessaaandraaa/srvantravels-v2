@@ -1,12 +1,12 @@
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import PackageList from "../../components/ui/PackageList";
+import PackageList from "../../../../components/user-ui/PackageList";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
-  console.log(session);
+  console.log("SESSION: ", session);
 
-  if (session?.user) {
+  if (session?.user.name) {
     return (
       <div>
         <PackageList />

@@ -33,10 +33,8 @@ class CustomerService {
     ID_Picture,
   }: Customer) {
     try {
-      console.log("ID PIC: ", ID_Picture);
       const fixedPath = safeDecodeBase64(ID_Picture);
 
-      console.log("Decoded path before insert:", fixedPath);
       const newCustomer = await prisma.customer.create({
         data: {
           customer_ID,

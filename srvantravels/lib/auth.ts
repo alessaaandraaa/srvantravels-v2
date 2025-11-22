@@ -41,7 +41,6 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        console.log("User success");
         return {
           id: user.person_ID + "",
           name: user.name ?? "",
@@ -54,6 +53,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        token.id = user.id;
         return {
           ...token,
           name: user.name,
@@ -64,10 +64,12 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
+      console.log(session);
       return {
         ...session,
         user: {
           ...session.user,
+          id: token.id ?? token.sub,
           name: token.name,
           email: token.email,
           contact_number: token.contact_number,
