@@ -1,8 +1,15 @@
-"use client"
+"use client";
 
-import { Actives, Inactives, TotalItineraries } from "@/app/components/ui/Admin/AdminItinerary/AdminViewItineraryKPIS";
-import { DataTable } from "@/app/components/ui/Admin/AdminItinerary/data-table";
-import { getColumns, packageItinerary } from "../../../components/ui/Admin/AdminItinerary/columns"
+import {
+  Actives,
+  Inactives,
+  TotalItineraries,
+} from "@/src/app/components/ui/Admin/AdminItinerary/AdminViewItineraryKPIS";
+import { DataTable } from "@/src/app/components/ui/Admin/AdminItinerary/data-table";
+import {
+  getColumns,
+  packageItinerary,
+} from "../../../components/ui/Admin/AdminItinerary/columns";
 
 export const packageItineraries: packageItinerary[] = [
   {
@@ -77,24 +84,23 @@ export const packageItineraries: packageItinerary[] = [
   },
 ];
 
-
 const page = () => {
-    return (
-         <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4">
-            <div className="bg-primary-foreground rounded-lg">
-                <TotalItineraries/>
-            </div>
-            <div className="bg-primary-foreground rounded-lg">
-                <Actives/>
-            </div>
-            <div className="bg-primary-foreground rounded-lg">
-                <Inactives/>
-            </div>
-            <div className="bg-primary-foreground rounded-lg col-span-3 p-4">   
-                <DataTable columns={getColumns()} data={packageItineraries}/>
-            </div>
-         </div>
-    )
-}
+  return (
+    <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4">
+      <div className="bg-primary-foreground rounded-lg">
+        <TotalItineraries />
+      </div>
+      <div className="bg-primary-foreground rounded-lg">
+        <Actives />
+      </div>
+      <div className="bg-primary-foreground rounded-lg">
+        <Inactives />
+      </div>
+      <div className="bg-primary-foreground rounded-lg col-span-3 p-4">
+        <DataTable columns={getColumns()} data={packageItineraries} />
+      </div>
+    </div>
+  );
+};
 
 export default page;
