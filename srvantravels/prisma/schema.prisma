@@ -176,34 +176,7 @@ model Van {
   @@map("van")
 }
 
-<<<<<<< HEAD
-model Message {
-  message_ID   Int      @id @default(autoincrement())
-  sender_ID    Int
-  receiver_ID  Int
-  subject      String?   @db.VarChar(255)
-  content      String    @db.VarChar(2048)
-  isRead       Boolean   @default(false)
-  createdAt    DateTime  @default(now())
-
-  sender   Person  @relation("SentMessages", fields: [sender_ID], references: [person_ID], onDelete: Cascade)
-  receiver Person  @relation("ReceivedMessages", fields: [receiver_ID], references: [person_ID], onDelete: Cascade)
-
-  @@index([sender_ID], map: "sender_ID")
-  @@index([receiver_ID], map: "receiver_ID")
-}
-
-
-
-enum Payment_payment_method {
-  CASH
-  GCASH
-}
-
-enum Itinerary_type {
-=======
 enum itinerary_type {
->>>>>>> 42104827b14aad75578a243e0c4c746525ec6e65
   PACKAGE
   CUSTOM
 }
