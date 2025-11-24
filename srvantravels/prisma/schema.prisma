@@ -9,10 +9,10 @@ datasource db {
 }
 
 model Custom_Itinerary {
-  custom_ID           Int               @id @default(autoincrement())
+  custom_ID           Int               @id
   is_made_by_customer Int?
-  Itinerary           Itinerary         @relation(fields: [custom_ID], references: [itinerary_ID], onDelete: NoAction, onUpdate: NoAction, map: "Custom_Itinerary_ibfk_1")
-  Person              Person?           @relation(fields: [is_made_by_customer], references: [person_ID], onDelete: NoAction, onUpdate: NoAction, map: "Custom_Itinerary_ibfk_2")
+  Itinerary           Itinerary         @relation(fields: [custom_ID], references: [itinerary_ID], onUpdate: Restrict, map: "Custom_Itinerary_ibfk_1")
+  Person              Person?           @relation(fields: [is_made_by_customer], references: [person_ID], onDelete: Restrict, onUpdate: Restrict, map: "Custom_Itinerary_ibfk_2")
   Itinerary_Stops     Itinerary_Stops[]
 
   @@index([is_made_by_customer], map: "is_made_by_customer")
@@ -123,17 +123,18 @@ model Order_Details {
 }
 
 model Package_Itinerary {
-  package_ID         Int       @id @default(autoincrement())
-  package_name       String?   @db.VarChar(255)
-  inclusions         String?   @db.VarChar(1024)
-  number_of_PAX      Int?
-  route              String?   @db.VarChar(1024)
-  description        String?   @db.VarChar(1024)
-  is_made_by_manager Int?
-  is_available       Boolean?  @default(false)
-  package_picture    String?   @db.VarChar(255)
-  itinerary          Itinerary @relation(fields: [package_ID], references: [itinerary_ID], onUpdate: Restrict, map: "package_itinerary_ibfk_1")
-  manager            Manager?  @relation(fields: [is_made_by_manager], references: [manager_ID], onDelete: Restrict, onUpdate: Restrict, map: "package_itinerary_ibfk_2")
+  package_ID            Int                     @id @default(autoincrement())
+  package_name          String?                 @db.VarChar(255)
+  inclusions            String?                 @db.VarChar(1024)
+  number_of_PAX         Int?
+  route                 String?                 @db.VarChar(1024)
+  description           String?                 @db.VarChar(1024)
+  is_made_by_manager    Int?
+  is_available          Boolean?                @default(false)
+  package_picture       String?                 @db.VarChar(255)
+  itinerary             Itinerary               @relation(fields: [package_ID], references: [itinerary_ID], onUpdate: Restrict, map: "package_itinerary_ibfk_1")
+  manager               Manager?                @relation(fields: [is_made_by_manager], references: [manager_ID], onDelete: Restrict, onUpdate: Restrict, map: "package_itinerary_ibfk_2")
+  package_itinerary_tag package_itinerary_tag[]
 
   @@index([is_made_by_manager], map: "is_made_by_manager")
   @@map("package_itinerary")
@@ -174,6 +175,24 @@ model Van {
   @@index([customer_ID, payment_ID], map: "customer_ID")
   @@index([driver_ID], map: "driver_ID")
   @@map("van")
+}
+
+model tag {
+  tag_ID                Int                     @id @default(autoincrement())
+  name                  String                  @unique @db.VarChar(255)
+  color                 String                  @db.VarChar(255)
+  package_itinerary_tag package_itinerary_tag[]
+}
+
+model package_itinerary_tag {
+  package_itinerary_tag_ID Int               @id @default(autoincrement())
+  package_ID               Int
+  tag_ID                   Int
+  package_itinerary        Package_Itinerary @relation(fields: [package_ID], references: [package_ID])
+  tag                      tag               @relation(fields: [tag_ID], references: [tag_ID])
+
+  @@index([package_ID])
+  @@index([tag_ID])
 }
 
 enum itinerary_type {

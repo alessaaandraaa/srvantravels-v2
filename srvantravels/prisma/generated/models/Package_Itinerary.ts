@@ -258,6 +258,7 @@ export type Package_ItineraryWhereInput = {
   package_picture?: Prisma.StringNullableFilter<"Package_Itinerary"> | string | null
   itinerary?: Prisma.XOR<Prisma.ItineraryScalarRelationFilter, Prisma.ItineraryWhereInput>
   manager?: Prisma.XOR<Prisma.ManagerNullableScalarRelationFilter, Prisma.ManagerWhereInput> | null
+  package_itinerary_tag?: Prisma.Package_itinerary_tagListRelationFilter
 }
 
 export type Package_ItineraryOrderByWithRelationInput = {
@@ -272,6 +273,7 @@ export type Package_ItineraryOrderByWithRelationInput = {
   package_picture?: Prisma.SortOrderInput | Prisma.SortOrder
   itinerary?: Prisma.ItineraryOrderByWithRelationInput
   manager?: Prisma.ManagerOrderByWithRelationInput
+  package_itinerary_tag?: Prisma.package_itinerary_tagOrderByRelationAggregateInput
   _relevance?: Prisma.Package_ItineraryOrderByRelevanceInput
 }
 
@@ -290,6 +292,7 @@ export type Package_ItineraryWhereUniqueInput = Prisma.AtLeast<{
   package_picture?: Prisma.StringNullableFilter<"Package_Itinerary"> | string | null
   itinerary?: Prisma.XOR<Prisma.ItineraryScalarRelationFilter, Prisma.ItineraryWhereInput>
   manager?: Prisma.XOR<Prisma.ManagerNullableScalarRelationFilter, Prisma.ManagerWhereInput> | null
+  package_itinerary_tag?: Prisma.Package_itinerary_tagListRelationFilter
 }, "package_ID">
 
 export type Package_ItineraryOrderByWithAggregationInput = {
@@ -334,6 +337,7 @@ export type Package_ItineraryCreateInput = {
   package_picture?: string | null
   itinerary?: Prisma.ItineraryCreateNestedOneWithoutPackage_itineraryInput
   manager?: Prisma.ManagerCreateNestedOneWithoutPackage_itineraryInput
+  package_itinerary_tag?: Prisma.package_itinerary_tagCreateNestedManyWithoutPackage_itineraryInput
 }
 
 export type Package_ItineraryUncheckedCreateInput = {
@@ -346,6 +350,7 @@ export type Package_ItineraryUncheckedCreateInput = {
   is_made_by_manager?: number | null
   is_available?: boolean | null
   package_picture?: string | null
+  package_itinerary_tag?: Prisma.package_itinerary_tagUncheckedCreateNestedManyWithoutPackage_itineraryInput
 }
 
 export type Package_ItineraryUpdateInput = {
@@ -358,6 +363,7 @@ export type Package_ItineraryUpdateInput = {
   package_picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itinerary?: Prisma.ItineraryUpdateOneRequiredWithoutPackage_itineraryNestedInput
   manager?: Prisma.ManagerUpdateOneWithoutPackage_itineraryNestedInput
+  package_itinerary_tag?: Prisma.package_itinerary_tagUpdateManyWithoutPackage_itineraryNestedInput
 }
 
 export type Package_ItineraryUncheckedUpdateInput = {
@@ -370,6 +376,7 @@ export type Package_ItineraryUncheckedUpdateInput = {
   is_made_by_manager?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   is_available?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   package_picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  package_itinerary_tag?: Prisma.package_itinerary_tagUncheckedUpdateManyWithoutPackage_itineraryNestedInput
 }
 
 export type Package_ItineraryCreateManyInput = {
@@ -475,6 +482,11 @@ export type Package_ItinerarySumOrderByAggregateInput = {
   is_made_by_manager?: Prisma.SortOrder
 }
 
+export type Package_ItineraryScalarRelationFilter = {
+  is?: Prisma.Package_ItineraryWhereInput
+  isNot?: Prisma.Package_ItineraryWhereInput
+}
+
 export type Package_ItineraryCreateNestedOneWithoutItineraryInput = {
   create?: Prisma.XOR<Prisma.Package_ItineraryCreateWithoutItineraryInput, Prisma.Package_ItineraryUncheckedCreateWithoutItineraryInput>
   connectOrCreate?: Prisma.Package_ItineraryCreateOrConnectWithoutItineraryInput
@@ -549,6 +561,20 @@ export type Package_ItineraryUncheckedUpdateManyWithoutManagerNestedInput = {
   deleteMany?: Prisma.Package_ItineraryScalarWhereInput | Prisma.Package_ItineraryScalarWhereInput[]
 }
 
+export type Package_ItineraryCreateNestedOneWithoutPackage_itinerary_tagInput = {
+  create?: Prisma.XOR<Prisma.Package_ItineraryCreateWithoutPackage_itinerary_tagInput, Prisma.Package_ItineraryUncheckedCreateWithoutPackage_itinerary_tagInput>
+  connectOrCreate?: Prisma.Package_ItineraryCreateOrConnectWithoutPackage_itinerary_tagInput
+  connect?: Prisma.Package_ItineraryWhereUniqueInput
+}
+
+export type Package_ItineraryUpdateOneRequiredWithoutPackage_itinerary_tagNestedInput = {
+  create?: Prisma.XOR<Prisma.Package_ItineraryCreateWithoutPackage_itinerary_tagInput, Prisma.Package_ItineraryUncheckedCreateWithoutPackage_itinerary_tagInput>
+  connectOrCreate?: Prisma.Package_ItineraryCreateOrConnectWithoutPackage_itinerary_tagInput
+  upsert?: Prisma.Package_ItineraryUpsertWithoutPackage_itinerary_tagInput
+  connect?: Prisma.Package_ItineraryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.Package_ItineraryUpdateToOneWithWhereWithoutPackage_itinerary_tagInput, Prisma.Package_ItineraryUpdateWithoutPackage_itinerary_tagInput>, Prisma.Package_ItineraryUncheckedUpdateWithoutPackage_itinerary_tagInput>
+}
+
 export type Package_ItineraryCreateWithoutItineraryInput = {
   package_name?: string | null
   inclusions?: string | null
@@ -558,6 +584,7 @@ export type Package_ItineraryCreateWithoutItineraryInput = {
   is_available?: boolean | null
   package_picture?: string | null
   manager?: Prisma.ManagerCreateNestedOneWithoutPackage_itineraryInput
+  package_itinerary_tag?: Prisma.package_itinerary_tagCreateNestedManyWithoutPackage_itineraryInput
 }
 
 export type Package_ItineraryUncheckedCreateWithoutItineraryInput = {
@@ -569,6 +596,7 @@ export type Package_ItineraryUncheckedCreateWithoutItineraryInput = {
   is_made_by_manager?: number | null
   is_available?: boolean | null
   package_picture?: string | null
+  package_itinerary_tag?: Prisma.package_itinerary_tagUncheckedCreateNestedManyWithoutPackage_itineraryInput
 }
 
 export type Package_ItineraryCreateOrConnectWithoutItineraryInput = {
@@ -596,6 +624,7 @@ export type Package_ItineraryUpdateWithoutItineraryInput = {
   is_available?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   package_picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   manager?: Prisma.ManagerUpdateOneWithoutPackage_itineraryNestedInput
+  package_itinerary_tag?: Prisma.package_itinerary_tagUpdateManyWithoutPackage_itineraryNestedInput
 }
 
 export type Package_ItineraryUncheckedUpdateWithoutItineraryInput = {
@@ -607,6 +636,7 @@ export type Package_ItineraryUncheckedUpdateWithoutItineraryInput = {
   is_made_by_manager?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   is_available?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   package_picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  package_itinerary_tag?: Prisma.package_itinerary_tagUncheckedUpdateManyWithoutPackage_itineraryNestedInput
 }
 
 export type Package_ItineraryCreateWithoutManagerInput = {
@@ -618,6 +648,7 @@ export type Package_ItineraryCreateWithoutManagerInput = {
   is_available?: boolean | null
   package_picture?: string | null
   itinerary?: Prisma.ItineraryCreateNestedOneWithoutPackage_itineraryInput
+  package_itinerary_tag?: Prisma.package_itinerary_tagCreateNestedManyWithoutPackage_itineraryInput
 }
 
 export type Package_ItineraryUncheckedCreateWithoutManagerInput = {
@@ -629,6 +660,7 @@ export type Package_ItineraryUncheckedCreateWithoutManagerInput = {
   description?: string | null
   is_available?: boolean | null
   package_picture?: string | null
+  package_itinerary_tag?: Prisma.package_itinerary_tagUncheckedCreateNestedManyWithoutPackage_itineraryInput
 }
 
 export type Package_ItineraryCreateOrConnectWithoutManagerInput = {
@@ -672,6 +704,70 @@ export type Package_ItineraryScalarWhereInput = {
   package_picture?: Prisma.StringNullableFilter<"Package_Itinerary"> | string | null
 }
 
+export type Package_ItineraryCreateWithoutPackage_itinerary_tagInput = {
+  package_name?: string | null
+  inclusions?: string | null
+  number_of_PAX?: number | null
+  route?: string | null
+  description?: string | null
+  is_available?: boolean | null
+  package_picture?: string | null
+  itinerary?: Prisma.ItineraryCreateNestedOneWithoutPackage_itineraryInput
+  manager?: Prisma.ManagerCreateNestedOneWithoutPackage_itineraryInput
+}
+
+export type Package_ItineraryUncheckedCreateWithoutPackage_itinerary_tagInput = {
+  package_ID?: number
+  package_name?: string | null
+  inclusions?: string | null
+  number_of_PAX?: number | null
+  route?: string | null
+  description?: string | null
+  is_made_by_manager?: number | null
+  is_available?: boolean | null
+  package_picture?: string | null
+}
+
+export type Package_ItineraryCreateOrConnectWithoutPackage_itinerary_tagInput = {
+  where: Prisma.Package_ItineraryWhereUniqueInput
+  create: Prisma.XOR<Prisma.Package_ItineraryCreateWithoutPackage_itinerary_tagInput, Prisma.Package_ItineraryUncheckedCreateWithoutPackage_itinerary_tagInput>
+}
+
+export type Package_ItineraryUpsertWithoutPackage_itinerary_tagInput = {
+  update: Prisma.XOR<Prisma.Package_ItineraryUpdateWithoutPackage_itinerary_tagInput, Prisma.Package_ItineraryUncheckedUpdateWithoutPackage_itinerary_tagInput>
+  create: Prisma.XOR<Prisma.Package_ItineraryCreateWithoutPackage_itinerary_tagInput, Prisma.Package_ItineraryUncheckedCreateWithoutPackage_itinerary_tagInput>
+  where?: Prisma.Package_ItineraryWhereInput
+}
+
+export type Package_ItineraryUpdateToOneWithWhereWithoutPackage_itinerary_tagInput = {
+  where?: Prisma.Package_ItineraryWhereInput
+  data: Prisma.XOR<Prisma.Package_ItineraryUpdateWithoutPackage_itinerary_tagInput, Prisma.Package_ItineraryUncheckedUpdateWithoutPackage_itinerary_tagInput>
+}
+
+export type Package_ItineraryUpdateWithoutPackage_itinerary_tagInput = {
+  package_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inclusions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  number_of_PAX?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  route?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_available?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  package_picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itinerary?: Prisma.ItineraryUpdateOneRequiredWithoutPackage_itineraryNestedInput
+  manager?: Prisma.ManagerUpdateOneWithoutPackage_itineraryNestedInput
+}
+
+export type Package_ItineraryUncheckedUpdateWithoutPackage_itinerary_tagInput = {
+  package_ID?: Prisma.IntFieldUpdateOperationsInput | number
+  package_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inclusions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  number_of_PAX?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  route?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_made_by_manager?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  is_available?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  package_picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
 export type Package_ItineraryCreateManyManagerInput = {
   package_ID?: number
   package_name?: string | null
@@ -692,6 +788,7 @@ export type Package_ItineraryUpdateWithoutManagerInput = {
   is_available?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   package_picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itinerary?: Prisma.ItineraryUpdateOneRequiredWithoutPackage_itineraryNestedInput
+  package_itinerary_tag?: Prisma.package_itinerary_tagUpdateManyWithoutPackage_itineraryNestedInput
 }
 
 export type Package_ItineraryUncheckedUpdateWithoutManagerInput = {
@@ -703,6 +800,7 @@ export type Package_ItineraryUncheckedUpdateWithoutManagerInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_available?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   package_picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  package_itinerary_tag?: Prisma.package_itinerary_tagUncheckedUpdateManyWithoutPackage_itineraryNestedInput
 }
 
 export type Package_ItineraryUncheckedUpdateManyWithoutManagerInput = {
@@ -717,6 +815,35 @@ export type Package_ItineraryUncheckedUpdateManyWithoutManagerInput = {
 }
 
 
+/**
+ * Count Type Package_ItineraryCountOutputType
+ */
+
+export type Package_ItineraryCountOutputType = {
+  package_itinerary_tag: number
+}
+
+export type Package_ItineraryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  package_itinerary_tag?: boolean | Package_ItineraryCountOutputTypeCountPackage_itinerary_tagArgs
+}
+
+/**
+ * Package_ItineraryCountOutputType without action
+ */
+export type Package_ItineraryCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Package_ItineraryCountOutputType
+   */
+  select?: Prisma.Package_ItineraryCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * Package_ItineraryCountOutputType without action
+ */
+export type Package_ItineraryCountOutputTypeCountPackage_itinerary_tagArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.package_itinerary_tagWhereInput
+}
+
 
 export type Package_ItinerarySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   package_ID?: boolean
@@ -730,6 +857,8 @@ export type Package_ItinerarySelect<ExtArgs extends runtime.Types.Extensions.Int
   package_picture?: boolean
   itinerary?: boolean | Prisma.ItineraryDefaultArgs<ExtArgs>
   manager?: boolean | Prisma.Package_Itinerary$managerArgs<ExtArgs>
+  package_itinerary_tag?: boolean | Prisma.Package_Itinerary$package_itinerary_tagArgs<ExtArgs>
+  _count?: boolean | Prisma.Package_ItineraryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["package_Itinerary"]>
 
 
@@ -750,6 +879,8 @@ export type Package_ItineraryOmit<ExtArgs extends runtime.Types.Extensions.Inter
 export type Package_ItineraryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   itinerary?: boolean | Prisma.ItineraryDefaultArgs<ExtArgs>
   manager?: boolean | Prisma.Package_Itinerary$managerArgs<ExtArgs>
+  package_itinerary_tag?: boolean | Prisma.Package_Itinerary$package_itinerary_tagArgs<ExtArgs>
+  _count?: boolean | Prisma.Package_ItineraryCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $Package_ItineraryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -757,6 +888,7 @@ export type $Package_ItineraryPayload<ExtArgs extends runtime.Types.Extensions.I
   objects: {
     itinerary: Prisma.$ItineraryPayload<ExtArgs>
     manager: Prisma.$ManagerPayload<ExtArgs> | null
+    package_itinerary_tag: Prisma.$package_itinerary_tagPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     package_ID: number
@@ -1110,6 +1242,7 @@ export interface Prisma__Package_ItineraryClient<T, Null = never, ExtArgs extend
   readonly [Symbol.toStringTag]: "PrismaPromise"
   itinerary<T extends Prisma.ItineraryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ItineraryDefaultArgs<ExtArgs>>): Prisma.Prisma__ItineraryClient<runtime.Types.Result.GetResult<Prisma.$ItineraryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   manager<T extends Prisma.Package_Itinerary$managerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Package_Itinerary$managerArgs<ExtArgs>>): Prisma.Prisma__ManagerClient<runtime.Types.Result.GetResult<Prisma.$ManagerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  package_itinerary_tag<T extends Prisma.Package_Itinerary$package_itinerary_tagArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Package_Itinerary$package_itinerary_tagArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$package_itinerary_tagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1507,6 +1640,30 @@ export type Package_Itinerary$managerArgs<ExtArgs extends runtime.Types.Extensio
    */
   include?: Prisma.ManagerInclude<ExtArgs> | null
   where?: Prisma.ManagerWhereInput
+}
+
+/**
+ * Package_Itinerary.package_itinerary_tag
+ */
+export type Package_Itinerary$package_itinerary_tagArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the package_itinerary_tag
+   */
+  select?: Prisma.package_itinerary_tagSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the package_itinerary_tag
+   */
+  omit?: Prisma.package_itinerary_tagOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.package_itinerary_tagInclude<ExtArgs> | null
+  where?: Prisma.package_itinerary_tagWhereInput
+  orderBy?: Prisma.package_itinerary_tagOrderByWithRelationInput | Prisma.package_itinerary_tagOrderByWithRelationInput[]
+  cursor?: Prisma.package_itinerary_tagWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Package_itinerary_tagScalarFieldEnum | Prisma.Package_itinerary_tagScalarFieldEnum[]
 }
 
 /**

@@ -15,20 +15,16 @@ export default function UserProfile({
   customer_id,
   session,
 }: userProfileProps) {
-  // 1. State for visibility and local override
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [contactAdded, setContactAdded] = useState(false);
 
-  // 2. Check server session
   const serverHasContact = !!session?.user?.contact_number;
 
-  // 3. Logic: Show button only if server doesn't have it AND we haven't just added it
   const shouldShowButton = !serverHasContact && !contactAdded;
 
-  // 4. 🎯 FIX: A wrapper function to handle BOTH actions (Update UI + Close Dialog)
   const handleDialogSuccess = () => {
-    setContactAdded(true); // Hide the button
-    setIsDialogOpen(false); // Close the dialog
+    setContactAdded(true);
+    setIsDialogOpen(false);
   };
 
   return (
@@ -40,7 +36,6 @@ export default function UserProfile({
           </h1>
         </div>
 
-        {/* 5. Render Button if needed */}
         {shouldShowButton && (
           <button
             onClick={() => setIsDialogOpen(true)}
@@ -50,12 +45,10 @@ export default function UserProfile({
           </button>
         )}
 
-        {/* 6. Render Dialog controlled by 'isDialogOpen' */}
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogContent>
             <ContactDialog
               customer_id={customer_id}
-              // 🎯 FIX: Pass the wrapper function, not the state setter
               onSuccess={handleDialogSuccess}
             />
           </DialogContent>

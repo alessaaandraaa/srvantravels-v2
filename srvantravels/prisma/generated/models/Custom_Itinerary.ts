@@ -239,13 +239,13 @@ export type Custom_ItineraryScalarWhereWithAggregatesInput = {
 }
 
 export type Custom_ItineraryCreateInput = {
-  Itinerary?: Prisma.ItineraryCreateNestedOneWithoutCustom_itineraryInput
+  Itinerary: Prisma.ItineraryCreateNestedOneWithoutCustom_itineraryInput
   Person?: Prisma.PersonCreateNestedOneWithoutCustom_itineraryInput
   Itinerary_Stops?: Prisma.Itinerary_StopsCreateNestedManyWithoutCustom_itineraryInput
 }
 
 export type Custom_ItineraryUncheckedCreateInput = {
-  custom_ID?: number
+  custom_ID: number
   is_made_by_customer?: number | null
   Itinerary_Stops?: Prisma.Itinerary_StopsUncheckedCreateNestedManyWithoutCustom_itineraryInput
 }
@@ -263,7 +263,7 @@ export type Custom_ItineraryUncheckedUpdateInput = {
 }
 
 export type Custom_ItineraryCreateManyInput = {
-  custom_ID?: number
+  custom_ID: number
   is_made_by_customer?: number | null
 }
 
@@ -459,12 +459,12 @@ export type Custom_ItineraryUncheckedUpdateWithoutItineraryInput = {
 }
 
 export type Custom_ItineraryCreateWithoutItinerary_StopsInput = {
-  Itinerary?: Prisma.ItineraryCreateNestedOneWithoutCustom_itineraryInput
+  Itinerary: Prisma.ItineraryCreateNestedOneWithoutCustom_itineraryInput
   Person?: Prisma.PersonCreateNestedOneWithoutCustom_itineraryInput
 }
 
 export type Custom_ItineraryUncheckedCreateWithoutItinerary_StopsInput = {
-  custom_ID?: number
+  custom_ID: number
   is_made_by_customer?: number | null
 }
 
@@ -495,12 +495,12 @@ export type Custom_ItineraryUncheckedUpdateWithoutItinerary_StopsInput = {
 }
 
 export type Custom_ItineraryCreateWithoutPersonInput = {
-  Itinerary?: Prisma.ItineraryCreateNestedOneWithoutCustom_itineraryInput
+  Itinerary: Prisma.ItineraryCreateNestedOneWithoutCustom_itineraryInput
   Itinerary_Stops?: Prisma.Itinerary_StopsCreateNestedManyWithoutCustom_itineraryInput
 }
 
 export type Custom_ItineraryUncheckedCreateWithoutPersonInput = {
-  custom_ID?: number
+  custom_ID: number
   Itinerary_Stops?: Prisma.Itinerary_StopsUncheckedCreateNestedManyWithoutCustom_itineraryInput
 }
 
@@ -539,7 +539,7 @@ export type Custom_ItineraryScalarWhereInput = {
 }
 
 export type Custom_ItineraryCreateManyPersonInput = {
-  custom_ID?: number
+  custom_ID: number
 }
 
 export type Custom_ItineraryUpdateWithoutPersonInput = {

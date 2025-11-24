@@ -82,3 +82,13 @@ export type Person = Prisma.PersonModel
  * 
  */
 export type Van = Prisma.VanModel
+/**
+ * Model tag
+ * 
+ */
+export type tag = Prisma.tagModel
+/**
+ * Model package_itinerary_tag
+ * 
+ */
+export type package_itinerary_tag = Prisma.package_itinerary_tagModel

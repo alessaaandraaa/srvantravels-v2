@@ -6,8 +6,8 @@ import {
   AdvancedMarker,
   MapMouseEvent,
 } from "@vis.gl/react-google-maps";
-import AdminForm from "@/src/app/components/ui/Admin/AdminLocations/AdminForm";
-import { useState } from "react";
+
+import { isInCebuPH } from "@/lib/map-helpers";
 import Search from "./search";
 
 const center = { lat: 10.2926, lng: 123.9022 };
@@ -27,44 +27,6 @@ interface AdminMapProps {
 type GComp =
   | google.maps.GeocoderAddressComponent
   | google.maps.places.AddressComponent;
-function isPlaceComp(c: GComp): c is google.maps.places.AddressComponent {
-  return "longText" in c;
-}
-function isGeocoderComp(c: GComp): c is google.maps.GeocoderAddressComponent {
-  return "long_name" in c;
-}
-function compHasType(c: GComp, type: string) {
-  return Array.isArray(c.types) && c.types.includes(type);
-}
-function getLong(c?: GComp) {
-  if (!c) return undefined;
-  return isPlaceComp(c)
-    ? c.longText
-    : isGeocoderComp(c)
-    ? c.long_name
-    : undefined;
-}
-function getShort(c?: GComp) {
-  if (!c) return undefined;
-  return isPlaceComp(c)
-    ? c.shortText
-    : isGeocoderComp(c)
-    ? c.short_name
-    : undefined;
-}
-function getComp(comps: GComp[] | undefined, type: string): GComp | undefined {
-  return comps?.find((c) => compHasType(c, type));
-}
-function isInCebuPH(comps: GComp[] | undefined): boolean {
-  const countryShort = getShort(getComp(comps, "country")); // "PH"
-  const provLong = getLong(getComp(comps, "administrative_area_level_2")); // "Cebu"
-  const cityLong = getLong(getComp(comps, "locality")); // "Cebu City"
-  return (
-    countryShort === "PH" &&
-    ((provLong ?? "").toLowerCase() === "cebu" ||
-      (cityLong ?? "").toLowerCase() === "cebu city")
-  );
-}
 
 export default function AdminMap({
   onMarkerSelect,

@@ -396,7 +396,9 @@ export const ModelName = {
   Package_Itinerary: 'Package_Itinerary',
   Payment: 'Payment',
   Person: 'Person',
-  Van: 'Van'
+  Van: 'Van',
+  tag: 'tag',
+  package_itinerary_tag: 'package_itinerary_tag'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -412,7 +414,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "custom_Itinerary" | "customer" | "driver" | "employee" | "itinerary" | "itinerary_Stops" | "locations" | "manager" | "order_Details" | "package_Itinerary" | "payment" | "person" | "van"
+    modelProps: "custom_Itinerary" | "customer" | "driver" | "employee" | "itinerary" | "itinerary_Stops" | "locations" | "manager" | "order_Details" | "package_Itinerary" | "payment" | "person" | "van" | "tag" | "package_itinerary_tag"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1274,6 +1276,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    tag: {
+      payload: Prisma.$tagPayload<ExtArgs>
+      fields: Prisma.tagFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.tagFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tagPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.tagFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tagPayload>
+        }
+        findFirst: {
+          args: Prisma.tagFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tagPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.tagFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tagPayload>
+        }
+        findMany: {
+          args: Prisma.tagFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tagPayload>[]
+        }
+        create: {
+          args: Prisma.tagCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tagPayload>
+        }
+        createMany: {
+          args: Prisma.tagCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.tagDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tagPayload>
+        }
+        update: {
+          args: Prisma.tagUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tagPayload>
+        }
+        deleteMany: {
+          args: Prisma.tagDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.tagUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.tagUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$tagPayload>
+        }
+        aggregate: {
+          args: Prisma.TagAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTag>
+        }
+        groupBy: {
+          args: Prisma.tagGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TagGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.tagCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TagCountAggregateOutputType> | number
+        }
+      }
+    }
+    package_itinerary_tag: {
+      payload: Prisma.$package_itinerary_tagPayload<ExtArgs>
+      fields: Prisma.package_itinerary_tagFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.package_itinerary_tagFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$package_itinerary_tagPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.package_itinerary_tagFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$package_itinerary_tagPayload>
+        }
+        findFirst: {
+          args: Prisma.package_itinerary_tagFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$package_itinerary_tagPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.package_itinerary_tagFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$package_itinerary_tagPayload>
+        }
+        findMany: {
+          args: Prisma.package_itinerary_tagFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$package_itinerary_tagPayload>[]
+        }
+        create: {
+          args: Prisma.package_itinerary_tagCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$package_itinerary_tagPayload>
+        }
+        createMany: {
+          args: Prisma.package_itinerary_tagCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.package_itinerary_tagDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$package_itinerary_tagPayload>
+        }
+        update: {
+          args: Prisma.package_itinerary_tagUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$package_itinerary_tagPayload>
+        }
+        deleteMany: {
+          args: Prisma.package_itinerary_tagDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.package_itinerary_tagUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.package_itinerary_tagUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$package_itinerary_tagPayload>
+        }
+        aggregate: {
+          args: Prisma.Package_itinerary_tagAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePackage_itinerary_tag>
+        }
+        groupBy: {
+          args: Prisma.package_itinerary_tagGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Package_itinerary_tagGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.package_itinerary_tagCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Package_itinerary_tagCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1451,6 +1585,24 @@ export const VanScalarFieldEnum = {
 export type VanScalarFieldEnum = (typeof VanScalarFieldEnum)[keyof typeof VanScalarFieldEnum]
 
 
+export const TagScalarFieldEnum = {
+  tag_ID: 'tag_ID',
+  name: 'name',
+  color: 'color'
+} as const
+
+export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum]
+
+
+export const Package_itinerary_tagScalarFieldEnum = {
+  package_itinerary_tag_ID: 'package_itinerary_tag_ID',
+  package_ID: 'package_ID',
+  tag_ID: 'tag_ID'
+} as const
+
+export type Package_itinerary_tagScalarFieldEnum = (typeof Package_itinerary_tagScalarFieldEnum)[keyof typeof Package_itinerary_tagScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1515,6 +1667,14 @@ export const VanOrderByRelevanceFieldEnum = {
 } as const
 
 export type VanOrderByRelevanceFieldEnum = (typeof VanOrderByRelevanceFieldEnum)[keyof typeof VanOrderByRelevanceFieldEnum]
+
+
+export const tagOrderByRelevanceFieldEnum = {
+  name: 'name',
+  color: 'color'
+} as const
+
+export type tagOrderByRelevanceFieldEnum = (typeof tagOrderByRelevanceFieldEnum)[keyof typeof tagOrderByRelevanceFieldEnum]
 
 
 
@@ -1684,6 +1844,8 @@ export type GlobalOmitConfig = {
   payment?: Prisma.PaymentOmit
   person?: Prisma.PersonOmit
   van?: Prisma.VanOmit
+  tag?: Prisma.tagOmit
+  package_itinerary_tag?: Prisma.package_itinerary_tagOmit
 }
 
 /* Types for Logging */
