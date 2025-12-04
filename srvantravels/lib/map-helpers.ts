@@ -1,46 +1,44 @@
-import { MarkerData as ListMarkerData } from "@/components/map/locations";
+import { MarkerData } from "@/components/map/locations";
 
-type Place = {
-  name: string;
-  address: string;
-  lat: number;
-  lng: number;
-};
-
-type MarkerData = ListMarkerData;
-
+// Helper types
 type GComp =
   | google.maps.GeocoderAddressComponent
   | google.maps.places.AddressComponent;
 
-function uid() {
+export function uid() {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto)
     return crypto.randomUUID();
   return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 }
 
-function rotateTo<T>(arr: T[], i: number): T[] {
+export function rotateTo<T>(arr: T[], i: number): T[] {
   if (i <= 0) return arr.slice();
   return arr.slice(i).concat(arr.slice(0, i));
 }
 
-function summarizeDirections(res: google.maps.DirectionsResult) {
+export function summarizeDirections(res: google.maps.DirectionsResult) {
   const legs = res.routes[0]?.legs ?? [];
   const meters = legs.reduce((a, l) => a + (l.distance?.value ?? 0), 0);
   const secs = legs.reduce(
     (a, l) => a + (l.duration_in_traffic?.value ?? l.duration?.value ?? 0),
     0
   );
+
   const km = (meters / 1000).toFixed(1) + " km";
   const hrs = Math.floor(secs / 3600);
   const mins = Math.round((secs % 3600) / 60);
+
   return {
     distanceText: km,
     durationText: hrs > 0 ? `${hrs} hr ${mins} min` : `${mins} min`,
+    durationTime: secs,
   };
 }
 
-function rebuildByIds(ids: string[], current: MarkerData[]): MarkerData[] {
+export function rebuildByIds(
+  ids: string[],
+  current: MarkerData[]
+): MarkerData[] {
   const map = new Map(current.map((m) => [m.id, m]));
   return ids.map((id) => map.get(id)!).filter(Boolean);
 }
@@ -62,6 +60,7 @@ function getLong(c?: GComp) {
     ? c.long_name
     : undefined;
 }
+
 function getShort(c?: GComp) {
   if (!c) return undefined;
   return isPlaceComp(c)
@@ -75,7 +74,7 @@ function getComp(comps: GComp[] | undefined, type: string): GComp | undefined {
   return comps?.find((c) => compHasType(c, type));
 }
 
-function isInCebuPH(comps: GComp[] | undefined): boolean {
+export function isInCebuPH(comps: GComp[] | undefined): boolean {
   const countryShort = getShort(getComp(comps, "country")); // "PH"
   const provLong = getLong(getComp(comps, "administrative_area_level_2")); // "Cebu"
   const cityLong = getLong(getComp(comps, "locality")); // "Cebu City"
@@ -86,20 +85,21 @@ function isInCebuPH(comps: GComp[] | undefined): boolean {
   );
 }
 
-function computeStops(
+export function computeStops(
   list: MarkerData[],
-  start: string | null,
+  startId: string | null,
   optimize: boolean
 ) {
   if (list.length < 2) return null;
   let ordered = list.slice();
-  if (start) {
-    const i = ordered.findIndex((m) => m.id === start);
+  if (startId) {
+    const i = ordered.findIndex((m) => m.id === startId);
     if (i >= 0) ordered = rotateTo(ordered, i);
   }
   const origin = ordered[0];
   const destination = ordered[ordered.length - 1];
-  const inBetween = ordered.slice(1, -1); // waypoint_order indexes this
+  const inBetween = ordered.slice(1, -1);
+
   return {
     ordered,
     origin,
@@ -112,12 +112,3 @@ function computeStops(
     optimizeWaypoints: optimize,
   };
 }
-
-export {
-  uid,
-  rotateTo,
-  summarizeDirections,
-  rebuildByIds,
-  isInCebuPH,
-  computeStops,
-};

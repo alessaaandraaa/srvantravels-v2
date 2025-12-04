@@ -1,4 +1,5 @@
 "use client";
+const SECONDS_PER_STOP = 3600;
 
 import {
   useCustomerDetailsStore,
@@ -11,6 +12,12 @@ type FormDetails = {
   date_of_travel: string;
   time_for_pickup: string;
   time_for_dropoff: string;
+};
+
+type CustomFormProps = {
+  isRouted: boolean;
+  time: number;
+  numStops: number;
 };
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -30,7 +37,21 @@ const toDateStr = (v?: string | number | Date | null | undefined) => {
     : "";
 };
 
-export default function CustomForm() {
+function timeToSeconds(timeString: string) {
+  const [hours, minutes, seconds = 0] = timeString.split(":").map(Number);
+
+  return hours * 3600 + minutes * 60 + seconds;
+}
+
+function isItineraryValid(itineraryTime: number, stopsTime: number) {
+  return itineraryTime > stopsTime;
+}
+
+export default function CustomForm({
+  isRouted,
+  time,
+  numStops,
+}: CustomFormProps) {
   const router = useRouter();
   const details = useCustomerDetailsStore((l) => l.customerDetails);
   const selectedCount = useLocationsStore((l) => l.locations.length);
@@ -52,24 +73,69 @@ export default function CustomForm() {
     },
   });
 
-  const canSubmit = isValid && selectedCount >= 2;
+  const canSubmit = isValid && selectedCount >= 2 && isRouted && time > 0;
 
   const onSubmit = async (FormData: FormDetails) => {
-    if (canSubmit) {
-      setCustomerDetails({
-        date_of_travel: new Date(FormData.date_of_travel),
-        time_for_pickup: FormData.time_for_pickup,
-        time_for_dropoff: FormData.time_for_dropoff,
-      });
+    // --- DEBUGGING LOGS (Check your browser console!) ---
+    console.log("--- FORM DEBUG ---");
+    console.log("isRouted:", isRouted);
+    console.log("Map Time (seconds):", time);
+    console.log("Pickup Input:", FormData.time_for_pickup);
+    console.log("Dropoff Input:", FormData.time_for_dropoff);
 
-      router.push(`/itinerary/customer-details`);
-    } else {
-      if (!isValid) {
-        alert("Please fill up the form.");
-      } else if (selectedCount < 2) {
-        alert("Please select at least two locations and route them.");
-      }
+    // 2. PARSE TIMES
+    const pickupSec = timeToSeconds(FormData.time_for_pickup);
+    const dropoffSec = timeToSeconds(FormData.time_for_dropoff);
+
+    // Calculate Duration (Handle midnight crossing if needed)
+    let allocatedTime = dropoffSec - pickupSec;
+    if (allocatedTime < 0) {
+      // Assume next day if dropoff is smaller than pickup?
+      // If so: allocatedTime += 86400;
+      // For now, let's treat it as 0 to force an error.
+      allocatedTime = 0;
     }
+
+    console.log("User Allocated Seconds:", allocatedTime);
+
+    // 3. DEFINE REQUIRED TIMES
+    // Use Math.max(0, time) to ensure we never compare against -1
+    const drivingTimeOnly = Math.max(0, time);
+    const stopsTime = selectedCount * SECONDS_PER_STOP;
+    const totalRequiredTime = drivingTimeOnly + stopsTime;
+
+    console.log("Required Driving Only:", drivingTimeOnly);
+    console.log("Total Required (w/ stops):", totalRequiredTime);
+
+    // --- THE LOGIC GATES ---
+
+    if (!canSubmit) {
+      if (!isValid) alert("Please fill up the form.");
+      else if (selectedCount < 2)
+        alert("Please select at least two locations.");
+      else if (!isRouted) alert("Please route your itinerary!");
+      else if (time <= 0)
+        alert("Route invalid (Time is 0). Please clear and re-route.");
+      return;
+    }
+
+    if (allocatedTime < drivingTimeOnly) {
+      alert(`Your itinerary is too short for your allocated time!`);
+      return;
+    }
+
+    if (allocatedTime < totalRequiredTime) {
+      console.warn("Warning: Schedule is tight. User might rush stops.");
+    }
+
+    console.log("SUCCESS. Navigating...");
+    setCustomerDetails({
+      date_of_travel: new Date(FormData.date_of_travel),
+      time_for_pickup: FormData.time_for_pickup,
+      time_for_dropoff: FormData.time_for_dropoff,
+    });
+
+    router.push(`/itinerary/customer-details`);
   };
 
   return (

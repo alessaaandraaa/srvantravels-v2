@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  uid,
-  rotateTo,
-  summarizeDirections,
-  rebuildByIds,
-  isInCebuPH,
-  computeStops,
-} from "@/lib/map-helpers";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocationsStore } from "@/store/custom-itinerary.store";
 import {
   APIProvider,
@@ -16,6 +8,14 @@ import {
   AdvancedMarker,
   MapMouseEvent,
 } from "@vis.gl/react-google-maps";
+
+import {
+  uid,
+  summarizeDirections,
+  isInCebuPH,
+  computeStops,
+  rebuildByIds,
+} from "@/lib/map-helpers";
 
 import Search from "./search";
 import Directions from "./directions";
@@ -38,6 +38,12 @@ type GComp =
   | google.maps.GeocoderAddressComponent
   | google.maps.places.AddressComponent;
 
+interface MapComponentProps {
+  onSetRoute: (routed: boolean) => void;
+  onTime: (time: number) => void;
+  onNumStops: (stops: number) => void;
+}
+
 const sameByNameAddress = (
   a: { name?: string; address: string },
   b: { name?: string; address: string }
@@ -47,10 +53,17 @@ const sameByNameAddress = (
 
 /* ---------------- component ---------------- */
 
-export default function MapComponent() {
-  const markers = useLocationsStore((s) => s.locations);
-  const setLocation = useLocationsStore((s) => s.setLocation);
-  const clear = useLocationsStore((s) => s.clear);
+export default function MapComponent({
+  onSetRoute,
+  onTime,
+  onNumStops,
+}: MapComponentProps) {
+  if (!onSetRoute) {
+    console.log("NOT ROUTED YET\n");
+  } else {
+    console.log("ALREADY ROUTED");
+  }
+  const { locations: markers, setLocation, clear } = useLocationsStore();
 
   const [startId, setStartId] = useState<string | null>(null);
   const [directions, setDirections] =
@@ -58,10 +71,20 @@ export default function MapComponent() {
   const [summary, setSummary] = useState<{
     distanceText: string;
     durationText: string;
+    durationTime: number;
   } | null>(null);
-
-  // snapshot of the pre-optimization order (ids) so user can go back
   const [savedOrderIds, setSavedOrderIds] = useState<string[] | null>(null);
+
+  const resetRouteUI = () => {
+    setDirections(null);
+    setSummary(null);
+    onTime(-1);
+    onSetRoute(false);
+  };
+
+  useEffect(() => {
+    resetRouteUI();
+  }, []);
 
   /* ---------- add with Cebu gate ---------- */
   function addIfAllowed(
@@ -226,22 +249,24 @@ export default function MapComponent() {
     next.forEach((m) => setLocation(m));
     setStartId((curr) => (curr === id ? null : curr));
     setSavedOrderIds(null);
+
+    resetRouteUI();
   };
 
   const clearAllMarkers = () => {
     clear();
     setStartId(null);
-    setDirections(null);
-    setSummary(null);
     setSavedOrderIds(null);
+
+    resetRouteUI();
   };
 
   const clearRoute = () => {
-    setDirections(null);
-    setSummary(null);
+    resetRouteUI();
   };
 
   function commitList(finalList: MarkerData[]) {
+    clear();
     finalList.forEach((m) => setLocation(m));
   }
 
@@ -267,6 +292,10 @@ export default function MapComponent() {
       if (status === "OK" && res) {
         setDirections(res);
         setSummary(summarizeDirections(res));
+        if (summary) {
+          onTime(summary.durationTime);
+          onNumStops(markers.length);
+        }
 
         let finalList: MarkerData[] | null = null;
 
@@ -284,6 +313,7 @@ export default function MapComponent() {
         }
 
         if (finalList) commitList(finalList);
+        onSetRoute(true);
       } else {
         console.warn("Directions failed:", status);
       }

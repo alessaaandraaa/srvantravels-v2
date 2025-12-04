@@ -13,4 +13,8 @@ YEAH THIS I NEED TO MAKE A TOAST FOR THIS
 NEW HANDLING:
     WHEN IN SUMMARY, CLEAR ZUSTAND SO YOU CANT GO BACK AND ALL
 
-MANY-TO-MANY FILTERS FOR EACH PACKAGE
+
+TO DO IMPLEMENTATIONS
+- Booking Availability (COMPLEX)
+- Form Global state management (warning dialog, clearing store, etc.)
+- Custom itinerary time business logic
