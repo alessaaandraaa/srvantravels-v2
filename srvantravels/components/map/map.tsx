@@ -272,13 +272,15 @@ export default function MapComponent({
 
   function route(optimize: boolean, markersOverride?: MarkerData[]) {
     if (!window.google) return;
+
     const source = markersOverride ?? markers;
+    // Use your imported utility helper
     const stops = computeStops(source, startId, optimize);
     if (!stops) return;
 
     const req: google.maps.DirectionsRequest = {
-      origin: { lat: stops.origin.lat, lng: stops.origin.lng },
-      destination: { lat: stops.destination.lat, lng: stops.destination.lng },
+      origin: stops.origin,
+      destination: stops.destination,
       waypoints: stops.waypoints,
       optimizeWaypoints: stops.optimizeWaypoints,
       travelMode: google.maps.TravelMode.DRIVING,
@@ -291,9 +293,13 @@ export default function MapComponent({
     new google.maps.DirectionsService().route(req, (res, status) => {
       if (status === "OK" && res) {
         setDirections(res);
-        setSummary(summarizeDirections(res));
-        if (summary) {
-          onTime(summary.durationTime);
+
+        const currentSummary = summarizeDirections(res);
+
+        setSummary(currentSummary);
+
+        if (currentSummary) {
+          onTime(currentSummary.durationTime);
           onNumStops(markers.length);
         }
 
@@ -313,6 +319,8 @@ export default function MapComponent({
         }
 
         if (finalList) commitList(finalList);
+
+        // 4. Finally, mark as routed
         onSetRoute(true);
       } else {
         console.warn("Directions failed:", status);

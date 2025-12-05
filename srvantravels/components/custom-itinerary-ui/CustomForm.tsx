@@ -7,6 +7,8 @@ import {
 } from "@/store/custom-itinerary.store";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import WarningDialog from "./WarningDialog";
 
 type FormDetails = {
   date_of_travel: string;
@@ -55,10 +57,21 @@ export default function CustomForm({
   const router = useRouter();
   const details = useCustomerDetailsStore((l) => l.customerDetails);
   const selectedCount = useLocationsStore((l) => l.locations.length);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [pendingData, setPendingData] = useState<FormDetails | null>(null);
 
   const setCustomerDetails = useCustomerDetailsStore(
     (state) => state.setCustomerDetails
   );
+
+  const navigate = (data: FormDetails) => {
+    setCustomerDetails({
+      date_of_travel: new Date(data.date_of_travel),
+      time_for_pickup: data.time_for_pickup,
+      time_for_dropoff: data.time_for_dropoff,
+    });
+    router.push(`/itinerary/customer-details`);
+  };
 
   const {
     register,
@@ -76,38 +89,17 @@ export default function CustomForm({
   const canSubmit = isValid && selectedCount >= 2 && isRouted && time > 0;
 
   const onSubmit = async (FormData: FormDetails) => {
-    // --- DEBUGGING LOGS (Check your browser console!) ---
-    console.log("--- FORM DEBUG ---");
-    console.log("isRouted:", isRouted);
-    console.log("Map Time (seconds):", time);
-    console.log("Pickup Input:", FormData.time_for_pickup);
-    console.log("Dropoff Input:", FormData.time_for_dropoff);
-
-    // 2. PARSE TIMES
     const pickupSec = timeToSeconds(FormData.time_for_pickup);
     const dropoffSec = timeToSeconds(FormData.time_for_dropoff);
 
-    // Calculate Duration (Handle midnight crossing if needed)
     let allocatedTime = dropoffSec - pickupSec;
     if (allocatedTime < 0) {
-      // Assume next day if dropoff is smaller than pickup?
-      // If so: allocatedTime += 86400;
-      // For now, let's treat it as 0 to force an error.
       allocatedTime = 0;
     }
 
-    console.log("User Allocated Seconds:", allocatedTime);
-
-    // 3. DEFINE REQUIRED TIMES
-    // Use Math.max(0, time) to ensure we never compare against -1
     const drivingTimeOnly = Math.max(0, time);
     const stopsTime = selectedCount * SECONDS_PER_STOP;
     const totalRequiredTime = drivingTimeOnly + stopsTime;
-
-    console.log("Required Driving Only:", drivingTimeOnly);
-    console.log("Total Required (w/ stops):", totalRequiredTime);
-
-    // --- THE LOGIC GATES ---
 
     if (!canSubmit) {
       if (!isValid) alert("Please fill up the form.");
@@ -125,21 +117,27 @@ export default function CustomForm({
     }
 
     if (allocatedTime < totalRequiredTime) {
-      console.warn("Warning: Schedule is tight. User might rush stops.");
+      setPendingData(FormData);
+      setOpenDialog(true);
+      return;
     }
 
-    console.log("SUCCESS. Navigating...");
-    setCustomerDetails({
-      date_of_travel: new Date(FormData.date_of_travel),
-      time_for_pickup: FormData.time_for_pickup,
-      time_for_dropoff: FormData.time_for_dropoff,
-    });
-
-    router.push(`/itinerary/customer-details`);
+    navigate(FormData);
   };
 
   return (
     <>
+      <WarningDialog
+        open={openDialog}
+        onOpenChange={setOpenDialog}
+        onConfirm={() => {
+          if (pendingData) {
+            navigate(pendingData);
+            setOpenDialog(false);
+          }
+        }}
+      />
+
       <form className="w-full max-w-3xl m-10" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Date of travel */}

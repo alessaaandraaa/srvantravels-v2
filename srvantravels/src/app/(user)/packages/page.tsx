@@ -6,7 +6,7 @@ export default async function Packages() {
   const session = await getServerSession(authOptions);
   console.log(session);
 
-  if (true) {
+  if (session?.user.name) {
     return (
       <div>
         <PackageList />
