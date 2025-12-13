@@ -23,6 +23,7 @@ import {
 import { Button } from "../../../../../components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Input } from "../../../../components/ui/Admin/input"
+import { AddPackageSheet } from "./AddPackageSheet"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -55,7 +56,7 @@ export function DataTable<TData, TValue>({
 
   return (
       <div className="">
-        <div className="flex items-center py-4">
+        <div className="flex items-center py-4 gap-4">
           <Input
             placeholder="Filter Package Name..."
             value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -64,6 +65,7 @@ export function DataTable<TData, TValue>({
             }
             className="max-w-sm"
           />
+          <AddPackageSheet/>
         </div>
         <div className="overflow-hidden rounded-md border">
           <Table>

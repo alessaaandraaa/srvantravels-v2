@@ -14,6 +14,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../dropdown-menu"
+import { Label } from "../../../../../../components/ui/label";
+import { Input } from "../../../../../../components/ui/input";
+import { Textarea } from "../../../../../../components/ui/textarea";
+import { ScrollArea } from "../../../../../../components/ui/scroll-area";
 
 export type packageItinerary = {
   id : Number;
@@ -103,29 +107,160 @@ export const getColumns = (): ColumnDef<packageItinerary>[] => [
     },
   },
   {
-    id: "action1",
-    cell: ({row}) => {
-      const packageID = row.original.id;
-      const [open, openState] = useState(false);
+  id: "action1",
+  cell: ({ row }) => {
+    const pkg = row.original;
 
-      return (
-        <div className="w-[50px]">
-          <Sheet>
-            <SheetTrigger>View more info...</SheetTrigger>
-              <SheetContent>
-                <SheetHeader>
-                  <SheetTitle>Are you absolutely sure?</SheetTitle>
-                  <SheetDescription>
-                    This action cannot be undone. This will permanently delete your account
-                    and remove your data from our servers.
-                  </SheetDescription>
-                </SheetHeader>
-              </SheetContent>
-          </Sheet>
-        </div>
-      )
-    }
+    const [open, setOpen] = useState(false);
+    const [routes, setRoutes] = useState<string[]>([]);
+    const [routeInput, setRouteInput] = useState("");
+
+    const [inclusions, setInclusions] = useState<string[]>([]);
+    const [inclusionInput, setInclusionInput] = useState("");
+
+    const addRoute = () => {
+      if (!routeInput.trim()) return;
+      setRoutes(prev => [...prev, routeInput.trim()]);
+      setRouteInput("");
+    };
+
+    const addInclusion = () => {
+      if (!inclusionInput.trim()) return;
+      setInclusions(prev => [...prev, inclusionInput.trim()]);
+      setInclusionInput("");
+    };
+
+    return (
+      <div className="w-[50px]">
+        <Sheet open={open} onOpenChange={setOpen}>
+          <SheetTrigger>
+            View more info
+          </SheetTrigger>
+
+          <SheetContent className="overflow-y-auto p-4">
+            <SheetHeader>
+              <SheetTitle>Edit Package</SheetTitle>
+              <SheetDescription>
+                Update package details below.
+              </SheetDescription>
+            </SheetHeader>
+
+            <div className="mt-6 space-y-6">
+
+              {/* Package Name */}
+              <div className="space-y-2">
+                <Label>Package Name</Label>
+                <Input placeholder="Enter package name" defaultValue={pkg.name} />
+              </div>
+
+              {/* Passenger Count */}
+              <div className="space-y-2">
+                <Label>Passenger Count</Label>
+                <Input type="number" placeholder="e.g. 20" />
+              </div>
+
+              {/* Price per PAX */}
+              <div className="space-y-2">
+                <Label>Price per PAX</Label>
+                <Input type="number" placeholder="₱ price" defaultValue={pkg.price as any} />
+              </div>
+
+              {/* ROUTE SECTION */}
+              <div className="space-y-2">
+                <Label>Route</Label>
+
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="Enter route"
+                    value={routeInput}
+                    onChange={(e) => setRouteInput(e.target.value)}
+                  />
+                  <Button onClick={addRoute}>Add</Button>
+                </div>
+
+                <ScrollArea className="h-24 w-full rounded-md border p-2">
+                  {routes.length === 0 && (
+                    <p className="text-sm text-muted-foreground">No routes added.</p>
+                  )}
+
+                  <ul className="space-y-1">
+                    {routes.map((r, i) => (
+                      <li key={i} className="text-sm flex justify-between">
+                        {r}
+                        <button
+                          className="text-red-500 text-xs"
+                          onClick={() => setRoutes(routes.filter((_, idx) => idx !== i))}
+                        >
+                          Remove
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </ScrollArea>
+              </div>
+
+              {/* INCLUSIONS SECTION */}
+              <div className="space-y-2">
+                <Label>Inclusions List</Label>
+
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="Enter inclusion"
+                    value={inclusionInput}
+                    onChange={(e) => setInclusionInput(e.target.value)}
+                  />
+                  <Button onClick={addInclusion}>Add</Button>
+                </div>
+
+                <ScrollArea className="h-24 w-full rounded-md border p-2">
+                  {inclusions.length === 0 && (
+                    <p className="text-sm text-muted-foreground">No inclusions added.</p>
+                  )}
+
+                  <ul className="space-y-1">
+                    {inclusions.map((item, i) => (
+                      <li key={i} className="text-sm flex justify-between">
+                        {item}
+                        <button
+                          className="text-red-500 text-xs"
+                          onClick={() => setInclusions(inclusions.filter((_, idx) => idx !== i))}
+                        >
+                          Remove
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </ScrollArea>
+              </div>
+
+              {/* Description */}
+              <div className="space-y-2">
+                <Label>Description</Label>
+                <Textarea placeholder="Enter package description..." />
+              </div>
+
+              {/* Attach Image */}
+              <div className="space-y-2">
+                <Label>Attach Image</Label>
+                <Input type="file" accept="image/*" />
+              </div>
+
+              {/* Footer */}
+              <div className="pt-4 flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setOpen(false)}>
+                  Cancel
+                </Button>
+                <Button>Save Changes</Button>
+              </div>
+
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
+    );
   }
+}
+
 ]
 
 

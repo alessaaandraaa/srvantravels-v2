@@ -50,6 +50,14 @@ export default async function Navbar() {
       </div>
       <div>
         <Link
+          href="/message"
+          className="text-white hover:text-teal-800 hover:font-bold"
+        >
+          Inbox
+        </Link>
+      </div>
+      <div>
+        <Link
           href="/profile"
           className="text-white hover:text-teal-800 hover:font-bold"
         >
