@@ -57,7 +57,7 @@ const AdminSideBar = () => {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <Link href="/">
+                <Link href="/admin/profile">
                   <Image src="/FlinsEmo.jpg" alt="GAY" width={20} height={20}/>
                   <span>Mikoro Leonardo</span>
                 </Link>
@@ -143,13 +143,6 @@ const AdminSideBar = () => {
                     <SidebarMenuButton asChild>
                       <Link href="/admin/locations">
                         <Projector/> See All Locations
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link href="/admin/locations">
-                        <Plus/> Add Locations
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

@@ -14,7 +14,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../dropdown-menu"
-import { stat } from "fs";
 
 export type packageItinerary = {
   id : Number;

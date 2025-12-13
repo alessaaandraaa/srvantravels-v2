@@ -9,11 +9,11 @@ datasource db {
 }
 
 model Custom_Itinerary {
-  custom_ID           Int               @id @default(autoincrement())
+  custom_ID           Int               @id
   is_made_by_customer Int?
-  Itinerary           Itinerary         @relation(fields: [custom_ID], references: [itinerary_ID], onDelete: NoAction, onUpdate: NoAction, map: "Custom_Itinerary_ibfk_1")
-  Person              Person?           @relation(fields: [is_made_by_customer], references: [person_ID], onDelete: NoAction, onUpdate: NoAction, map: "Custom_Itinerary_ibfk_2")
-  Itinerary_Stops     Itinerary_Stops[]
+  itinerary           Itinerary         @relation(fields: [custom_ID], references: [itinerary_ID], onUpdate: Restrict, map: "custom_itinerary_ibfk_1")
+  person              Person?           @relation(fields: [is_made_by_customer], references: [person_ID], onDelete: Restrict, onUpdate: Restrict, map: "custom_itinerary_ibfk_2")
+  itinerary_stops     Itinerary_Stops[]
 
   @@index([is_made_by_customer], map: "is_made_by_customer")
   @@map("custom_itinerary")
@@ -100,7 +100,7 @@ model Manager {
   @@map("manager")
 }
 
-model Order_Details {
+model Order_Details { 
   order_ID            Int                   @id @default(autoincrement())
   customer_ID         Int?
   payment_ID          Int?
