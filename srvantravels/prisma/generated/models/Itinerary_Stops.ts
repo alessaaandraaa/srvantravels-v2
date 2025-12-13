@@ -269,7 +269,7 @@ export type Itinerary_StopsScalarWhereWithAggregatesInput = {
 
 export type Itinerary_StopsCreateInput = {
   stop_order?: number | null
-  custom_itinerary?: Prisma.Custom_ItineraryCreateNestedOneWithoutItinerary_stopsInput
+  custom_itinerary?: Prisma.Custom_ItineraryCreateNestedOneWithoutItinerary_StopsInput
   locations?: Prisma.LocationsCreateNestedOneWithoutItinerary_stopsInput
 }
 
@@ -282,7 +282,7 @@ export type Itinerary_StopsUncheckedCreateInput = {
 
 export type Itinerary_StopsUpdateInput = {
   stop_order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  custom_itinerary?: Prisma.Custom_ItineraryUpdateOneWithoutItinerary_stopsNestedInput
+  custom_itinerary?: Prisma.Custom_ItineraryUpdateOneWithoutItinerary_StopsNestedInput
   locations?: Prisma.LocationsUpdateOneWithoutItinerary_stopsNestedInput
 }
 
@@ -489,7 +489,7 @@ export type Itinerary_StopsScalarWhereInput = {
 
 export type Itinerary_StopsCreateWithoutLocationsInput = {
   stop_order?: number | null
-  custom_itinerary?: Prisma.Custom_ItineraryCreateNestedOneWithoutItinerary_stopsInput
+  custom_itinerary?: Prisma.Custom_ItineraryCreateNestedOneWithoutItinerary_StopsInput
 }
 
 export type Itinerary_StopsUncheckedCreateWithoutLocationsInput = {
@@ -555,7 +555,7 @@ export type Itinerary_StopsCreateManyLocationsInput = {
 
 export type Itinerary_StopsUpdateWithoutLocationsInput = {
   stop_order?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  custom_itinerary?: Prisma.Custom_ItineraryUpdateOneWithoutItinerary_stopsNestedInput
+  custom_itinerary?: Prisma.Custom_ItineraryUpdateOneWithoutItinerary_StopsNestedInput
 }
 
 export type Itinerary_StopsUncheckedUpdateWithoutLocationsInput = {

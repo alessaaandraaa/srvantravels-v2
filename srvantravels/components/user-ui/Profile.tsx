@@ -1,12 +1,32 @@
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
+"use client";
+
+import { Session } from "next-auth";
 import OrdersList from "@/components/user-ui/OrdersList";
 import { ContactDialog } from "./ContactDialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useState } from "react";
 
-export default async function UserProfile(customer_id: {
+interface userProfileProps {
   customer_id: number;
-}) {
-  const session = await getServerSession(authOptions);
+  session: Session | null;
+}
+
+export default function UserProfile({
+  customer_id,
+  session,
+}: userProfileProps) {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [contactAdded, setContactAdded] = useState(false);
+
+  const serverHasContact = !!session?.user?.contact_number;
+
+  const shouldShowButton = !serverHasContact && !contactAdded;
+
+  const handleDialogSuccess = () => {
+    setContactAdded(true);
+    setIsDialogOpen(false);
+  };
+
   return (
     <div className="flex items-start p-5">
       <div>
@@ -15,10 +35,28 @@ export default async function UserProfile(customer_id: {
             Welcome, {session?.user?.name}!
           </h1>
         </div>
-        <ContactDialog />
+
+        {shouldShowButton && (
+          <button
+            onClick={() => setIsDialogOpen(true)}
+            className="mt-4 p-2 bg-teal-500 text-white rounded"
+          >
+            Add Contact Number
+          </button>
+        )}
+
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogContent>
+            <ContactDialog
+              customer_id={customer_id}
+              onSuccess={handleDialogSuccess}
+            />
+          </DialogContent>
+        </Dialog>
       </div>
+
       <div className="border-2 border-black rounded-2xl ml-5 p-10 max-w-full">
-        <OrdersList customer_id={customer_id.customer_id} />
+        <OrdersList customer_id={customer_id} />
       </div>
     </div>
   );

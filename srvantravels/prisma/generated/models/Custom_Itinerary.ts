@@ -196,17 +196,17 @@ export type Custom_ItineraryWhereInput = {
   NOT?: Prisma.Custom_ItineraryWhereInput | Prisma.Custom_ItineraryWhereInput[]
   custom_ID?: Prisma.IntFilter<"Custom_Itinerary"> | number
   is_made_by_customer?: Prisma.IntNullableFilter<"Custom_Itinerary"> | number | null
-  itinerary?: Prisma.XOR<Prisma.ItineraryScalarRelationFilter, Prisma.ItineraryWhereInput>
-  person?: Prisma.XOR<Prisma.PersonNullableScalarRelationFilter, Prisma.PersonWhereInput> | null
-  itinerary_stops?: Prisma.Itinerary_StopsListRelationFilter
+  Itinerary?: Prisma.XOR<Prisma.ItineraryScalarRelationFilter, Prisma.ItineraryWhereInput>
+  Person?: Prisma.XOR<Prisma.PersonNullableScalarRelationFilter, Prisma.PersonWhereInput> | null
+  Itinerary_Stops?: Prisma.Itinerary_StopsListRelationFilter
 }
 
 export type Custom_ItineraryOrderByWithRelationInput = {
   custom_ID?: Prisma.SortOrder
   is_made_by_customer?: Prisma.SortOrderInput | Prisma.SortOrder
-  itinerary?: Prisma.ItineraryOrderByWithRelationInput
-  person?: Prisma.PersonOrderByWithRelationInput
-  itinerary_stops?: Prisma.Itinerary_StopsOrderByRelationAggregateInput
+  Itinerary?: Prisma.ItineraryOrderByWithRelationInput
+  Person?: Prisma.PersonOrderByWithRelationInput
+  Itinerary_Stops?: Prisma.Itinerary_StopsOrderByRelationAggregateInput
 }
 
 export type Custom_ItineraryWhereUniqueInput = Prisma.AtLeast<{
@@ -215,9 +215,9 @@ export type Custom_ItineraryWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.Custom_ItineraryWhereInput[]
   NOT?: Prisma.Custom_ItineraryWhereInput | Prisma.Custom_ItineraryWhereInput[]
   is_made_by_customer?: Prisma.IntNullableFilter<"Custom_Itinerary"> | number | null
-  itinerary?: Prisma.XOR<Prisma.ItineraryScalarRelationFilter, Prisma.ItineraryWhereInput>
-  person?: Prisma.XOR<Prisma.PersonNullableScalarRelationFilter, Prisma.PersonWhereInput> | null
-  itinerary_stops?: Prisma.Itinerary_StopsListRelationFilter
+  Itinerary?: Prisma.XOR<Prisma.ItineraryScalarRelationFilter, Prisma.ItineraryWhereInput>
+  Person?: Prisma.XOR<Prisma.PersonNullableScalarRelationFilter, Prisma.PersonWhereInput> | null
+  Itinerary_Stops?: Prisma.Itinerary_StopsListRelationFilter
 }, "custom_ID">
 
 export type Custom_ItineraryOrderByWithAggregationInput = {
@@ -239,27 +239,27 @@ export type Custom_ItineraryScalarWhereWithAggregatesInput = {
 }
 
 export type Custom_ItineraryCreateInput = {
-  itinerary: Prisma.ItineraryCreateNestedOneWithoutCustom_itineraryInput
-  person?: Prisma.PersonCreateNestedOneWithoutCustom_itineraryInput
-  itinerary_stops?: Prisma.Itinerary_StopsCreateNestedManyWithoutCustom_itineraryInput
+  Itinerary: Prisma.ItineraryCreateNestedOneWithoutCustom_itineraryInput
+  Person?: Prisma.PersonCreateNestedOneWithoutCustom_itineraryInput
+  Itinerary_Stops?: Prisma.Itinerary_StopsCreateNestedManyWithoutCustom_itineraryInput
 }
 
 export type Custom_ItineraryUncheckedCreateInput = {
   custom_ID: number
   is_made_by_customer?: number | null
-  itinerary_stops?: Prisma.Itinerary_StopsUncheckedCreateNestedManyWithoutCustom_itineraryInput
+  Itinerary_Stops?: Prisma.Itinerary_StopsUncheckedCreateNestedManyWithoutCustom_itineraryInput
 }
 
 export type Custom_ItineraryUpdateInput = {
-  itinerary?: Prisma.ItineraryUpdateOneRequiredWithoutCustom_itineraryNestedInput
-  person?: Prisma.PersonUpdateOneWithoutCustom_itineraryNestedInput
-  itinerary_stops?: Prisma.Itinerary_StopsUpdateManyWithoutCustom_itineraryNestedInput
+  Itinerary?: Prisma.ItineraryUpdateOneRequiredWithoutCustom_itineraryNestedInput
+  Person?: Prisma.PersonUpdateOneWithoutCustom_itineraryNestedInput
+  Itinerary_Stops?: Prisma.Itinerary_StopsUpdateManyWithoutCustom_itineraryNestedInput
 }
 
 export type Custom_ItineraryUncheckedUpdateInput = {
   custom_ID?: Prisma.IntFieldUpdateOperationsInput | number
   is_made_by_customer?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  itinerary_stops?: Prisma.Itinerary_StopsUncheckedUpdateManyWithoutCustom_itineraryNestedInput
+  Itinerary_Stops?: Prisma.Itinerary_StopsUncheckedUpdateManyWithoutCustom_itineraryNestedInput
 }
 
 export type Custom_ItineraryCreateManyInput = {
@@ -364,20 +364,20 @@ export type Custom_ItineraryUncheckedUpdateOneWithoutItineraryNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.Custom_ItineraryUpdateToOneWithWhereWithoutItineraryInput, Prisma.Custom_ItineraryUpdateWithoutItineraryInput>, Prisma.Custom_ItineraryUncheckedUpdateWithoutItineraryInput>
 }
 
-export type Custom_ItineraryCreateNestedOneWithoutItinerary_stopsInput = {
-  create?: Prisma.XOR<Prisma.Custom_ItineraryCreateWithoutItinerary_stopsInput, Prisma.Custom_ItineraryUncheckedCreateWithoutItinerary_stopsInput>
-  connectOrCreate?: Prisma.Custom_ItineraryCreateOrConnectWithoutItinerary_stopsInput
+export type Custom_ItineraryCreateNestedOneWithoutItinerary_StopsInput = {
+  create?: Prisma.XOR<Prisma.Custom_ItineraryCreateWithoutItinerary_StopsInput, Prisma.Custom_ItineraryUncheckedCreateWithoutItinerary_StopsInput>
+  connectOrCreate?: Prisma.Custom_ItineraryCreateOrConnectWithoutItinerary_StopsInput
   connect?: Prisma.Custom_ItineraryWhereUniqueInput
 }
 
-export type Custom_ItineraryUpdateOneWithoutItinerary_stopsNestedInput = {
-  create?: Prisma.XOR<Prisma.Custom_ItineraryCreateWithoutItinerary_stopsInput, Prisma.Custom_ItineraryUncheckedCreateWithoutItinerary_stopsInput>
-  connectOrCreate?: Prisma.Custom_ItineraryCreateOrConnectWithoutItinerary_stopsInput
-  upsert?: Prisma.Custom_ItineraryUpsertWithoutItinerary_stopsInput
+export type Custom_ItineraryUpdateOneWithoutItinerary_StopsNestedInput = {
+  create?: Prisma.XOR<Prisma.Custom_ItineraryCreateWithoutItinerary_StopsInput, Prisma.Custom_ItineraryUncheckedCreateWithoutItinerary_StopsInput>
+  connectOrCreate?: Prisma.Custom_ItineraryCreateOrConnectWithoutItinerary_StopsInput
+  upsert?: Prisma.Custom_ItineraryUpsertWithoutItinerary_StopsInput
   disconnect?: Prisma.Custom_ItineraryWhereInput | boolean
   delete?: Prisma.Custom_ItineraryWhereInput | boolean
   connect?: Prisma.Custom_ItineraryWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.Custom_ItineraryUpdateToOneWithWhereWithoutItinerary_stopsInput, Prisma.Custom_ItineraryUpdateWithoutItinerary_stopsInput>, Prisma.Custom_ItineraryUncheckedUpdateWithoutItinerary_stopsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.Custom_ItineraryUpdateToOneWithWhereWithoutItinerary_StopsInput, Prisma.Custom_ItineraryUpdateWithoutItinerary_StopsInput>, Prisma.Custom_ItineraryUncheckedUpdateWithoutItinerary_StopsInput>
 }
 
 export type Custom_ItineraryCreateNestedManyWithoutPersonInput = {
@@ -423,13 +423,13 @@ export type Custom_ItineraryUncheckedUpdateManyWithoutPersonNestedInput = {
 }
 
 export type Custom_ItineraryCreateWithoutItineraryInput = {
-  person?: Prisma.PersonCreateNestedOneWithoutCustom_itineraryInput
-  itinerary_stops?: Prisma.Itinerary_StopsCreateNestedManyWithoutCustom_itineraryInput
+  Person?: Prisma.PersonCreateNestedOneWithoutCustom_itineraryInput
+  Itinerary_Stops?: Prisma.Itinerary_StopsCreateNestedManyWithoutCustom_itineraryInput
 }
 
 export type Custom_ItineraryUncheckedCreateWithoutItineraryInput = {
   is_made_by_customer?: number | null
-  itinerary_stops?: Prisma.Itinerary_StopsUncheckedCreateNestedManyWithoutCustom_itineraryInput
+  Itinerary_Stops?: Prisma.Itinerary_StopsUncheckedCreateNestedManyWithoutCustom_itineraryInput
 }
 
 export type Custom_ItineraryCreateOrConnectWithoutItineraryInput = {
@@ -449,59 +449,59 @@ export type Custom_ItineraryUpdateToOneWithWhereWithoutItineraryInput = {
 }
 
 export type Custom_ItineraryUpdateWithoutItineraryInput = {
-  person?: Prisma.PersonUpdateOneWithoutCustom_itineraryNestedInput
-  itinerary_stops?: Prisma.Itinerary_StopsUpdateManyWithoutCustom_itineraryNestedInput
+  Person?: Prisma.PersonUpdateOneWithoutCustom_itineraryNestedInput
+  Itinerary_Stops?: Prisma.Itinerary_StopsUpdateManyWithoutCustom_itineraryNestedInput
 }
 
 export type Custom_ItineraryUncheckedUpdateWithoutItineraryInput = {
   is_made_by_customer?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  itinerary_stops?: Prisma.Itinerary_StopsUncheckedUpdateManyWithoutCustom_itineraryNestedInput
+  Itinerary_Stops?: Prisma.Itinerary_StopsUncheckedUpdateManyWithoutCustom_itineraryNestedInput
 }
 
-export type Custom_ItineraryCreateWithoutItinerary_stopsInput = {
-  itinerary: Prisma.ItineraryCreateNestedOneWithoutCustom_itineraryInput
-  person?: Prisma.PersonCreateNestedOneWithoutCustom_itineraryInput
+export type Custom_ItineraryCreateWithoutItinerary_StopsInput = {
+  Itinerary: Prisma.ItineraryCreateNestedOneWithoutCustom_itineraryInput
+  Person?: Prisma.PersonCreateNestedOneWithoutCustom_itineraryInput
 }
 
-export type Custom_ItineraryUncheckedCreateWithoutItinerary_stopsInput = {
+export type Custom_ItineraryUncheckedCreateWithoutItinerary_StopsInput = {
   custom_ID: number
   is_made_by_customer?: number | null
 }
 
-export type Custom_ItineraryCreateOrConnectWithoutItinerary_stopsInput = {
+export type Custom_ItineraryCreateOrConnectWithoutItinerary_StopsInput = {
   where: Prisma.Custom_ItineraryWhereUniqueInput
-  create: Prisma.XOR<Prisma.Custom_ItineraryCreateWithoutItinerary_stopsInput, Prisma.Custom_ItineraryUncheckedCreateWithoutItinerary_stopsInput>
+  create: Prisma.XOR<Prisma.Custom_ItineraryCreateWithoutItinerary_StopsInput, Prisma.Custom_ItineraryUncheckedCreateWithoutItinerary_StopsInput>
 }
 
-export type Custom_ItineraryUpsertWithoutItinerary_stopsInput = {
-  update: Prisma.XOR<Prisma.Custom_ItineraryUpdateWithoutItinerary_stopsInput, Prisma.Custom_ItineraryUncheckedUpdateWithoutItinerary_stopsInput>
-  create: Prisma.XOR<Prisma.Custom_ItineraryCreateWithoutItinerary_stopsInput, Prisma.Custom_ItineraryUncheckedCreateWithoutItinerary_stopsInput>
+export type Custom_ItineraryUpsertWithoutItinerary_StopsInput = {
+  update: Prisma.XOR<Prisma.Custom_ItineraryUpdateWithoutItinerary_StopsInput, Prisma.Custom_ItineraryUncheckedUpdateWithoutItinerary_StopsInput>
+  create: Prisma.XOR<Prisma.Custom_ItineraryCreateWithoutItinerary_StopsInput, Prisma.Custom_ItineraryUncheckedCreateWithoutItinerary_StopsInput>
   where?: Prisma.Custom_ItineraryWhereInput
 }
 
-export type Custom_ItineraryUpdateToOneWithWhereWithoutItinerary_stopsInput = {
+export type Custom_ItineraryUpdateToOneWithWhereWithoutItinerary_StopsInput = {
   where?: Prisma.Custom_ItineraryWhereInput
-  data: Prisma.XOR<Prisma.Custom_ItineraryUpdateWithoutItinerary_stopsInput, Prisma.Custom_ItineraryUncheckedUpdateWithoutItinerary_stopsInput>
+  data: Prisma.XOR<Prisma.Custom_ItineraryUpdateWithoutItinerary_StopsInput, Prisma.Custom_ItineraryUncheckedUpdateWithoutItinerary_StopsInput>
 }
 
-export type Custom_ItineraryUpdateWithoutItinerary_stopsInput = {
-  itinerary?: Prisma.ItineraryUpdateOneRequiredWithoutCustom_itineraryNestedInput
-  person?: Prisma.PersonUpdateOneWithoutCustom_itineraryNestedInput
+export type Custom_ItineraryUpdateWithoutItinerary_StopsInput = {
+  Itinerary?: Prisma.ItineraryUpdateOneRequiredWithoutCustom_itineraryNestedInput
+  Person?: Prisma.PersonUpdateOneWithoutCustom_itineraryNestedInput
 }
 
-export type Custom_ItineraryUncheckedUpdateWithoutItinerary_stopsInput = {
+export type Custom_ItineraryUncheckedUpdateWithoutItinerary_StopsInput = {
   custom_ID?: Prisma.IntFieldUpdateOperationsInput | number
   is_made_by_customer?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type Custom_ItineraryCreateWithoutPersonInput = {
-  itinerary: Prisma.ItineraryCreateNestedOneWithoutCustom_itineraryInput
-  itinerary_stops?: Prisma.Itinerary_StopsCreateNestedManyWithoutCustom_itineraryInput
+  Itinerary: Prisma.ItineraryCreateNestedOneWithoutCustom_itineraryInput
+  Itinerary_Stops?: Prisma.Itinerary_StopsCreateNestedManyWithoutCustom_itineraryInput
 }
 
 export type Custom_ItineraryUncheckedCreateWithoutPersonInput = {
   custom_ID: number
-  itinerary_stops?: Prisma.Itinerary_StopsUncheckedCreateNestedManyWithoutCustom_itineraryInput
+  Itinerary_Stops?: Prisma.Itinerary_StopsUncheckedCreateNestedManyWithoutCustom_itineraryInput
 }
 
 export type Custom_ItineraryCreateOrConnectWithoutPersonInput = {
@@ -543,13 +543,13 @@ export type Custom_ItineraryCreateManyPersonInput = {
 }
 
 export type Custom_ItineraryUpdateWithoutPersonInput = {
-  itinerary?: Prisma.ItineraryUpdateOneRequiredWithoutCustom_itineraryNestedInput
-  itinerary_stops?: Prisma.Itinerary_StopsUpdateManyWithoutCustom_itineraryNestedInput
+  Itinerary?: Prisma.ItineraryUpdateOneRequiredWithoutCustom_itineraryNestedInput
+  Itinerary_Stops?: Prisma.Itinerary_StopsUpdateManyWithoutCustom_itineraryNestedInput
 }
 
 export type Custom_ItineraryUncheckedUpdateWithoutPersonInput = {
   custom_ID?: Prisma.IntFieldUpdateOperationsInput | number
-  itinerary_stops?: Prisma.Itinerary_StopsUncheckedUpdateManyWithoutCustom_itineraryNestedInput
+  Itinerary_Stops?: Prisma.Itinerary_StopsUncheckedUpdateManyWithoutCustom_itineraryNestedInput
 }
 
 export type Custom_ItineraryUncheckedUpdateManyWithoutPersonInput = {
@@ -562,11 +562,11 @@ export type Custom_ItineraryUncheckedUpdateManyWithoutPersonInput = {
  */
 
 export type Custom_ItineraryCountOutputType = {
-  itinerary_stops: number
+  Itinerary_Stops: number
 }
 
 export type Custom_ItineraryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  itinerary_stops?: boolean | Custom_ItineraryCountOutputTypeCountItinerary_stopsArgs
+  Itinerary_Stops?: boolean | Custom_ItineraryCountOutputTypeCountItinerary_StopsArgs
 }
 
 /**
@@ -582,7 +582,7 @@ export type Custom_ItineraryCountOutputTypeDefaultArgs<ExtArgs extends runtime.T
 /**
  * Custom_ItineraryCountOutputType without action
  */
-export type Custom_ItineraryCountOutputTypeCountItinerary_stopsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Custom_ItineraryCountOutputTypeCountItinerary_StopsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.Itinerary_StopsWhereInput
 }
 
@@ -590,9 +590,9 @@ export type Custom_ItineraryCountOutputTypeCountItinerary_stopsArgs<ExtArgs exte
 export type Custom_ItinerarySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   custom_ID?: boolean
   is_made_by_customer?: boolean
-  itinerary?: boolean | Prisma.ItineraryDefaultArgs<ExtArgs>
-  person?: boolean | Prisma.Custom_Itinerary$personArgs<ExtArgs>
-  itinerary_stops?: boolean | Prisma.Custom_Itinerary$itinerary_stopsArgs<ExtArgs>
+  Itinerary?: boolean | Prisma.ItineraryDefaultArgs<ExtArgs>
+  Person?: boolean | Prisma.Custom_Itinerary$PersonArgs<ExtArgs>
+  Itinerary_Stops?: boolean | Prisma.Custom_Itinerary$Itinerary_StopsArgs<ExtArgs>
   _count?: boolean | Prisma.Custom_ItineraryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["custom_Itinerary"]>
 
@@ -605,18 +605,18 @@ export type Custom_ItinerarySelectScalar = {
 
 export type Custom_ItineraryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"custom_ID" | "is_made_by_customer", ExtArgs["result"]["custom_Itinerary"]>
 export type Custom_ItineraryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  itinerary?: boolean | Prisma.ItineraryDefaultArgs<ExtArgs>
-  person?: boolean | Prisma.Custom_Itinerary$personArgs<ExtArgs>
-  itinerary_stops?: boolean | Prisma.Custom_Itinerary$itinerary_stopsArgs<ExtArgs>
+  Itinerary?: boolean | Prisma.ItineraryDefaultArgs<ExtArgs>
+  Person?: boolean | Prisma.Custom_Itinerary$PersonArgs<ExtArgs>
+  Itinerary_Stops?: boolean | Prisma.Custom_Itinerary$Itinerary_StopsArgs<ExtArgs>
   _count?: boolean | Prisma.Custom_ItineraryCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $Custom_ItineraryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Custom_Itinerary"
   objects: {
-    itinerary: Prisma.$ItineraryPayload<ExtArgs>
-    person: Prisma.$PersonPayload<ExtArgs> | null
-    itinerary_stops: Prisma.$Itinerary_StopsPayload<ExtArgs>[]
+    Itinerary: Prisma.$ItineraryPayload<ExtArgs>
+    Person: Prisma.$PersonPayload<ExtArgs> | null
+    Itinerary_Stops: Prisma.$Itinerary_StopsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     custom_ID: number
@@ -961,9 +961,9 @@ readonly fields: Custom_ItineraryFieldRefs;
  */
 export interface Prisma__Custom_ItineraryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  itinerary<T extends Prisma.ItineraryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ItineraryDefaultArgs<ExtArgs>>): Prisma.Prisma__ItineraryClient<runtime.Types.Result.GetResult<Prisma.$ItineraryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  person<T extends Prisma.Custom_Itinerary$personArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Custom_Itinerary$personArgs<ExtArgs>>): Prisma.Prisma__PersonClient<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  itinerary_stops<T extends Prisma.Custom_Itinerary$itinerary_stopsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Custom_Itinerary$itinerary_stopsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$Itinerary_StopsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Itinerary<T extends Prisma.ItineraryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ItineraryDefaultArgs<ExtArgs>>): Prisma.Prisma__ItineraryClient<runtime.Types.Result.GetResult<Prisma.$ItineraryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  Person<T extends Prisma.Custom_Itinerary$PersonArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Custom_Itinerary$PersonArgs<ExtArgs>>): Prisma.Prisma__PersonClient<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  Itinerary_Stops<T extends Prisma.Custom_Itinerary$Itinerary_StopsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Custom_Itinerary$Itinerary_StopsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$Itinerary_StopsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1338,9 +1338,9 @@ export type Custom_ItineraryDeleteManyArgs<ExtArgs extends runtime.Types.Extensi
 }
 
 /**
- * Custom_Itinerary.person
+ * Custom_Itinerary.Person
  */
-export type Custom_Itinerary$personArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Custom_Itinerary$PersonArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Person
    */
@@ -1357,9 +1357,9 @@ export type Custom_Itinerary$personArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 /**
- * Custom_Itinerary.itinerary_stops
+ * Custom_Itinerary.Itinerary_Stops
  */
-export type Custom_Itinerary$itinerary_stopsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Custom_Itinerary$Itinerary_StopsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Itinerary_Stops
    */

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import type {} from "@redux-devtools/extension";
-import { itinerary_type } from "@prisma/client";
+import { ITINERARY_TYPES } from "@/types/db.types";
 
 /*interface InitialDetails {
   date_of_travel: Date;

@@ -1,5 +1,5 @@
-import { Prisma } from "@prisma/client"; // Import the 'Prisma' type
 import { prisma } from "@/lib/db";
+import { Prisma } from "@/prisma/generated/client";
 
 // THIS IS THE "BLUEPRINT"
 // It's just your 'select' object from the query

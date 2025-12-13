@@ -1,4 +1,5 @@
 "use client";
+const SECONDS_PER_STOP = 3600;
 
 import {
   useCustomerDetailsStore,
@@ -6,11 +7,19 @@ import {
 } from "@/store/custom-itinerary.store";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import WarningDialog from "./WarningDialog";
 
 type FormDetails = {
   date_of_travel: string;
   time_for_pickup: string;
   time_for_dropoff: string;
+};
+
+type CustomFormProps = {
+  isRouted: boolean;
+  time: number;
+  numStops: number;
 };
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -30,14 +39,39 @@ const toDateStr = (v?: string | number | Date | null | undefined) => {
     : "";
 };
 
-export default function CustomForm() {
+function timeToSeconds(timeString: string) {
+  const [hours, minutes, seconds = 0] = timeString.split(":").map(Number);
+
+  return hours * 3600 + minutes * 60 + seconds;
+}
+
+function isItineraryValid(itineraryTime: number, stopsTime: number) {
+  return itineraryTime > stopsTime;
+}
+
+export default function CustomForm({
+  isRouted,
+  time,
+  numStops,
+}: CustomFormProps) {
   const router = useRouter();
   const details = useCustomerDetailsStore((l) => l.customerDetails);
   const selectedCount = useLocationsStore((l) => l.locations.length);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [pendingData, setPendingData] = useState<FormDetails | null>(null);
 
   const setCustomerDetails = useCustomerDetailsStore(
     (state) => state.setCustomerDetails
   );
+
+  const navigate = (data: FormDetails) => {
+    setCustomerDetails({
+      date_of_travel: new Date(data.date_of_travel),
+      time_for_pickup: data.time_for_pickup,
+      time_for_dropoff: data.time_for_dropoff,
+    });
+    router.push(`/itinerary/customer-details`);
+  };
 
   const {
     register,
@@ -52,28 +86,58 @@ export default function CustomForm() {
     },
   });
 
-  const canSubmit = isValid && selectedCount >= 2;
+  const canSubmit = isValid && selectedCount >= 2 && isRouted && time > 0;
 
   const onSubmit = async (FormData: FormDetails) => {
-    if (canSubmit) {
-      setCustomerDetails({
-        date_of_travel: new Date(FormData.date_of_travel),
-        time_for_pickup: FormData.time_for_pickup,
-        time_for_dropoff: FormData.time_for_dropoff,
-      });
+    const pickupSec = timeToSeconds(FormData.time_for_pickup);
+    const dropoffSec = timeToSeconds(FormData.time_for_dropoff);
 
-      router.push(`/itinerary/customer-details`);
-    } else {
-      if (!isValid) {
-        alert("Please fill up the form.");
-      } else if (selectedCount < 2) {
-        alert("Please select at least two locations and route them.");
-      }
+    let allocatedTime = dropoffSec - pickupSec;
+    if (allocatedTime < 0) {
+      allocatedTime = 0;
     }
+
+    const drivingTimeOnly = Math.max(0, time);
+    const stopsTime = selectedCount * SECONDS_PER_STOP;
+    const totalRequiredTime = drivingTimeOnly + stopsTime;
+
+    if (!canSubmit) {
+      if (!isValid) alert("Please fill up the form.");
+      else if (selectedCount < 2)
+        alert("Please select at least two locations.");
+      else if (!isRouted) alert("Please route your itinerary!");
+      else if (time <= 0)
+        alert("Route invalid (Time is 0). Please clear and re-route.");
+      return;
+    }
+
+    if (allocatedTime < drivingTimeOnly) {
+      alert(`Your itinerary is too short for your allocated time!`);
+      return;
+    }
+
+    if (allocatedTime < totalRequiredTime) {
+      setPendingData(FormData);
+      setOpenDialog(true);
+      return;
+    }
+
+    navigate(FormData);
   };
 
   return (
     <>
+      <WarningDialog
+        open={openDialog}
+        onOpenChange={setOpenDialog}
+        onConfirm={() => {
+          if (pendingData) {
+            navigate(pendingData);
+            setOpenDialog(false);
+          }
+        }}
+      />
+
       <form className="w-full max-w-3xl m-10" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Date of travel */}

@@ -19,6 +19,8 @@ const images = [
 
 export default function Login() {
   const [current, setCurrent] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const router = useRouter();
 
   useEffect(() => {
@@ -40,7 +42,11 @@ export default function Login() {
       password,
     });
 
-    if (!data?.error) router.push("/home");
+    if (!data?.error) {
+      router.push("/home");
+    } else {
+      setErrorMessage("Login Error: " + data?.error);
+    }
   };
 
   return (
@@ -95,6 +101,12 @@ export default function Login() {
               Register
             </a>
           </p>
+
+          {errorMessage && (
+            <p className="mt-3 text-center text-red-600 font-medium">
+              {errorMessage}
+            </p>
+          )}
         </div>
       </div>
 

@@ -9,11 +9,11 @@ datasource db {
 }
 
 model Custom_Itinerary {
-  custom_ID           Int               @id
+  custom_ID           Int               @id @default(autoincrement())
   is_made_by_customer Int?
-  itinerary           Itinerary         @relation(fields: [custom_ID], references: [itinerary_ID], onUpdate: Restrict, map: "custom_itinerary_ibfk_1")
-  person              Person?           @relation(fields: [is_made_by_customer], references: [person_ID], onDelete: Restrict, onUpdate: Restrict, map: "custom_itinerary_ibfk_2")
-  itinerary_stops     Itinerary_Stops[]
+  Itinerary           Itinerary         @relation(fields: [custom_ID], references: [itinerary_ID], onDelete: NoAction, onUpdate: NoAction, map: "Custom_Itinerary_ibfk_1")
+  Person              Person?           @relation(fields: [is_made_by_customer], references: [person_ID], onDelete: NoAction, onUpdate: NoAction, map: "Custom_Itinerary_ibfk_2")
+  Itinerary_Stops     Itinerary_Stops[]
 
   @@index([is_made_by_customer], map: "is_made_by_customer")
   @@map("custom_itinerary")
@@ -123,17 +123,18 @@ model Order_Details {
 }
 
 model Package_Itinerary {
-  package_ID         Int       @id @default(autoincrement())
-  package_name       String?   @db.VarChar(255)
-  inclusions         String?   @db.VarChar(1024)
-  number_of_PAX      Int?
-  route              String?   @db.VarChar(1024)
-  description        String?   @db.VarChar(1024)
-  is_made_by_manager Int?
-  is_available       Boolean?  @default(false)
-  package_picture    String?   @db.VarChar(255)
-  itinerary          Itinerary @relation(fields: [package_ID], references: [itinerary_ID], onUpdate: Restrict, map: "package_itinerary_ibfk_1")
-  manager            Manager?  @relation(fields: [is_made_by_manager], references: [manager_ID], onDelete: Restrict, onUpdate: Restrict, map: "package_itinerary_ibfk_2")
+  package_ID            Int                     @id @default(autoincrement())
+  package_name          String?                 @db.VarChar(255)
+  inclusions            String?                 @db.VarChar(1024)
+  number_of_PAX         Int?
+  route                 String?                 @db.VarChar(1024)
+  description           String?                 @db.VarChar(1024)
+  is_made_by_manager    Int?
+  is_available          Boolean?                @default(false)
+  package_picture       String?                 @db.VarChar(255)
+  itinerary             Itinerary               @relation(fields: [package_ID], references: [itinerary_ID], onUpdate: Restrict, map: "package_itinerary_ibfk_1")
+  manager               Manager?                @relation(fields: [is_made_by_manager], references: [manager_ID], onDelete: Restrict, onUpdate: Restrict, map: "package_itinerary_ibfk_2")
+  package_itinerary_tag package_itinerary_tag[]
 
   @@index([is_made_by_manager], map: "is_made_by_manager")
   @@map("package_itinerary")
@@ -176,34 +177,25 @@ model Van {
   @@map("van")
 }
 
-<<<<<<< HEAD
-model Message {
-  message_ID   Int      @id @default(autoincrement())
-  sender_ID    Int
-  receiver_ID  Int
-  subject      String?   @db.VarChar(255)
-  content      String    @db.VarChar(2048)
-  isRead       Boolean   @default(false)
-  createdAt    DateTime  @default(now())
-
-  sender   Person  @relation("SentMessages", fields: [sender_ID], references: [person_ID], onDelete: Cascade)
-  receiver Person  @relation("ReceivedMessages", fields: [receiver_ID], references: [person_ID], onDelete: Cascade)
-
-  @@index([sender_ID], map: "sender_ID")
-  @@index([receiver_ID], map: "receiver_ID")
+model tag {
+  tag_ID                Int                     @id @default(autoincrement())
+  name                  String                  @unique @db.VarChar(255)
+  color                 String                  @db.VarChar(255)
+  package_itinerary_tag package_itinerary_tag[]
 }
 
+model package_itinerary_tag {
+  package_itinerary_tag_ID Int               @id @default(autoincrement())
+  package_ID               Int
+  tag_ID                   Int
+  package_itinerary        Package_Itinerary @relation(fields: [package_ID], references: [package_ID])
+  tag                      tag               @relation(fields: [tag_ID], references: [tag_ID])
 
-
-enum Payment_payment_method {
-  CASH
-  GCASH
+  @@index([package_ID])
+  @@index([tag_ID])
 }
 
-enum Itinerary_type {
-=======
 enum itinerary_type {
->>>>>>> 42104827b14aad75578a243e0c4c746525ec6e65
   PACKAGE
   CUSTOM
 }

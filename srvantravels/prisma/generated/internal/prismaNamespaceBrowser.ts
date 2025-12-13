@@ -63,7 +63,9 @@ export const ModelName = {
   Package_Itinerary: 'Package_Itinerary',
   Payment: 'Payment',
   Person: 'Person',
-  Van: 'Van'
+  Van: 'Van',
+  tag: 'tag',
+  package_itinerary_tag: 'package_itinerary_tag'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -220,6 +222,24 @@ export const VanScalarFieldEnum = {
 export type VanScalarFieldEnum = (typeof VanScalarFieldEnum)[keyof typeof VanScalarFieldEnum]
 
 
+export const TagScalarFieldEnum = {
+  tag_ID: 'tag_ID',
+  name: 'name',
+  color: 'color'
+} as const
+
+export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum]
+
+
+export const Package_itinerary_tagScalarFieldEnum = {
+  package_itinerary_tag_ID: 'package_itinerary_tag_ID',
+  package_ID: 'package_ID',
+  tag_ID: 'tag_ID'
+} as const
+
+export type Package_itinerary_tagScalarFieldEnum = (typeof Package_itinerary_tagScalarFieldEnum)[keyof typeof Package_itinerary_tagScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -284,4 +304,12 @@ export const VanOrderByRelevanceFieldEnum = {
 } as const
 
 export type VanOrderByRelevanceFieldEnum = (typeof VanOrderByRelevanceFieldEnum)[keyof typeof VanOrderByRelevanceFieldEnum]
+
+
+export const tagOrderByRelevanceFieldEnum = {
+  name: 'name',
+  color: 'color'
+} as const
+
+export type tagOrderByRelevanceFieldEnum = (typeof tagOrderByRelevanceFieldEnum)[keyof typeof tagOrderByRelevanceFieldEnum]
 
