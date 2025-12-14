@@ -9,10 +9,10 @@ datasource db {
 }
 
 model Custom_Itinerary {
-  custom_ID           Int               @id @default(autoincrement())
+  custom_ID           Int               @id
   is_made_by_customer Int?
-  Itinerary           Itinerary         @relation(fields: [custom_ID], references: [itinerary_ID], onDelete: NoAction, onUpdate: NoAction, map: "Custom_Itinerary_ibfk_1")
-  Person              Person?           @relation(fields: [is_made_by_customer], references: [person_ID], onDelete: NoAction, onUpdate: NoAction, map: "Custom_Itinerary_ibfk_2")
+  Itinerary           Itinerary         @relation(fields: [custom_ID], references: [itinerary_ID], onUpdate: Restrict, map: "Custom_Itinerary_ibfk_1")
+  Person              Person?           @relation(fields: [is_made_by_customer], references: [person_ID], onDelete: Restrict, onUpdate: Restrict, map: "Custom_Itinerary_ibfk_2")
   Itinerary_Stops     Itinerary_Stops[]
 
   @@index([is_made_by_customer], map: "is_made_by_customer")
@@ -100,7 +100,7 @@ model Manager {
   @@map("manager")
 }
 
-model Order_Details { 
+model Order_Details {
   order_ID            Int                   @id @default(autoincrement())
   customer_ID         Int?
   payment_ID          Int?
@@ -185,12 +185,13 @@ model tag {
 }
 
 model package_itinerary_tag {
-  package_itinerary_tag_ID Int               @id @default(autoincrement())
   package_ID               Int
   tag_ID                   Int
+  package_itinerary_tag_ID Int               @id @default(autoincrement())
   package_itinerary        Package_Itinerary @relation(fields: [package_ID], references: [package_ID])
   tag                      tag               @relation(fields: [tag_ID], references: [tag_ID])
 
+  @@unique([package_ID, tag_ID])
   @@index([package_ID])
   @@index([tag_ID])
 }

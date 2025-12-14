@@ -232,9 +232,9 @@ export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagSca
 
 
 export const Package_itinerary_tagScalarFieldEnum = {
-  package_itinerary_tag_ID: 'package_itinerary_tag_ID',
   package_ID: 'package_ID',
-  tag_ID: 'tag_ID'
+  tag_ID: 'tag_ID',
+  package_itinerary_tag_ID: 'package_itinerary_tag_ID'
 } as const
 
 export type Package_itinerary_tagScalarFieldEnum = (typeof Package_itinerary_tagScalarFieldEnum)[keyof typeof Package_itinerary_tagScalarFieldEnum]

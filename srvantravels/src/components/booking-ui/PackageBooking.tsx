@@ -28,26 +28,40 @@ export default function PackageBooking({ package_ID }: { package_ID: number }) {
   }, [package_ID]);
 
   return (
-    <div>
-      {pack ? <Packages key={pack.package_ID} {...pack} /> : <p>Loading...</p>}
+    <main className="min-h-screen bg-[rgba(121,198,209,0.52)] flex justify-center px-6 py-12">
+      <div className="w-full max-w-5xl bg-white rounded-3xl shadow-xl p-10 space-y-10">
 
-      <div className="flex">
-        <Link
-          href="/packages"
-          className="p-5 rounded-3xl bg-cyan-400 text-amber-50 hover:bg-cyan-900 "
-        >
-          Back to Plans
-        </Link>
-        <Link
-          href={`/packages/${package_ID}/booking/page1`}
-          onClick={() => {
-            if (pack) setBookedPackage(pack);
-          }}
-          className="p-5 rounded-3xl bg-orange-500 text-amber-50 hover:bg-orange-900"
-        >
-          Book this Package
-        </Link>
+        {/* Package Details */}
+        {pack ? (
+          <Packages key={pack.package_ID} {...pack} />
+        ) : (
+          <p className="text-center text-cyan-700 text-lg">Loading package...</p>
+        )}
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-6 justify-between">
+          <Link
+            href="/packages"
+            className="flex-1 text-center py-4 rounded-2xl 
+                       bg-[#36B9CB] text-white font-semibold
+                       hover:bg-cyan-800 transition"
+          >
+            ← Back to Plans
+          </Link>
+
+          <Link
+            href={`/packages/${package_ID}/booking/page1`}
+            onClick={() => {
+              if (pack) setBookedPackage(pack);
+            }}
+            className="flex-1 text-center py-4 rounded-2xl 
+                       bg-[#F3B54D] text-white font-semibold
+                       hover:bg-orange-600 transition"
+          >
+            Book this Package
+          </Link>
+        </div>
       </div>
-    </div>
+    </main>
   );
 }

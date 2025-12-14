@@ -1,52 +1,89 @@
+import Image from "next/image";
+
 export default function AboutUs() {
   return (
-    <div className="bg-white shadow-md rounded-2xl p-10 m-5">
-      <h1 className="text-7xl font-bold">
-        ABOUT US - <i>WHY DO WE DRIVE?</i>
-      </h1>
-      <p className="p-5">
-        SR Van Travels are one of these esteemed business corporations that
-        offer standard itineraries that provide clients of all sorts the luxury
-        of being destined from one place to another. SR Van Travels is one of
-        the many itinerary services present in Cebu. It is a growing transport
-        service provider whose service caters to tourists and locals who require
-        efficient, comfortable, and reliable travel across multiple
-        destinations. With a fleet of well-maintained vans, experienced drivers,
-        and a friendly team, SR Van Travels is more than just a transport
-        service — we’re your travel partner. Whether you&apos;re discovering Cebu for
-        the first time or exploring it all over again, we are here to take you
-        there — safely, comfortably, and on time.
-      </p>
-      <h3 className="text-4xl font-bold">
-        Your journey matters. Let SR Van Travels drive you to unforgettable
-        destinations.
-      </h3>
-      <h3 className="text-2xl font-bold mt-5">CONTACTS:</h3>
-      <div className="grid grid-cols-2 gap-5">
-        <div className="bg-white shadow-md rounded-2xl p-5">
-          <h1 className="font-bold text-teal-900">Facebook</h1>
-          <p className="p-5">SR Van Travels</p>
+    <section className="bg-[rgba(121,198,209,0.52)] py-16 px-6">
+      <div className="max-w-6xl mx-auto bg-white rounded-3xl shadow-xl p-12 space-y-10">
+        
+        <div className="flex flex-col items-center text-center space-y-4">
+          <div className="w-36 h-36 md:w-40 md:h-40 flex items-center justify-center">
+            <Image
+              src="/images/srvanlogo2.png"
+              alt="SR Van Travels Logo"
+              width={160}
+              height={160}
+              className="object-contain"
+            />
+          </div>
+
+          <h1 className="text-5xl md:text-6xl font-extrabold text-black">
+            ABOUT US
+          </h1>
+          <p className="text-xl italic text-black">
+            Why do we drive?
+          </p>
         </div>
-        <div className="bg-white shadow-md rounded-2xl p-5">
-          <h1 className="font-bold text-teal-900">Email</h1>
-          <p className="p-5">srvantravels@gmail.com</p>
+
+        <p className="text-lg leading-relaxed text-black text-justify">
+          SR Van Travels is one of Cebu&apos;s growing transport service providers,
+          offering standard itineraries that bring clients from one destination
+          to another with comfort and reliability. We cater to tourists and
+          locals who require efficient, safe, and stress-free travel across
+          multiple locations.
+          <br /><br />
+          With a fleet of well-maintained vans, experienced drivers, and a
+          friendly team, SR Van Travels is more than just transportation —
+          we&apos;re your travel partner. Whether you&apos;re discovering Cebu for
+          the first time or exploring it all over again, we are here to take
+          you there — safely, comfortably, and on time.
+        </p>
+
+        <div className="text-center space-y-1">
+          <p className="text-3xl md:text-4xl font-extrabold text-black">
+            Your journey matters.
+          </p>
+          <p className="text-lg text-black">
+            Let SR Van Travels drive you to unforgettable destinations.
+          </p>
         </div>
-        <div className="bg-white shadow-md rounded-2xl p-5">
-          <h1 className="font-bold text-teal-900">Phone Numbers</h1>
-          <div className="grid grid-cols-2 gap-3">
-            <p>09452866649</p>
-            <p>09478196739</p>
-            <p>09166240642</p>
-            <p>09166629657</p>
-            <p>0916660527</p>
-            <p>09569430826</p>
+
+        <div className="space-y-6">
+          <h3 className="text-3xl font-bold text-black text-center">
+            Contact Us
+          </h3>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+              <h4 className="font-bold text-black mb-2">Facebook</h4>
+              <p>SR Van Travels</p>
+            </div>
+
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+              <h4 className="font-bold text-black mb-2">Email</h4>
+              <p>srvantravels@gmail.com</p>
+            </div>
+
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+              <h4 className="font-bold text-black mb-4">Phone Numbers</h4>
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                <p>09452866649</p>
+                <p>09478196739</p>
+                <p>09166240642</p>
+                <p>09166629657</p>
+                <p>0916660527</p>
+                <p>09569430826</p>
+              </div>
+            </div>
+
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+              <h4 className="font-bold text-black mb-2">Location</h4>
+              <p>
+                Jugan, Consolacion, Cebu City, Philippines
+              </p>
+            </div>
           </div>
         </div>
-        <div className="bg-white shadow-md rounded-2xl p-5">
-          <h1 className="font-bold text-teal-900">Location</h1>
-          <p className="p-5">Jugan, Consolacion, Cebu City, Philippines</p>
-        </div>
       </div>
-    </div>
+    </section>
   );
 }

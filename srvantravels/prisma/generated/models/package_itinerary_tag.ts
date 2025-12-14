@@ -27,65 +27,65 @@ export type AggregatePackage_itinerary_tag = {
 }
 
 export type Package_itinerary_tagAvgAggregateOutputType = {
-  package_itinerary_tag_ID: number | null
   package_ID: number | null
   tag_ID: number | null
+  package_itinerary_tag_ID: number | null
 }
 
 export type Package_itinerary_tagSumAggregateOutputType = {
-  package_itinerary_tag_ID: number | null
   package_ID: number | null
   tag_ID: number | null
+  package_itinerary_tag_ID: number | null
 }
 
 export type Package_itinerary_tagMinAggregateOutputType = {
-  package_itinerary_tag_ID: number | null
   package_ID: number | null
   tag_ID: number | null
+  package_itinerary_tag_ID: number | null
 }
 
 export type Package_itinerary_tagMaxAggregateOutputType = {
-  package_itinerary_tag_ID: number | null
   package_ID: number | null
   tag_ID: number | null
+  package_itinerary_tag_ID: number | null
 }
 
 export type Package_itinerary_tagCountAggregateOutputType = {
-  package_itinerary_tag_ID: number
   package_ID: number
   tag_ID: number
+  package_itinerary_tag_ID: number
   _all: number
 }
 
 
 export type Package_itinerary_tagAvgAggregateInputType = {
-  package_itinerary_tag_ID?: true
   package_ID?: true
   tag_ID?: true
+  package_itinerary_tag_ID?: true
 }
 
 export type Package_itinerary_tagSumAggregateInputType = {
-  package_itinerary_tag_ID?: true
   package_ID?: true
   tag_ID?: true
+  package_itinerary_tag_ID?: true
 }
 
 export type Package_itinerary_tagMinAggregateInputType = {
-  package_itinerary_tag_ID?: true
   package_ID?: true
   tag_ID?: true
+  package_itinerary_tag_ID?: true
 }
 
 export type Package_itinerary_tagMaxAggregateInputType = {
-  package_itinerary_tag_ID?: true
   package_ID?: true
   tag_ID?: true
+  package_itinerary_tag_ID?: true
 }
 
 export type Package_itinerary_tagCountAggregateInputType = {
-  package_itinerary_tag_ID?: true
   package_ID?: true
   tag_ID?: true
+  package_itinerary_tag_ID?: true
   _all?: true
 }
 
@@ -176,9 +176,9 @@ export type package_itinerary_tagGroupByArgs<ExtArgs extends runtime.Types.Exten
 }
 
 export type Package_itinerary_tagGroupByOutputType = {
-  package_itinerary_tag_ID: number
   package_ID: number
   tag_ID: number
+  package_itinerary_tag_ID: number
   _count: Package_itinerary_tagCountAggregateOutputType | null
   _avg: Package_itinerary_tagAvgAggregateOutputType | null
   _sum: Package_itinerary_tagSumAggregateOutputType | null
@@ -205,23 +205,24 @@ export type package_itinerary_tagWhereInput = {
   AND?: Prisma.package_itinerary_tagWhereInput | Prisma.package_itinerary_tagWhereInput[]
   OR?: Prisma.package_itinerary_tagWhereInput[]
   NOT?: Prisma.package_itinerary_tagWhereInput | Prisma.package_itinerary_tagWhereInput[]
-  package_itinerary_tag_ID?: Prisma.IntFilter<"package_itinerary_tag"> | number
   package_ID?: Prisma.IntFilter<"package_itinerary_tag"> | number
   tag_ID?: Prisma.IntFilter<"package_itinerary_tag"> | number
+  package_itinerary_tag_ID?: Prisma.IntFilter<"package_itinerary_tag"> | number
   package_itinerary?: Prisma.XOR<Prisma.Package_ItineraryScalarRelationFilter, Prisma.Package_ItineraryWhereInput>
   tag?: Prisma.XOR<Prisma.TagScalarRelationFilter, Prisma.tagWhereInput>
 }
 
 export type package_itinerary_tagOrderByWithRelationInput = {
-  package_itinerary_tag_ID?: Prisma.SortOrder
   package_ID?: Prisma.SortOrder
   tag_ID?: Prisma.SortOrder
+  package_itinerary_tag_ID?: Prisma.SortOrder
   package_itinerary?: Prisma.Package_ItineraryOrderByWithRelationInput
   tag?: Prisma.tagOrderByWithRelationInput
 }
 
 export type package_itinerary_tagWhereUniqueInput = Prisma.AtLeast<{
   package_itinerary_tag_ID?: number
+  package_ID_tag_ID?: Prisma.package_itinerary_tagPackage_IDTag_IDCompoundUniqueInput
   AND?: Prisma.package_itinerary_tagWhereInput | Prisma.package_itinerary_tagWhereInput[]
   OR?: Prisma.package_itinerary_tagWhereInput[]
   NOT?: Prisma.package_itinerary_tagWhereInput | Prisma.package_itinerary_tagWhereInput[]
@@ -229,12 +230,12 @@ export type package_itinerary_tagWhereUniqueInput = Prisma.AtLeast<{
   tag_ID?: Prisma.IntFilter<"package_itinerary_tag"> | number
   package_itinerary?: Prisma.XOR<Prisma.Package_ItineraryScalarRelationFilter, Prisma.Package_ItineraryWhereInput>
   tag?: Prisma.XOR<Prisma.TagScalarRelationFilter, Prisma.tagWhereInput>
-}, "package_itinerary_tag_ID">
+}, "package_itinerary_tag_ID" | "package_ID_tag_ID">
 
 export type package_itinerary_tagOrderByWithAggregationInput = {
-  package_itinerary_tag_ID?: Prisma.SortOrder
   package_ID?: Prisma.SortOrder
   tag_ID?: Prisma.SortOrder
+  package_itinerary_tag_ID?: Prisma.SortOrder
   _count?: Prisma.package_itinerary_tagCountOrderByAggregateInput
   _avg?: Prisma.package_itinerary_tagAvgOrderByAggregateInput
   _max?: Prisma.package_itinerary_tagMaxOrderByAggregateInput
@@ -246,9 +247,9 @@ export type package_itinerary_tagScalarWhereWithAggregatesInput = {
   AND?: Prisma.package_itinerary_tagScalarWhereWithAggregatesInput | Prisma.package_itinerary_tagScalarWhereWithAggregatesInput[]
   OR?: Prisma.package_itinerary_tagScalarWhereWithAggregatesInput[]
   NOT?: Prisma.package_itinerary_tagScalarWhereWithAggregatesInput | Prisma.package_itinerary_tagScalarWhereWithAggregatesInput[]
-  package_itinerary_tag_ID?: Prisma.IntWithAggregatesFilter<"package_itinerary_tag"> | number
   package_ID?: Prisma.IntWithAggregatesFilter<"package_itinerary_tag"> | number
   tag_ID?: Prisma.IntWithAggregatesFilter<"package_itinerary_tag"> | number
+  package_itinerary_tag_ID?: Prisma.IntWithAggregatesFilter<"package_itinerary_tag"> | number
 }
 
 export type package_itinerary_tagCreateInput = {
@@ -257,9 +258,9 @@ export type package_itinerary_tagCreateInput = {
 }
 
 export type package_itinerary_tagUncheckedCreateInput = {
-  package_itinerary_tag_ID?: number
   package_ID: number
   tag_ID: number
+  package_itinerary_tag_ID?: number
 }
 
 export type package_itinerary_tagUpdateInput = {
@@ -268,15 +269,15 @@ export type package_itinerary_tagUpdateInput = {
 }
 
 export type package_itinerary_tagUncheckedUpdateInput = {
-  package_itinerary_tag_ID?: Prisma.IntFieldUpdateOperationsInput | number
   package_ID?: Prisma.IntFieldUpdateOperationsInput | number
   tag_ID?: Prisma.IntFieldUpdateOperationsInput | number
+  package_itinerary_tag_ID?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type package_itinerary_tagCreateManyInput = {
-  package_itinerary_tag_ID?: number
   package_ID: number
   tag_ID: number
+  package_itinerary_tag_ID?: number
 }
 
 export type package_itinerary_tagUpdateManyMutationInput = {
@@ -284,9 +285,9 @@ export type package_itinerary_tagUpdateManyMutationInput = {
 }
 
 export type package_itinerary_tagUncheckedUpdateManyInput = {
-  package_itinerary_tag_ID?: Prisma.IntFieldUpdateOperationsInput | number
   package_ID?: Prisma.IntFieldUpdateOperationsInput | number
   tag_ID?: Prisma.IntFieldUpdateOperationsInput | number
+  package_itinerary_tag_ID?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type Package_itinerary_tagListRelationFilter = {
@@ -299,34 +300,39 @@ export type package_itinerary_tagOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type package_itinerary_tagPackage_IDTag_IDCompoundUniqueInput = {
+  package_ID: number
+  tag_ID: number
+}
+
 export type package_itinerary_tagCountOrderByAggregateInput = {
-  package_itinerary_tag_ID?: Prisma.SortOrder
   package_ID?: Prisma.SortOrder
   tag_ID?: Prisma.SortOrder
+  package_itinerary_tag_ID?: Prisma.SortOrder
 }
 
 export type package_itinerary_tagAvgOrderByAggregateInput = {
-  package_itinerary_tag_ID?: Prisma.SortOrder
   package_ID?: Prisma.SortOrder
   tag_ID?: Prisma.SortOrder
+  package_itinerary_tag_ID?: Prisma.SortOrder
 }
 
 export type package_itinerary_tagMaxOrderByAggregateInput = {
-  package_itinerary_tag_ID?: Prisma.SortOrder
   package_ID?: Prisma.SortOrder
   tag_ID?: Prisma.SortOrder
+  package_itinerary_tag_ID?: Prisma.SortOrder
 }
 
 export type package_itinerary_tagMinOrderByAggregateInput = {
-  package_itinerary_tag_ID?: Prisma.SortOrder
   package_ID?: Prisma.SortOrder
   tag_ID?: Prisma.SortOrder
+  package_itinerary_tag_ID?: Prisma.SortOrder
 }
 
 export type package_itinerary_tagSumOrderByAggregateInput = {
-  package_itinerary_tag_ID?: Prisma.SortOrder
   package_ID?: Prisma.SortOrder
   tag_ID?: Prisma.SortOrder
+  package_itinerary_tag_ID?: Prisma.SortOrder
 }
 
 export type package_itinerary_tagCreateNestedManyWithoutPackage_itineraryInput = {
@@ -418,8 +424,8 @@ export type package_itinerary_tagCreateWithoutPackage_itineraryInput = {
 }
 
 export type package_itinerary_tagUncheckedCreateWithoutPackage_itineraryInput = {
-  package_itinerary_tag_ID?: number
   tag_ID: number
+  package_itinerary_tag_ID?: number
 }
 
 export type package_itinerary_tagCreateOrConnectWithoutPackage_itineraryInput = {
@@ -452,9 +458,9 @@ export type package_itinerary_tagScalarWhereInput = {
   AND?: Prisma.package_itinerary_tagScalarWhereInput | Prisma.package_itinerary_tagScalarWhereInput[]
   OR?: Prisma.package_itinerary_tagScalarWhereInput[]
   NOT?: Prisma.package_itinerary_tagScalarWhereInput | Prisma.package_itinerary_tagScalarWhereInput[]
-  package_itinerary_tag_ID?: Prisma.IntFilter<"package_itinerary_tag"> | number
   package_ID?: Prisma.IntFilter<"package_itinerary_tag"> | number
   tag_ID?: Prisma.IntFilter<"package_itinerary_tag"> | number
+  package_itinerary_tag_ID?: Prisma.IntFilter<"package_itinerary_tag"> | number
 }
 
 export type package_itinerary_tagCreateWithoutTagInput = {
@@ -462,8 +468,8 @@ export type package_itinerary_tagCreateWithoutTagInput = {
 }
 
 export type package_itinerary_tagUncheckedCreateWithoutTagInput = {
-  package_itinerary_tag_ID?: number
   package_ID: number
+  package_itinerary_tag_ID?: number
 }
 
 export type package_itinerary_tagCreateOrConnectWithoutTagInput = {
@@ -493,8 +499,8 @@ export type package_itinerary_tagUpdateManyWithWhereWithoutTagInput = {
 }
 
 export type package_itinerary_tagCreateManyPackage_itineraryInput = {
-  package_itinerary_tag_ID?: number
   tag_ID: number
+  package_itinerary_tag_ID?: number
 }
 
 export type package_itinerary_tagUpdateWithoutPackage_itineraryInput = {
@@ -502,18 +508,18 @@ export type package_itinerary_tagUpdateWithoutPackage_itineraryInput = {
 }
 
 export type package_itinerary_tagUncheckedUpdateWithoutPackage_itineraryInput = {
-  package_itinerary_tag_ID?: Prisma.IntFieldUpdateOperationsInput | number
   tag_ID?: Prisma.IntFieldUpdateOperationsInput | number
+  package_itinerary_tag_ID?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type package_itinerary_tagUncheckedUpdateManyWithoutPackage_itineraryInput = {
-  package_itinerary_tag_ID?: Prisma.IntFieldUpdateOperationsInput | number
   tag_ID?: Prisma.IntFieldUpdateOperationsInput | number
+  package_itinerary_tag_ID?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type package_itinerary_tagCreateManyTagInput = {
-  package_itinerary_tag_ID?: number
   package_ID: number
+  package_itinerary_tag_ID?: number
 }
 
 export type package_itinerary_tagUpdateWithoutTagInput = {
@@ -521,21 +527,21 @@ export type package_itinerary_tagUpdateWithoutTagInput = {
 }
 
 export type package_itinerary_tagUncheckedUpdateWithoutTagInput = {
-  package_itinerary_tag_ID?: Prisma.IntFieldUpdateOperationsInput | number
   package_ID?: Prisma.IntFieldUpdateOperationsInput | number
+  package_itinerary_tag_ID?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type package_itinerary_tagUncheckedUpdateManyWithoutTagInput = {
-  package_itinerary_tag_ID?: Prisma.IntFieldUpdateOperationsInput | number
   package_ID?: Prisma.IntFieldUpdateOperationsInput | number
+  package_itinerary_tag_ID?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
 
 export type package_itinerary_tagSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  package_itinerary_tag_ID?: boolean
   package_ID?: boolean
   tag_ID?: boolean
+  package_itinerary_tag_ID?: boolean
   package_itinerary?: boolean | Prisma.Package_ItineraryDefaultArgs<ExtArgs>
   tag?: boolean | Prisma.tagDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["package_itinerary_tag"]>
@@ -543,12 +549,12 @@ export type package_itinerary_tagSelect<ExtArgs extends runtime.Types.Extensions
 
 
 export type package_itinerary_tagSelectScalar = {
-  package_itinerary_tag_ID?: boolean
   package_ID?: boolean
   tag_ID?: boolean
+  package_itinerary_tag_ID?: boolean
 }
 
-export type package_itinerary_tagOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"package_itinerary_tag_ID" | "package_ID" | "tag_ID", ExtArgs["result"]["package_itinerary_tag"]>
+export type package_itinerary_tagOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"package_ID" | "tag_ID" | "package_itinerary_tag_ID", ExtArgs["result"]["package_itinerary_tag"]>
 export type package_itinerary_tagInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   package_itinerary?: boolean | Prisma.Package_ItineraryDefaultArgs<ExtArgs>
   tag?: boolean | Prisma.tagDefaultArgs<ExtArgs>
@@ -561,9 +567,9 @@ export type $package_itinerary_tagPayload<ExtArgs extends runtime.Types.Extensio
     tag: Prisma.$tagPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    package_itinerary_tag_ID: number
     package_ID: number
     tag_ID: number
+    package_itinerary_tag_ID: number
   }, ExtArgs["result"]["package_itinerary_tag"]>
   composites: {}
 }
@@ -647,8 +653,8 @@ export interface package_itinerary_tagDelegate<ExtArgs extends runtime.Types.Ext
    * // Get first 10 Package_itinerary_tags
    * const package_itinerary_tags = await prisma.package_itinerary_tag.findMany({ take: 10 })
    * 
-   * // Only select the `package_itinerary_tag_ID`
-   * const package_itinerary_tagWithPackage_itinerary_tag_IDOnly = await prisma.package_itinerary_tag.findMany({ select: { package_itinerary_tag_ID: true } })
+   * // Only select the `package_ID`
+   * const package_itinerary_tagWithPackage_IDOnly = await prisma.package_itinerary_tag.findMany({ select: { package_ID: true } })
    * 
    */
   findMany<T extends package_itinerary_tagFindManyArgs>(args?: Prisma.SelectSubset<T, package_itinerary_tagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$package_itinerary_tagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -935,9 +941,9 @@ export interface Prisma__package_itinerary_tagClient<T, Null = never, ExtArgs ex
  * Fields of the package_itinerary_tag model
  */
 export interface package_itinerary_tagFieldRefs {
-  readonly package_itinerary_tag_ID: Prisma.FieldRef<"package_itinerary_tag", 'Int'>
   readonly package_ID: Prisma.FieldRef<"package_itinerary_tag", 'Int'>
   readonly tag_ID: Prisma.FieldRef<"package_itinerary_tag", 'Int'>
+  readonly package_itinerary_tag_ID: Prisma.FieldRef<"package_itinerary_tag", 'Int'>
 }
     
 
