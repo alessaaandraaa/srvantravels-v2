@@ -113,8 +113,7 @@ model Message {
   content String   @db.Text
   sent_at DateTime @default(now())
 
-  type   message_type   @default(GENERAL_INQUIRY)
-  status message_status @default(UNREAD)
+  type message_type @default(GENERAL_INQUIRY)
 
   // Relations
   sender   Person         @relation("SentMessages", fields: [sender_ID], references: [person_ID], onDelete: Cascade)
@@ -256,10 +255,4 @@ enum message_type {
   CANCELLATION_REQUEST
   REBOOKING_REQUEST
   GENERAL_INQUIRY
-}
-
-enum message_status {
-  UNREAD
-  READ
-  RESOLVED
 }

@@ -1,9 +1,9 @@
 const { prisma } = await import("@/lib/db");
-import { itinerary_type } from "@prisma/client";
+import { ITINERARY_TYPES } from "@/types/db.types";
 
 type Itinerary = {
   price: number;
-  type: itinerary_type;
+  type: (typeof ITINERARY_TYPES)[keyof typeof ITINERARY_TYPES];
 };
 
 class ItineraryService {

@@ -58,6 +58,11 @@ export type Locations = Prisma.LocationsModel
  */
 export type Manager = Prisma.ManagerModel
 /**
+ * Model Message
+ * 
+ */
+export type Message = Prisma.MessageModel
+/**
  * Model Order_Details
  * 
  */

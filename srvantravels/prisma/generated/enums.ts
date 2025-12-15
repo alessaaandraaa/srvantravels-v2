@@ -43,3 +43,12 @@ export const payment_payment_method = {
 } as const
 
 export type payment_payment_method = (typeof payment_payment_method)[keyof typeof payment_payment_method]
+
+
+export const message_type = {
+  CANCELLATION_REQUEST: 'CANCELLATION_REQUEST',
+  REBOOKING_REQUEST: 'REBOOKING_REQUEST',
+  GENERAL_INQUIRY: 'GENERAL_INQUIRY'
+} as const
+
+export type message_type = (typeof message_type)[keyof typeof message_type]
