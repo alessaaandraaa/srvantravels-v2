@@ -12,7 +12,7 @@ const UserInboxLeftPanel = () => {
         <p>Current Requests</p>
       </div>
       {/* PENDING LISTS */}
-      <ScrollArea className="h-[460px] mt-4 overflow-y-auto pr-4">
+      <ScrollArea className="h-115 mt-4 overflow-y-auto pr-4">
         {/* LIST ITEMS */}
         <div className="flex flex-col gap-4">
           <Card>

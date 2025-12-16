@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -9,8 +11,57 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import OrderSelectServer from "./UserOrderSelectServer";
-export default function UserRebook() {
+import OrderSelect from "./UserOrderSelect";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/navigation";
+
+type id = { user_id: number | null };
+type RebookFormValues = {
+  message: string;
+  rebook_date: string;
+  order_id: string;
+};
+
+export default function UserRebook({ user_id }: id) {
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<RebookFormValues>({
+    defaultValues: {
+      message: "",
+      order_id: "",
+      rebook_date: "",
+    },
+  });
+
+  const onSubmit = async (formData: RebookFormValues) => {
+    const body = {
+      sender_ID: user_id,
+      order_ID: Number(formData.order_id),
+      subject: "Rebooking Request",
+      requested_date: new Date(formData.rebook_date),
+      content: formData.message,
+      type: "REBOOKING_REQUEST",
+    };
+    const response = await fetch("/api/message", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify(body),
+    });
+
+    if (response.ok) {
+      router.push(`/message`);
+    } else {
+      const errorData = await response.json().catch(() => null);
+      console.error("SERVER ERROR:", response.status, errorData);
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -20,17 +71,29 @@ export default function UserRebook() {
           review your request before confirming it.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-2">
-        <form>
-          <OrderSelectServer />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <CardContent className="space-y-2">
+          <OrderSelect
+            user_id={user_id}
+            registration={register("order_id", {
+              required: "Please select an order",
+            })}
+          />
+
+          {errors.order_id && (
+            <p className="text-red-500 text-sm">{errors.order_id.message}</p>
+          )}
+
           <div className="p-3 gap-2">
             <label htmlFor="rebook_date" className="font-medium mr-2">
               Rebooking Date:
             </label>
-            <input
+            <Input
               type="date"
               id="rebook_date"
-              name="rebook_date"
+              {...register("rebook_date", {
+                required: "Rebooking date is required",
+              })}
               className="border border-gray-200 p-3 rounded-2xl"
             />
           </div>
@@ -38,13 +101,19 @@ export default function UserRebook() {
             <Label htmlFor="message" className="pb-3">
               Reason
             </Label>
-            <Input id="message" placeholder="Send your reason here." />
+            <Input
+              id="message"
+              placeholder="Send your reason here."
+              {...register("message", { required: "Reason is required" })}
+            />
           </div>
-        </form>
-      </CardContent>
-      <CardFooter>
-        <Button>Submit Rebook Request</Button>
-      </CardFooter>
+        </CardContent>
+        <CardFooter>
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Sending..." : "Submit"}
+          </Button>
+        </CardFooter>
+      </form>
     </Card>
   );
 }

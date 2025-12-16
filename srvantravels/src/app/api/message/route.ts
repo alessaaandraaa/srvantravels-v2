@@ -12,7 +12,7 @@ export async function POST(req: Request) {
       sender_ID: body.sender_ID,
       receiver_ID: body.receiver_ID,
       order_ID: body.order_ID,
-      requested_date: body.request_date,
+      requested_date: body.requested_date,
       subject: body.subject,
       content: body.content,
       type: body.type,
