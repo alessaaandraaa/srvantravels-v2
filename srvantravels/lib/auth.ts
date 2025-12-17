@@ -19,34 +19,45 @@ export const authOptions: NextAuthOptions = {
       id: "credentials",
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "text", placeholder: "user@gmail.com" },
+        email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null;
-        }
+        if (!credentials?.email || !credentials?.password) return null;
 
         const user = await prisma.person.findUnique({
-          where: { email: credentials?.email },
+          where: { email: credentials.email },
         });
 
-        if (!user) {
-          console.log("no user found.");
-          return null;
-        }
+        if (!user || !user.password) return null;
 
-        const pass = await compare(credentials.password, user.password!);
-        if (!pass) {
-          console.log("incorrect password");
-          return null;
+        const isPasswordValid = await compare(
+          credentials.password,
+          user.password
+        );
+        if (!isPasswordValid) return null;
+
+        let userRole = "USER";
+        const isManager = await prisma.manager.findUnique({
+          where: { manager_ID: user.person_ID },
+        });
+
+        if (isManager) {
+          userRole = "MANAGER";
+        } else {
+          const isDriver = await prisma.driver.findUnique({
+            where: { driver_ID: user.person_ID },
+          });
+          if (isDriver) userRole = "DRIVER";
         }
 
         return {
-          id: user.person_ID + "",
-          name: user.name ?? "",
-          email: user.email ?? "",
-          contact_number: user.contact_number ?? "",
+          id: user.person_ID.toString(),
+          name: user.name,
+          email: user.email,
+          contact_number: user.contact_number,
+          role: userRole,
         };
       },
     }),
@@ -55,24 +66,18 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        return {
-          ...token,
-          name: user.name,
-          email: user.email,
-          contact_number: user.contact_number,
-        };
+        token.role = user.role;
+        token.contact_number = user.contact_number;
       }
       return token;
     },
     async session({ session, token }) {
-      console.log(session);
       return {
         ...session,
         user: {
           ...session.user,
-          id: token.id ?? token.sub,
-          name: token.name,
-          email: token.email,
+          id: token.id,
+          role: token.role,
           contact_number: token.contact_number,
         },
       };
