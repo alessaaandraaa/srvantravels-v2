@@ -1,7 +1,19 @@
-import { getTotalCustomers } from "@/services/dashboard-service";
-import { Customers } from "./AdminHeaderCards";
+"use client";
 
-export default async function CustomersWrapper() {
-  const customers = await getTotalCustomers();
-  return <Customers total={customers} />;
+import { Customers } from "./AdminHeaderCards";
+import { useState, useEffect } from "react";
+
+type customerCount = number;
+
+export default function CustomersWrapper() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    fetch(`/api/customer`)
+      .then((response) => response.json())
+      .then((data) => setCount(data.count))
+      .catch((err) => console.error(err));
+  }, []);
+
+  return <Customers total={count} />;
 }

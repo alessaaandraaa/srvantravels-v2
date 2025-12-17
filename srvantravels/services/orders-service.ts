@@ -66,7 +66,6 @@ class OrdersService {
       const unfin_orders = await prisma.customer.findMany({
         where: {
           customer_ID: customer_id,
-          // This ensures we only look at customers who HAVE future orders
           order_details: {
             some: {
               date_of_travel: { gte: new Date() },
@@ -75,13 +74,11 @@ class OrdersService {
         },
         select: {
           order_details: {
-            // 🟢 1. FILTER: Only get orders where travel date is in the future
             where: {
               date_of_travel: {
                 gte: new Date(),
               },
             },
-            // 🟢 2. SORT: Sort the orders by date
             orderBy: {
               date_of_travel: "asc",
             },
@@ -97,7 +94,6 @@ class OrdersService {
                       package_name: true,
                     },
                   },
-                  // 🟢 3. DATA: Get the ID for custom trips
                   custom_itinerary: {
                     select: {
                       custom_ID: true,

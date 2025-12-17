@@ -2,8 +2,6 @@
 const { prisma } = await import("@/lib/db");
 
 export class InboxService {
-
-  /** Get inbox list (Admin) */
   static async getInboxList() {
     return prisma.message.findMany({
       orderBy: {
@@ -20,7 +18,7 @@ export class InboxService {
           },
         },
       },
-    })
+    });
   }
 
   /** Get single message by ID */
@@ -38,6 +36,6 @@ export class InboxService {
         },
         order: true,
       },
-    })
+    });
   }
 }
