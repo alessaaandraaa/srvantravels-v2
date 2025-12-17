@@ -100,6 +100,35 @@ model Manager {
   @@map("manager")
 }
 
+<<<<<<< HEAD
+=======
+model Message {
+  message_ID Int @id @default(autoincrement())
+
+  sender_ID   Int // The Customer (or Admin replying)
+  receiver_ID Int? // NULL = Sent to All Admins. SET = Sent to specific User.
+
+  order_ID       Int? // Optional: Context for Cancellations/Rebookings
+  requested_date DateTime? @db.Date // Optional: Only used for Rebooking requests
+
+  subject String?  @db.VarChar(255)
+  content String   @db.Text
+  sent_at DateTime @default(now())
+
+  type message_type @default(GENERAL_INQUIRY)
+
+  // Relations
+  sender   Person         @relation("SentMessages", fields: [sender_ID], references: [person_ID], onDelete: Cascade)
+  receiver Person?        @relation("ReceivedMessages", fields: [receiver_ID], references: [person_ID], onDelete: SetNull)
+  order    Order_Details? @relation(fields: [order_ID], references: [order_ID], onDelete: SetNull)
+
+  @@index([sender_ID])
+  @@index([receiver_ID])
+  @@index([order_ID])
+  @@map("message")
+}
+
+>>>>>>> 27a28f71e9a58138f1076198d24d5fc5571d7e31
 model Order_Details {
   order_ID            Int                   @id @default(autoincrement())
   customer_ID         Int?
@@ -116,6 +145,8 @@ model Order_Details {
   customer            Customer?             @relation(fields: [customer_ID, payment_ID], references: [customer_ID, payment_ID], onDelete: Restrict, onUpdate: Restrict, map: "order_details_ibfk_1")
   driver              Driver?               @relation(fields: [driver_ID], references: [driver_ID], onDelete: Restrict, onUpdate: Restrict, map: "order_details_ibfk_2")
   itinerary           Itinerary?            @relation(fields: [itinerary_ID], references: [itinerary_ID], onDelete: Restrict, onUpdate: Restrict, map: "order_details_ibfk_3")
+
+  messages Message[]
 
   @@index([customer_ID, payment_ID], map: "customer_ID")
   @@index([driver_ID], map: "driver_ID")
@@ -162,6 +193,9 @@ model Person {
   employee                            Employee?
   message_message_receiver_IDToperson message[]          @relation("message_receiver_IDToperson")
   message_message_sender_IDToperson   message[]          @relation("message_sender_IDToperson")
+
+  sent_messages     Message[] @relation("SentMessages")
+  received_messages Message[] @relation("ReceivedMessages")
 
   @@map("person")
 }

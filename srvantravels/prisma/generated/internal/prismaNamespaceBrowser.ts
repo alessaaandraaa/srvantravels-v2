@@ -59,6 +59,7 @@ export const ModelName = {
   Itinerary_Stops: 'Itinerary_Stops',
   Locations: 'Locations',
   Manager: 'Manager',
+  Message: 'Message',
   Order_Details: 'Order_Details',
   Package_Itinerary: 'Package_Itinerary',
   Payment: 'Payment',
@@ -157,6 +158,21 @@ export const ManagerScalarFieldEnum = {
 } as const
 
 export type ManagerScalarFieldEnum = (typeof ManagerScalarFieldEnum)[keyof typeof ManagerScalarFieldEnum]
+
+
+export const MessageScalarFieldEnum = {
+  message_ID: 'message_ID',
+  sender_ID: 'sender_ID',
+  receiver_ID: 'receiver_ID',
+  order_ID: 'order_ID',
+  requested_date: 'requested_date',
+  subject: 'subject',
+  content: 'content',
+  sent_at: 'sent_at',
+  type: 'type'
+} as const
+
+export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
 
 
 export const Order_DetailsScalarFieldEnum = {
@@ -292,6 +308,14 @@ export const LocationsOrderByRelevanceFieldEnum = {
 } as const
 
 export type LocationsOrderByRelevanceFieldEnum = (typeof LocationsOrderByRelevanceFieldEnum)[keyof typeof LocationsOrderByRelevanceFieldEnum]
+
+
+export const MessageOrderByRelevanceFieldEnum = {
+  subject: 'subject',
+  content: 'content'
+} as const
+
+export type MessageOrderByRelevanceFieldEnum = (typeof MessageOrderByRelevanceFieldEnum)[keyof typeof MessageOrderByRelevanceFieldEnum]
 
 
 export const Package_ItineraryOrderByRelevanceFieldEnum = {

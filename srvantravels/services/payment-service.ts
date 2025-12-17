@@ -1,10 +1,10 @@
 import { prisma } from "@/lib/db";
-import { payment_payment_method, Payment_payment_status } from "@prisma/client";
+import { PAYMENT_METHOD, PAYMENT_STATUS } from "@/types/db.types";
 
 type Payment = {
-  payment_method: payment_payment_method;
+  payment_method: (typeof PAYMENT_METHOD)[keyof typeof PAYMENT_METHOD];
   down_payment: number;
-  payment_status: Payment_payment_status;
+  payment_status: (typeof PAYMENT_STATUS)[keyof typeof PAYMENT_STATUS];
 };
 
 class PaymentService {
@@ -12,9 +12,11 @@ class PaymentService {
     try {
       const newPayment = await prisma.payment.create({
         data: {
-          payment_method: payment_method as payment_payment_method,
+          payment_method:
+            payment_method as (typeof PAYMENT_METHOD)[keyof typeof PAYMENT_METHOD],
           down_payment,
-          payment_status: payment_status as Payment_payment_status,
+          payment_status:
+            payment_status as (typeof PAYMENT_STATUS)[keyof typeof PAYMENT_STATUS],
         },
       });
       return newPayment;

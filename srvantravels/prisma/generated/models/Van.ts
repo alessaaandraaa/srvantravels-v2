@@ -469,10 +469,6 @@ export type VanUncheckedUpdateManyWithoutDriverNestedInput = {
   deleteMany?: Prisma.VanScalarWhereInput | Prisma.VanScalarWhereInput[]
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
-}
-
 export type VanCreateWithoutCustomerInput = {
   plate_number: string
   passenger_capacity?: number | null

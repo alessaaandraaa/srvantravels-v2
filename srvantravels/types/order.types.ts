@@ -38,7 +38,42 @@ const ordersQuerySelector = {
   },
 };
 
+const unfinishedOrdersQuerySelector = {
+  select: {
+    order_details: {
+      select: {
+        order_ID: true,
+        itinerary: {
+          select: {
+            itinerary_ID: true,
+            type: true,
+            package_itinerary: {
+              select: {
+                package_name: true,
+              },
+            },
+            // 🟢 I added this so the type recognizes custom_ID
+            custom_itinerary: {
+              select: {
+                custom_ID: true,
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  orderBy: {
+    date_of_travel: "asc",
+  },
+};
+
 export type OrderPayload = Prisma.CustomerGetPayload<
   typeof ordersQuerySelector
 >;
 export type OrdersListType = OrderPayload[];
+
+export type UnfinishedOrderPayload = Prisma.CustomerGetPayload<
+  typeof unfinishedOrdersQuerySelector
+>;
+export type UnfinishedOrdersListType = UnfinishedOrderPayload[];

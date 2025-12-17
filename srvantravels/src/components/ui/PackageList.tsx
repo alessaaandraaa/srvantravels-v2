@@ -16,7 +16,8 @@ interface Package {
 }
 
 export default function PackageList() {
-  const [packages, setPackages] = useState([]);
+  const [packages, setPackages] = useState<Package[]>([]);
+
   useEffect(() => {
     fetch("/api/packages")
       .then((response) => response.json())
@@ -24,13 +25,16 @@ export default function PackageList() {
   }, []);
 
   return (
-    <div>
-      <h2> PACKAGE LIST </h2>
-      <ul>
+    <main className="min-h-screen bg-[rgba(121,198,209,0.52)] px-10 py-14">
+      <h1 className="text-4xl font-bold text-center text-[#36B9CB] mb-12">
+        Available Travel Packages
+      </h1>
+
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         {packages.map((pack: Package) => (
           <Packages key={pack.package_ID} {...pack} />
         ))}
       </ul>
-    </div>
+    </main>
   );
 }
