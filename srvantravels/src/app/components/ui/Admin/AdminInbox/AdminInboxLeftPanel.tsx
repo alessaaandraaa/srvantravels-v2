@@ -1,88 +1,49 @@
 "use client"
 
-import { Flower, MailWarning } from "lucide-react";
-import { Card } from "../card";
-import { ScrollArea } from "../scroll-area";
+import { Flower, MailWarning } from "lucide-react"
+import { Card } from "../card"
+import { ScrollArea } from "../scroll-area"
+import { InboxMessageSummary } from "../../../../(admin)/admin/inbox/page"
 
-const AdminInboxLeftPanel = () => {
-    return (
-         <div className=''>
-            <div className="flex gap-4 pl-1">
-                <MailWarning/>
-                <p>Pending Mails</p>
-            </div>
-            {/* PENDING LISTS */}
-            <ScrollArea className="h-[460px] mt-4 overflow-y-auto pr-4">
-                {/* LIST ITEMS */}
-                <div className="flex flex-col gap-4">
-                    <Card>
-                        <div className="flex items-center gap-4 pl-4">
-                            <Flower className="h-4"/>
-                            <label className="text-sm text-muted-foreground">
-                                1. Lorem ipsum dolor, sit amet consectetur adipisicing elit. | Erika Lave 
-                            </label>
-                        </div>
-                    </Card>
-                    <Card>
-                        <div className="flex items-center gap-4 pl-4">
-                            <Flower className="h-4"/>
-                            <label className="text-sm text-muted-foreground">
-                                2. Lorem ipsum dolor, sit amet consectetur adipisicing elit. | Cliff Jao
-                            </label>
-                        </div>
-                    </Card>
-                    <Card>
-                        <div className="flex items-center gap-4 pl-4">
-                            <Flower className="h-4"/>
-                            <label className="text-sm text-muted-foreground">
-                                3. Lorem ipsum dolor, sit amet consectetur adipisicing elit. | Columbina Canon
-                            </label>
-                        </div>
-                    </Card>
-                    <Card>
-                        <div className="flex items-center gap-4 pl-4">
-                            <Flower className="h-4"/>
-                            <label className="text-sm text-muted-foreground">
-                                4. Lorem ipsum dolor, sit amet consectetur adipisicing elit. | Hello Lyre
-                            </label>
-                        </div>
-                    </Card>
-                    <Card>
-                        <div className="flex items-center gap-4 pl-4">
-                            <Flower className="h-4"/>
-                            <label className="text-sm text-muted-foreground">
-                                5. Lorem ipsum dolor, sit amet consectetur adipisicing elit. | Keepy Tepo
-                            </label>
-                        </div>
-                    </Card>
-                    <Card>
-                        <div className="flex items-center gap-4 pl-4">
-                            <Flower className="h-4"/>
-                            <label className="text-sm text-muted-foreground">
-                                6. Lorem ipsum dolor, sit amet consectetur adipisicing elit. | Keepy Tepo
-                            </label>
-                        </div>
-                    </Card>
-                    <Card>
-                        <div className="flex items-center gap-4 pl-4">
-                            <Flower className="h-4"/>
-                            <label className="text-sm text-muted-foreground">
-                                7. Lorem ipsum dolor, sit amet consectetur adipisicing elit. | Keepy Tepo
-                            </label>
-                        </div>
-                    </Card>
-                    <Card>
-                        <div className="flex items-center gap-4 pl-4">
-                            <Flower className="h-4"/>
-                            <label className="text-sm text-muted-foreground">
-                                8. Lorem ipsum dolor, sit amet consectetur adipisicing elit. | Keepy Tepo
-                            </label>
-                        </div>
-                    </Card>
-                </div>
-            </ScrollArea>
-         </div>
-    )
+interface Props {
+  messages: InboxMessageSummary[]
+  selectedId: number | null
+  onSelect: (id: number) => void
 }
 
-export default AdminInboxLeftPanel;
+const AdminInboxLeftPanel = ({ messages, selectedId, onSelect }: Props) => {
+  return (
+    <div>
+      <div className="flex gap-4 pl-1">
+        <MailWarning />
+        <p>Pending Mails</p>
+      </div>
+
+      <ScrollArea className="h-[460px] mt-4 pr-4">
+        <div className="flex flex-col gap-4">
+          {messages.map((msg, index) => (
+            <Card
+              key={msg.message_ID}
+              onClick={() => onSelect(msg.message_ID)}
+              className={`cursor-pointer ${
+                selectedId === msg.message_ID
+                  ? "border-primary"
+                  : "hover:bg-muted"
+              }`}
+            >
+              <div className="flex items-center gap-4 pl-4">
+                <Flower className="h-4" />
+                <label className="text-sm text-muted-foreground">
+                  {index + 1}. {msg.subject ?? "No Subject"} |{" "}
+                  {msg.sender.name}
+                </label>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </ScrollArea>
+    </div>
+  )
+}
+
+export default AdminInboxLeftPanel
