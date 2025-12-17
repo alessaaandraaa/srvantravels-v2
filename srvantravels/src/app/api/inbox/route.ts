@@ -1,4 +1,3 @@
-// src/app/api/admin/inbox/route.ts
 import { InboxService } from "@/services/inbox-service"
 import { NextResponse } from "next/server"
 
