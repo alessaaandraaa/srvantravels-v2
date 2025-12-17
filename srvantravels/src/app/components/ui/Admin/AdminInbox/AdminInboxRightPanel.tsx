@@ -1,33 +1,50 @@
-import { CircleDollarSign, MailWarning } from "lucide-react";
+"use client"
 
+import { useEffect, useState } from "react"
+import { CircleDollarSign } from "lucide-react"
 
-const AdminInboxRightPanel = () => {
-    return (
-         <div className="flex flex-col p-8 gap-4 border-2 rounded-lg h-full">
-            <div className="flex gap-4">
-                <CircleDollarSign/>
-                [REQUEST FOR REFUND]
-            </div>
-            <span className="text-[12px] text-muted-foreground">
-                by Cerydra Lava Hysilens
-            </span>
-            <div className="text-sm pt-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, delectus esse iste, ipsa in molestias expedita iure accusantium ut ratione consequuntur consectetur quidem. Similique provident fugit beatae, unde facilis autem!
-            </div>
-            <div className="mt-auto flex justify-between">
-                <div>
-                    <span className="text-[12px] text-muted-foreground">
-                        Created at: 2020/12/27
-                    </span>
-                </div>
-                <div>
-                    <span className="text-[12px] text-muted-foreground">
-                        Sent on: 11:01 PM
-                    </span>
-                </div>
-            </div>
-         </div>
-    )
+interface Props {
+  messageId: number | null
 }
 
-export default AdminInboxRightPanel;
+const AdminInboxRightPanel = ({ messageId }: Props) => {
+  const [message, setMessage] = useState<any>(null)
+
+  useEffect(() => {
+    if (!messageId) return
+
+    fetch(`/api/inbox/${messageId}`)
+      .then(res => res.json())
+      .then(setMessage)
+  }, [messageId])
+
+  if (!message) {
+    return <div className="p-8 text-muted-foreground">Select a message</div>
+  }
+
+  return (
+    <div className="flex flex-col p-8 gap-4 border-2 rounded-lg h-full">
+      <div className="flex gap-4">
+        <CircleDollarSign />
+        [{message.subject}]
+      </div>
+
+      <span className="text-[12px] text-muted-foreground">
+        by {message.sender.name}
+      </span>
+
+      <div className="text-sm pt-4">{message.content}</div>
+
+      <div className="mt-auto flex justify-between">
+        <span className="text-[12px] text-muted-foreground">
+          Created at: {new Date(message.sent_at).toLocaleDateString()}
+        </span>
+        <span className="text-[12px] text-muted-foreground">
+          Sent on: {new Date(message.sent_at).toLocaleTimeString()}
+        </span>
+      </div>
+    </div>
+  )
+}
+
+export default AdminInboxRightPanel
