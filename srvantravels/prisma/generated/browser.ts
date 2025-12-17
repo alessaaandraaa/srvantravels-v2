@@ -58,11 +58,6 @@ export type Locations = Prisma.LocationsModel
  */
 export type Manager = Prisma.ManagerModel
 /**
- * Model Message
- * 
- */
-export type Message = Prisma.MessageModel
-/**
  * Model Order_Details
  * 
  */
@@ -97,3 +92,8 @@ export type tag = Prisma.tagModel
  * 
  */
 export type package_itinerary_tag = Prisma.package_itinerary_tagModel
+/**
+ * Model message
+ * 
+ */
+export type message = Prisma.messageModel

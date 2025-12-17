@@ -59,14 +59,14 @@ export const ModelName = {
   Itinerary_Stops: 'Itinerary_Stops',
   Locations: 'Locations',
   Manager: 'Manager',
-  Message: 'Message',
   Order_Details: 'Order_Details',
   Package_Itinerary: 'Package_Itinerary',
   Payment: 'Payment',
   Person: 'Person',
   Van: 'Van',
   tag: 'tag',
-  package_itinerary_tag: 'package_itinerary_tag'
+  package_itinerary_tag: 'package_itinerary_tag',
+  message: 'message'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -159,21 +159,6 @@ export const ManagerScalarFieldEnum = {
 export type ManagerScalarFieldEnum = (typeof ManagerScalarFieldEnum)[keyof typeof ManagerScalarFieldEnum]
 
 
-export const MessageScalarFieldEnum = {
-  message_ID: 'message_ID',
-  sender_ID: 'sender_ID',
-  receiver_ID: 'receiver_ID',
-  order_ID: 'order_ID',
-  requested_date: 'requested_date',
-  subject: 'subject',
-  content: 'content',
-  sent_at: 'sent_at',
-  type: 'type'
-} as const
-
-export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
-
-
 export const Order_DetailsScalarFieldEnum = {
   order_ID: 'order_ID',
   customer_ID: 'customer_ID',
@@ -256,6 +241,21 @@ export const Package_itinerary_tagScalarFieldEnum = {
 export type Package_itinerary_tagScalarFieldEnum = (typeof Package_itinerary_tagScalarFieldEnum)[keyof typeof Package_itinerary_tagScalarFieldEnum]
 
 
+export const MessageScalarFieldEnum = {
+  message_ID: 'message_ID',
+  sender_ID: 'sender_ID',
+  receiver_ID: 'receiver_ID',
+  order_ID: 'order_ID',
+  requested_date: 'requested_date',
+  subject: 'subject',
+  content: 'content',
+  sent_at: 'sent_at',
+  type: 'type'
+} as const
+
+export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -294,14 +294,6 @@ export const LocationsOrderByRelevanceFieldEnum = {
 export type LocationsOrderByRelevanceFieldEnum = (typeof LocationsOrderByRelevanceFieldEnum)[keyof typeof LocationsOrderByRelevanceFieldEnum]
 
 
-export const MessageOrderByRelevanceFieldEnum = {
-  subject: 'subject',
-  content: 'content'
-} as const
-
-export type MessageOrderByRelevanceFieldEnum = (typeof MessageOrderByRelevanceFieldEnum)[keyof typeof MessageOrderByRelevanceFieldEnum]
-
-
 export const Package_ItineraryOrderByRelevanceFieldEnum = {
   package_name: 'package_name',
   inclusions: 'inclusions',
@@ -336,4 +328,12 @@ export const tagOrderByRelevanceFieldEnum = {
 } as const
 
 export type tagOrderByRelevanceFieldEnum = (typeof tagOrderByRelevanceFieldEnum)[keyof typeof tagOrderByRelevanceFieldEnum]
+
+
+export const messageOrderByRelevanceFieldEnum = {
+  subject: 'subject',
+  content: 'content'
+} as const
+
+export type messageOrderByRelevanceFieldEnum = (typeof messageOrderByRelevanceFieldEnum)[keyof typeof messageOrderByRelevanceFieldEnum]
 

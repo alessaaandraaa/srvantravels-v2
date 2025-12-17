@@ -392,14 +392,14 @@ export const ModelName = {
   Itinerary_Stops: 'Itinerary_Stops',
   Locations: 'Locations',
   Manager: 'Manager',
-  Message: 'Message',
   Order_Details: 'Order_Details',
   Package_Itinerary: 'Package_Itinerary',
   Payment: 'Payment',
   Person: 'Person',
   Van: 'Van',
   tag: 'tag',
-  package_itinerary_tag: 'package_itinerary_tag'
+  package_itinerary_tag: 'package_itinerary_tag',
+  message: 'message'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -415,7 +415,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "custom_Itinerary" | "customer" | "driver" | "employee" | "itinerary" | "itinerary_Stops" | "locations" | "manager" | "message" | "order_Details" | "package_Itinerary" | "payment" | "person" | "van" | "tag" | "package_itinerary_tag"
+    modelProps: "custom_Itinerary" | "customer" | "driver" | "employee" | "itinerary" | "itinerary_Stops" | "locations" | "manager" | "order_Details" | "package_Itinerary" | "payment" | "person" | "van" | "tag" | "package_itinerary_tag" | "message"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -947,72 +947,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Message: {
-      payload: Prisma.$MessagePayload<ExtArgs>
-      fields: Prisma.MessageFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.MessageFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessagePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.MessageFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessagePayload>
-        }
-        findFirst: {
-          args: Prisma.MessageFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessagePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.MessageFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessagePayload>
-        }
-        findMany: {
-          args: Prisma.MessageFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessagePayload>[]
-        }
-        create: {
-          args: Prisma.MessageCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessagePayload>
-        }
-        createMany: {
-          args: Prisma.MessageCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        delete: {
-          args: Prisma.MessageDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessagePayload>
-        }
-        update: {
-          args: Prisma.MessageUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessagePayload>
-        }
-        deleteMany: {
-          args: Prisma.MessageDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.MessageUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        upsert: {
-          args: Prisma.MessageUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessagePayload>
-        }
-        aggregate: {
-          args: Prisma.MessageAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateMessage>
-        }
-        groupBy: {
-          args: Prisma.MessageGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.MessageGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.MessageCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.MessageCountAggregateOutputType> | number
-        }
-      }
-    }
     Order_Details: {
       payload: Prisma.$Order_DetailsPayload<ExtArgs>
       fields: Prisma.Order_DetailsFieldRefs
@@ -1475,6 +1409,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    message: {
+      payload: Prisma.$messagePayload<ExtArgs>
+      fields: Prisma.messageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.messageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$messagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.messageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$messagePayload>
+        }
+        findFirst: {
+          args: Prisma.messageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$messagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.messageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$messagePayload>
+        }
+        findMany: {
+          args: Prisma.messageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$messagePayload>[]
+        }
+        create: {
+          args: Prisma.messageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$messagePayload>
+        }
+        createMany: {
+          args: Prisma.messageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.messageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$messagePayload>
+        }
+        update: {
+          args: Prisma.messageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$messagePayload>
+        }
+        deleteMany: {
+          args: Prisma.messageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.messageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.messageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$messagePayload>
+        }
+        aggregate: {
+          args: Prisma.MessageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMessage>
+        }
+        groupBy: {
+          args: Prisma.messageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MessageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.messageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MessageCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1588,21 +1588,6 @@ export const ManagerScalarFieldEnum = {
 export type ManagerScalarFieldEnum = (typeof ManagerScalarFieldEnum)[keyof typeof ManagerScalarFieldEnum]
 
 
-export const MessageScalarFieldEnum = {
-  message_ID: 'message_ID',
-  sender_ID: 'sender_ID',
-  receiver_ID: 'receiver_ID',
-  order_ID: 'order_ID',
-  requested_date: 'requested_date',
-  subject: 'subject',
-  content: 'content',
-  sent_at: 'sent_at',
-  type: 'type'
-} as const
-
-export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
-
-
 export const Order_DetailsScalarFieldEnum = {
   order_ID: 'order_ID',
   customer_ID: 'customer_ID',
@@ -1685,6 +1670,21 @@ export const Package_itinerary_tagScalarFieldEnum = {
 export type Package_itinerary_tagScalarFieldEnum = (typeof Package_itinerary_tagScalarFieldEnum)[keyof typeof Package_itinerary_tagScalarFieldEnum]
 
 
+export const MessageScalarFieldEnum = {
+  message_ID: 'message_ID',
+  sender_ID: 'sender_ID',
+  receiver_ID: 'receiver_ID',
+  order_ID: 'order_ID',
+  requested_date: 'requested_date',
+  subject: 'subject',
+  content: 'content',
+  sent_at: 'sent_at',
+  type: 'type'
+} as const
+
+export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1723,14 +1723,6 @@ export const LocationsOrderByRelevanceFieldEnum = {
 export type LocationsOrderByRelevanceFieldEnum = (typeof LocationsOrderByRelevanceFieldEnum)[keyof typeof LocationsOrderByRelevanceFieldEnum]
 
 
-export const MessageOrderByRelevanceFieldEnum = {
-  subject: 'subject',
-  content: 'content'
-} as const
-
-export type MessageOrderByRelevanceFieldEnum = (typeof MessageOrderByRelevanceFieldEnum)[keyof typeof MessageOrderByRelevanceFieldEnum]
-
-
 export const Package_ItineraryOrderByRelevanceFieldEnum = {
   package_name: 'package_name',
   inclusions: 'inclusions',
@@ -1765,6 +1757,14 @@ export const tagOrderByRelevanceFieldEnum = {
 } as const
 
 export type tagOrderByRelevanceFieldEnum = (typeof tagOrderByRelevanceFieldEnum)[keyof typeof tagOrderByRelevanceFieldEnum]
+
+
+export const messageOrderByRelevanceFieldEnum = {
+  subject: 'subject',
+  content: 'content'
+} as const
+
+export type messageOrderByRelevanceFieldEnum = (typeof messageOrderByRelevanceFieldEnum)[keyof typeof messageOrderByRelevanceFieldEnum]
 
 
 
@@ -1823,13 +1823,6 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
 
 
 /**
- * Reference to a field of type 'message_type'
- */
-export type Enummessage_typeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'message_type'>
-    
-
-
-/**
  * Reference to a field of type 'order_details_status'
  */
 export type Enumorder_details_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'order_details_status'>
@@ -1847,6 +1840,13 @@ export type Enumpayment_payment_methodFieldRefInput<$PrismaModel> = FieldRefInpu
  * Reference to a field of type 'Payment_payment_status'
  */
 export type EnumPayment_payment_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Payment_payment_status'>
+    
+
+
+/**
+ * Reference to a field of type 'message_type'
+ */
+export type Enummessage_typeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'message_type'>
     
 
 /**
@@ -1952,7 +1952,6 @@ export type GlobalOmitConfig = {
   itinerary_Stops?: Prisma.Itinerary_StopsOmit
   locations?: Prisma.LocationsOmit
   manager?: Prisma.ManagerOmit
-  message?: Prisma.MessageOmit
   order_Details?: Prisma.Order_DetailsOmit
   package_Itinerary?: Prisma.Package_ItineraryOmit
   payment?: Prisma.PaymentOmit
@@ -1960,6 +1959,7 @@ export type GlobalOmitConfig = {
   van?: Prisma.VanOmit
   tag?: Prisma.tagOmit
   package_itinerary_tag?: Prisma.package_itinerary_tagOmit
+  message?: Prisma.messageOmit
 }
 
 /* Types for Logging */

@@ -1,9 +1,9 @@
 import React from "react";
 import AdminSideBar from "../../components/ui/Admin/AdminGeneral/AdminSideBar";
 import AdminNavbar from "../../components/ui/Admin/AdminGeneral/AdminNavbar";
-import { ThemeProvider } from "../../components/provider/ThemeProvider";
 import { SidebarProvider } from "../../components/ui/Admin/Sidebar/sidebar";
 import { cookies } from "next/headers";
+import { ThemeProvider } from "../../provider";
 
 export default async function AdminLayout({
     children: hello,

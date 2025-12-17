@@ -51,7 +51,10 @@ class CustomerService {
       throw new Error("An unexpected error occurred while adding customer.");
     }
   }
-  // TODO: GET, EDIT, DELETE
+
+  async getTotalCustomers() {
+    return prisma.customer.count();
+  }
 }
 
 export default CustomerService;
