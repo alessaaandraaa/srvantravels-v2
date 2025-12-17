@@ -92,3 +92,8 @@ export type tag = Prisma.tagModel
  * 
  */
 export type package_itinerary_tag = Prisma.package_itinerary_tagModel
+/**
+ * Model message
+ * 
+ */
+export type message = Prisma.messageModel

@@ -219,6 +219,8 @@ export type PersonWhereInput = {
   custom_itinerary?: Prisma.Custom_ItineraryListRelationFilter
   customer?: Prisma.CustomerListRelationFilter
   employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  message_message_receiver_IDToperson?: Prisma.MessageListRelationFilter
+  message_message_sender_IDToperson?: Prisma.MessageListRelationFilter
 }
 
 export type PersonOrderByWithRelationInput = {
@@ -230,6 +232,8 @@ export type PersonOrderByWithRelationInput = {
   custom_itinerary?: Prisma.Custom_ItineraryOrderByRelationAggregateInput
   customer?: Prisma.CustomerOrderByRelationAggregateInput
   employee?: Prisma.EmployeeOrderByWithRelationInput
+  message_message_receiver_IDToperson?: Prisma.messageOrderByRelationAggregateInput
+  message_message_sender_IDToperson?: Prisma.messageOrderByRelationAggregateInput
   _relevance?: Prisma.PersonOrderByRelevanceInput
 }
 
@@ -245,6 +249,8 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   custom_itinerary?: Prisma.Custom_ItineraryListRelationFilter
   customer?: Prisma.CustomerListRelationFilter
   employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+  message_message_receiver_IDToperson?: Prisma.MessageListRelationFilter
+  message_message_sender_IDToperson?: Prisma.MessageListRelationFilter
 }, "person_ID" | "email" | "contact_number">
 
 export type PersonOrderByWithAggregationInput = {
@@ -279,6 +285,8 @@ export type PersonCreateInput = {
   custom_itinerary?: Prisma.Custom_ItineraryCreateNestedManyWithoutPersonInput
   customer?: Prisma.CustomerCreateNestedManyWithoutPersonInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutPersonInput
+  message_message_receiver_IDToperson?: Prisma.messageCreateNestedManyWithoutPerson_message_receiver_IDTopersonInput
+  message_message_sender_IDToperson?: Prisma.messageCreateNestedManyWithoutPerson_message_sender_IDTopersonInput
 }
 
 export type PersonUncheckedCreateInput = {
@@ -290,6 +298,8 @@ export type PersonUncheckedCreateInput = {
   custom_itinerary?: Prisma.Custom_ItineraryUncheckedCreateNestedManyWithoutPersonInput
   customer?: Prisma.CustomerUncheckedCreateNestedManyWithoutPersonInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutPersonInput
+  message_message_receiver_IDToperson?: Prisma.messageUncheckedCreateNestedManyWithoutPerson_message_receiver_IDTopersonInput
+  message_message_sender_IDToperson?: Prisma.messageUncheckedCreateNestedManyWithoutPerson_message_sender_IDTopersonInput
 }
 
 export type PersonUpdateInput = {
@@ -300,6 +310,8 @@ export type PersonUpdateInput = {
   custom_itinerary?: Prisma.Custom_ItineraryUpdateManyWithoutPersonNestedInput
   customer?: Prisma.CustomerUpdateManyWithoutPersonNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutPersonNestedInput
+  message_message_receiver_IDToperson?: Prisma.messageUpdateManyWithoutPerson_message_receiver_IDTopersonNestedInput
+  message_message_sender_IDToperson?: Prisma.messageUpdateManyWithoutPerson_message_sender_IDTopersonNestedInput
 }
 
 export type PersonUncheckedUpdateInput = {
@@ -311,6 +323,8 @@ export type PersonUncheckedUpdateInput = {
   custom_itinerary?: Prisma.Custom_ItineraryUncheckedUpdateManyWithoutPersonNestedInput
   customer?: Prisma.CustomerUncheckedUpdateManyWithoutPersonNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutPersonNestedInput
+  message_message_receiver_IDToperson?: Prisma.messageUncheckedUpdateManyWithoutPerson_message_receiver_IDTopersonNestedInput
+  message_message_sender_IDToperson?: Prisma.messageUncheckedUpdateManyWithoutPerson_message_sender_IDTopersonNestedInput
 }
 
 export type PersonCreateManyInput = {
@@ -428,6 +442,36 @@ export type PersonUpdateOneRequiredWithoutEmployeeNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutEmployeeInput, Prisma.PersonUpdateWithoutEmployeeInput>, Prisma.PersonUncheckedUpdateWithoutEmployeeInput>
 }
 
+export type PersonCreateNestedOneWithoutMessage_message_receiver_IDTopersonInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutMessage_message_receiver_IDTopersonInput, Prisma.PersonUncheckedCreateWithoutMessage_message_receiver_IDTopersonInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutMessage_message_receiver_IDTopersonInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonCreateNestedOneWithoutMessage_message_sender_IDTopersonInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutMessage_message_sender_IDTopersonInput, Prisma.PersonUncheckedCreateWithoutMessage_message_sender_IDTopersonInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutMessage_message_sender_IDTopersonInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneWithoutMessage_message_receiver_IDTopersonNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutMessage_message_receiver_IDTopersonInput, Prisma.PersonUncheckedCreateWithoutMessage_message_receiver_IDTopersonInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutMessage_message_receiver_IDTopersonInput
+  upsert?: Prisma.PersonUpsertWithoutMessage_message_receiver_IDTopersonInput
+  disconnect?: Prisma.PersonWhereInput | boolean
+  delete?: Prisma.PersonWhereInput | boolean
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutMessage_message_receiver_IDTopersonInput, Prisma.PersonUpdateWithoutMessage_message_receiver_IDTopersonInput>, Prisma.PersonUncheckedUpdateWithoutMessage_message_receiver_IDTopersonInput>
+}
+
+export type PersonUpdateOneRequiredWithoutMessage_message_sender_IDTopersonNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutMessage_message_sender_IDTopersonInput, Prisma.PersonUncheckedCreateWithoutMessage_message_sender_IDTopersonInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutMessage_message_sender_IDTopersonInput
+  upsert?: Prisma.PersonUpsertWithoutMessage_message_sender_IDTopersonInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutMessage_message_sender_IDTopersonInput, Prisma.PersonUpdateWithoutMessage_message_sender_IDTopersonInput>, Prisma.PersonUncheckedUpdateWithoutMessage_message_sender_IDTopersonInput>
+}
+
 export type PersonCreateWithoutCustom_itineraryInput = {
   name?: string | null
   password?: string | null
@@ -435,6 +479,8 @@ export type PersonCreateWithoutCustom_itineraryInput = {
   contact_number?: string | null
   customer?: Prisma.CustomerCreateNestedManyWithoutPersonInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutPersonInput
+  message_message_receiver_IDToperson?: Prisma.messageCreateNestedManyWithoutPerson_message_receiver_IDTopersonInput
+  message_message_sender_IDToperson?: Prisma.messageCreateNestedManyWithoutPerson_message_sender_IDTopersonInput
 }
 
 export type PersonUncheckedCreateWithoutCustom_itineraryInput = {
@@ -445,6 +491,8 @@ export type PersonUncheckedCreateWithoutCustom_itineraryInput = {
   contact_number?: string | null
   customer?: Prisma.CustomerUncheckedCreateNestedManyWithoutPersonInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutPersonInput
+  message_message_receiver_IDToperson?: Prisma.messageUncheckedCreateNestedManyWithoutPerson_message_receiver_IDTopersonInput
+  message_message_sender_IDToperson?: Prisma.messageUncheckedCreateNestedManyWithoutPerson_message_sender_IDTopersonInput
 }
 
 export type PersonCreateOrConnectWithoutCustom_itineraryInput = {
@@ -470,6 +518,8 @@ export type PersonUpdateWithoutCustom_itineraryInput = {
   contact_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customer?: Prisma.CustomerUpdateManyWithoutPersonNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutPersonNestedInput
+  message_message_receiver_IDToperson?: Prisma.messageUpdateManyWithoutPerson_message_receiver_IDTopersonNestedInput
+  message_message_sender_IDToperson?: Prisma.messageUpdateManyWithoutPerson_message_sender_IDTopersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCustom_itineraryInput = {
@@ -480,6 +530,8 @@ export type PersonUncheckedUpdateWithoutCustom_itineraryInput = {
   contact_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customer?: Prisma.CustomerUncheckedUpdateManyWithoutPersonNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutPersonNestedInput
+  message_message_receiver_IDToperson?: Prisma.messageUncheckedUpdateManyWithoutPerson_message_receiver_IDTopersonNestedInput
+  message_message_sender_IDToperson?: Prisma.messageUncheckedUpdateManyWithoutPerson_message_sender_IDTopersonNestedInput
 }
 
 export type PersonCreateWithoutCustomerInput = {
@@ -489,6 +541,8 @@ export type PersonCreateWithoutCustomerInput = {
   contact_number?: string | null
   custom_itinerary?: Prisma.Custom_ItineraryCreateNestedManyWithoutPersonInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutPersonInput
+  message_message_receiver_IDToperson?: Prisma.messageCreateNestedManyWithoutPerson_message_receiver_IDTopersonInput
+  message_message_sender_IDToperson?: Prisma.messageCreateNestedManyWithoutPerson_message_sender_IDTopersonInput
 }
 
 export type PersonUncheckedCreateWithoutCustomerInput = {
@@ -499,6 +553,8 @@ export type PersonUncheckedCreateWithoutCustomerInput = {
   contact_number?: string | null
   custom_itinerary?: Prisma.Custom_ItineraryUncheckedCreateNestedManyWithoutPersonInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutPersonInput
+  message_message_receiver_IDToperson?: Prisma.messageUncheckedCreateNestedManyWithoutPerson_message_receiver_IDTopersonInput
+  message_message_sender_IDToperson?: Prisma.messageUncheckedCreateNestedManyWithoutPerson_message_sender_IDTopersonInput
 }
 
 export type PersonCreateOrConnectWithoutCustomerInput = {
@@ -524,6 +580,8 @@ export type PersonUpdateWithoutCustomerInput = {
   contact_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom_itinerary?: Prisma.Custom_ItineraryUpdateManyWithoutPersonNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutPersonNestedInput
+  message_message_receiver_IDToperson?: Prisma.messageUpdateManyWithoutPerson_message_receiver_IDTopersonNestedInput
+  message_message_sender_IDToperson?: Prisma.messageUpdateManyWithoutPerson_message_sender_IDTopersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutCustomerInput = {
@@ -534,6 +592,8 @@ export type PersonUncheckedUpdateWithoutCustomerInput = {
   contact_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom_itinerary?: Prisma.Custom_ItineraryUncheckedUpdateManyWithoutPersonNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutPersonNestedInput
+  message_message_receiver_IDToperson?: Prisma.messageUncheckedUpdateManyWithoutPerson_message_receiver_IDTopersonNestedInput
+  message_message_sender_IDToperson?: Prisma.messageUncheckedUpdateManyWithoutPerson_message_sender_IDTopersonNestedInput
 }
 
 export type PersonCreateWithoutEmployeeInput = {
@@ -543,6 +603,8 @@ export type PersonCreateWithoutEmployeeInput = {
   contact_number?: string | null
   custom_itinerary?: Prisma.Custom_ItineraryCreateNestedManyWithoutPersonInput
   customer?: Prisma.CustomerCreateNestedManyWithoutPersonInput
+  message_message_receiver_IDToperson?: Prisma.messageCreateNestedManyWithoutPerson_message_receiver_IDTopersonInput
+  message_message_sender_IDToperson?: Prisma.messageCreateNestedManyWithoutPerson_message_sender_IDTopersonInput
 }
 
 export type PersonUncheckedCreateWithoutEmployeeInput = {
@@ -553,6 +615,8 @@ export type PersonUncheckedCreateWithoutEmployeeInput = {
   contact_number?: string | null
   custom_itinerary?: Prisma.Custom_ItineraryUncheckedCreateNestedManyWithoutPersonInput
   customer?: Prisma.CustomerUncheckedCreateNestedManyWithoutPersonInput
+  message_message_receiver_IDToperson?: Prisma.messageUncheckedCreateNestedManyWithoutPerson_message_receiver_IDTopersonInput
+  message_message_sender_IDToperson?: Prisma.messageUncheckedCreateNestedManyWithoutPerson_message_sender_IDTopersonInput
 }
 
 export type PersonCreateOrConnectWithoutEmployeeInput = {
@@ -578,6 +642,8 @@ export type PersonUpdateWithoutEmployeeInput = {
   contact_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom_itinerary?: Prisma.Custom_ItineraryUpdateManyWithoutPersonNestedInput
   customer?: Prisma.CustomerUpdateManyWithoutPersonNestedInput
+  message_message_receiver_IDToperson?: Prisma.messageUpdateManyWithoutPerson_message_receiver_IDTopersonNestedInput
+  message_message_sender_IDToperson?: Prisma.messageUpdateManyWithoutPerson_message_sender_IDTopersonNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutEmployeeInput = {
@@ -588,6 +654,132 @@ export type PersonUncheckedUpdateWithoutEmployeeInput = {
   contact_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   custom_itinerary?: Prisma.Custom_ItineraryUncheckedUpdateManyWithoutPersonNestedInput
   customer?: Prisma.CustomerUncheckedUpdateManyWithoutPersonNestedInput
+  message_message_receiver_IDToperson?: Prisma.messageUncheckedUpdateManyWithoutPerson_message_receiver_IDTopersonNestedInput
+  message_message_sender_IDToperson?: Prisma.messageUncheckedUpdateManyWithoutPerson_message_sender_IDTopersonNestedInput
+}
+
+export type PersonCreateWithoutMessage_message_receiver_IDTopersonInput = {
+  name?: string | null
+  password?: string | null
+  email?: string | null
+  contact_number?: string | null
+  custom_itinerary?: Prisma.Custom_ItineraryCreateNestedManyWithoutPersonInput
+  customer?: Prisma.CustomerCreateNestedManyWithoutPersonInput
+  employee?: Prisma.EmployeeCreateNestedOneWithoutPersonInput
+  message_message_sender_IDToperson?: Prisma.messageCreateNestedManyWithoutPerson_message_sender_IDTopersonInput
+}
+
+export type PersonUncheckedCreateWithoutMessage_message_receiver_IDTopersonInput = {
+  person_ID?: number
+  name?: string | null
+  password?: string | null
+  email?: string | null
+  contact_number?: string | null
+  custom_itinerary?: Prisma.Custom_ItineraryUncheckedCreateNestedManyWithoutPersonInput
+  customer?: Prisma.CustomerUncheckedCreateNestedManyWithoutPersonInput
+  employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutPersonInput
+  message_message_sender_IDToperson?: Prisma.messageUncheckedCreateNestedManyWithoutPerson_message_sender_IDTopersonInput
+}
+
+export type PersonCreateOrConnectWithoutMessage_message_receiver_IDTopersonInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutMessage_message_receiver_IDTopersonInput, Prisma.PersonUncheckedCreateWithoutMessage_message_receiver_IDTopersonInput>
+}
+
+export type PersonCreateWithoutMessage_message_sender_IDTopersonInput = {
+  name?: string | null
+  password?: string | null
+  email?: string | null
+  contact_number?: string | null
+  custom_itinerary?: Prisma.Custom_ItineraryCreateNestedManyWithoutPersonInput
+  customer?: Prisma.CustomerCreateNestedManyWithoutPersonInput
+  employee?: Prisma.EmployeeCreateNestedOneWithoutPersonInput
+  message_message_receiver_IDToperson?: Prisma.messageCreateNestedManyWithoutPerson_message_receiver_IDTopersonInput
+}
+
+export type PersonUncheckedCreateWithoutMessage_message_sender_IDTopersonInput = {
+  person_ID?: number
+  name?: string | null
+  password?: string | null
+  email?: string | null
+  contact_number?: string | null
+  custom_itinerary?: Prisma.Custom_ItineraryUncheckedCreateNestedManyWithoutPersonInput
+  customer?: Prisma.CustomerUncheckedCreateNestedManyWithoutPersonInput
+  employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutPersonInput
+  message_message_receiver_IDToperson?: Prisma.messageUncheckedCreateNestedManyWithoutPerson_message_receiver_IDTopersonInput
+}
+
+export type PersonCreateOrConnectWithoutMessage_message_sender_IDTopersonInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutMessage_message_sender_IDTopersonInput, Prisma.PersonUncheckedCreateWithoutMessage_message_sender_IDTopersonInput>
+}
+
+export type PersonUpsertWithoutMessage_message_receiver_IDTopersonInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutMessage_message_receiver_IDTopersonInput, Prisma.PersonUncheckedUpdateWithoutMessage_message_receiver_IDTopersonInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutMessage_message_receiver_IDTopersonInput, Prisma.PersonUncheckedCreateWithoutMessage_message_receiver_IDTopersonInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutMessage_message_receiver_IDTopersonInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutMessage_message_receiver_IDTopersonInput, Prisma.PersonUncheckedUpdateWithoutMessage_message_receiver_IDTopersonInput>
+}
+
+export type PersonUpdateWithoutMessage_message_receiver_IDTopersonInput = {
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  custom_itinerary?: Prisma.Custom_ItineraryUpdateManyWithoutPersonNestedInput
+  customer?: Prisma.CustomerUpdateManyWithoutPersonNestedInput
+  employee?: Prisma.EmployeeUpdateOneWithoutPersonNestedInput
+  message_message_sender_IDToperson?: Prisma.messageUpdateManyWithoutPerson_message_sender_IDTopersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutMessage_message_receiver_IDTopersonInput = {
+  person_ID?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  custom_itinerary?: Prisma.Custom_ItineraryUncheckedUpdateManyWithoutPersonNestedInput
+  customer?: Prisma.CustomerUncheckedUpdateManyWithoutPersonNestedInput
+  employee?: Prisma.EmployeeUncheckedUpdateOneWithoutPersonNestedInput
+  message_message_sender_IDToperson?: Prisma.messageUncheckedUpdateManyWithoutPerson_message_sender_IDTopersonNestedInput
+}
+
+export type PersonUpsertWithoutMessage_message_sender_IDTopersonInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutMessage_message_sender_IDTopersonInput, Prisma.PersonUncheckedUpdateWithoutMessage_message_sender_IDTopersonInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutMessage_message_sender_IDTopersonInput, Prisma.PersonUncheckedCreateWithoutMessage_message_sender_IDTopersonInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutMessage_message_sender_IDTopersonInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutMessage_message_sender_IDTopersonInput, Prisma.PersonUncheckedUpdateWithoutMessage_message_sender_IDTopersonInput>
+}
+
+export type PersonUpdateWithoutMessage_message_sender_IDTopersonInput = {
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  custom_itinerary?: Prisma.Custom_ItineraryUpdateManyWithoutPersonNestedInput
+  customer?: Prisma.CustomerUpdateManyWithoutPersonNestedInput
+  employee?: Prisma.EmployeeUpdateOneWithoutPersonNestedInput
+  message_message_receiver_IDToperson?: Prisma.messageUpdateManyWithoutPerson_message_receiver_IDTopersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutMessage_message_sender_IDTopersonInput = {
+  person_ID?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  custom_itinerary?: Prisma.Custom_ItineraryUncheckedUpdateManyWithoutPersonNestedInput
+  customer?: Prisma.CustomerUncheckedUpdateManyWithoutPersonNestedInput
+  employee?: Prisma.EmployeeUncheckedUpdateOneWithoutPersonNestedInput
+  message_message_receiver_IDToperson?: Prisma.messageUncheckedUpdateManyWithoutPerson_message_receiver_IDTopersonNestedInput
 }
 
 
@@ -598,11 +790,15 @@ export type PersonUncheckedUpdateWithoutEmployeeInput = {
 export type PersonCountOutputType = {
   custom_itinerary: number
   customer: number
+  message_message_receiver_IDToperson: number
+  message_message_sender_IDToperson: number
 }
 
 export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   custom_itinerary?: boolean | PersonCountOutputTypeCountCustom_itineraryArgs
   customer?: boolean | PersonCountOutputTypeCountCustomerArgs
+  message_message_receiver_IDToperson?: boolean | PersonCountOutputTypeCountMessage_message_receiver_IDTopersonArgs
+  message_message_sender_IDToperson?: boolean | PersonCountOutputTypeCountMessage_message_sender_IDTopersonArgs
 }
 
 /**
@@ -629,6 +825,20 @@ export type PersonCountOutputTypeCountCustomerArgs<ExtArgs extends runtime.Types
   where?: Prisma.CustomerWhereInput
 }
 
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountMessage_message_receiver_IDTopersonArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.messageWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountMessage_message_sender_IDTopersonArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.messageWhereInput
+}
+
 
 export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   person_ID?: boolean
@@ -639,6 +849,8 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   custom_itinerary?: boolean | Prisma.Person$custom_itineraryArgs<ExtArgs>
   customer?: boolean | Prisma.Person$customerArgs<ExtArgs>
   employee?: boolean | Prisma.Person$employeeArgs<ExtArgs>
+  message_message_receiver_IDToperson?: boolean | Prisma.Person$message_message_receiver_IDTopersonArgs<ExtArgs>
+  message_message_sender_IDToperson?: boolean | Prisma.Person$message_message_sender_IDTopersonArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["person"]>
 
@@ -657,6 +869,8 @@ export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   custom_itinerary?: boolean | Prisma.Person$custom_itineraryArgs<ExtArgs>
   customer?: boolean | Prisma.Person$customerArgs<ExtArgs>
   employee?: boolean | Prisma.Person$employeeArgs<ExtArgs>
+  message_message_receiver_IDToperson?: boolean | Prisma.Person$message_message_receiver_IDTopersonArgs<ExtArgs>
+  message_message_sender_IDToperson?: boolean | Prisma.Person$message_message_sender_IDTopersonArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -666,6 +880,8 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     custom_itinerary: Prisma.$Custom_ItineraryPayload<ExtArgs>[]
     customer: Prisma.$CustomerPayload<ExtArgs>[]
     employee: Prisma.$EmployeePayload<ExtArgs> | null
+    message_message_receiver_IDToperson: Prisma.$messagePayload<ExtArgs>[]
+    message_message_sender_IDToperson: Prisma.$messagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     person_ID: number
@@ -1016,6 +1232,8 @@ export interface Prisma__PersonClient<T, Null = never, ExtArgs extends runtime.T
   custom_itinerary<T extends Prisma.Person$custom_itineraryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$custom_itineraryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$Custom_ItineraryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   customer<T extends Prisma.Person$customerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$customerArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   employee<T extends Prisma.Person$employeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$employeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  message_message_receiver_IDToperson<T extends Prisma.Person$message_message_receiver_IDTopersonArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$message_message_receiver_IDTopersonArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$messagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  message_message_sender_IDToperson<T extends Prisma.Person$message_message_sender_IDTopersonArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$message_message_sender_IDTopersonArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$messagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1457,6 +1675,54 @@ export type Person$employeeArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   include?: Prisma.EmployeeInclude<ExtArgs> | null
   where?: Prisma.EmployeeWhereInput
+}
+
+/**
+ * Person.message_message_receiver_IDToperson
+ */
+export type Person$message_message_receiver_IDTopersonArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the message
+   */
+  select?: Prisma.messageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the message
+   */
+  omit?: Prisma.messageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.messageInclude<ExtArgs> | null
+  where?: Prisma.messageWhereInput
+  orderBy?: Prisma.messageOrderByWithRelationInput | Prisma.messageOrderByWithRelationInput[]
+  cursor?: Prisma.messageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MessageScalarFieldEnum | Prisma.MessageScalarFieldEnum[]
+}
+
+/**
+ * Person.message_message_sender_IDToperson
+ */
+export type Person$message_message_sender_IDTopersonArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the message
+   */
+  select?: Prisma.messageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the message
+   */
+  omit?: Prisma.messageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.messageInclude<ExtArgs> | null
+  where?: Prisma.messageWhereInput
+  orderBy?: Prisma.messageOrderByWithRelationInput | Prisma.messageOrderByWithRelationInput[]
+  cursor?: Prisma.messageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MessageScalarFieldEnum | Prisma.MessageScalarFieldEnum[]
 }
 
 /**

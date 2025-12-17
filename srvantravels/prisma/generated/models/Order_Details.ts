@@ -284,6 +284,7 @@ export type Order_DetailsWhereInput = {
   time_for_dropoff?: Prisma.DateTimeNullableFilter<"Order_Details"> | Date | string | null
   date_of_transaction?: Prisma.DateTimeNullableFilter<"Order_Details"> | Date | string | null
   status?: Prisma.Enumorder_details_statusNullableFilter<"Order_Details"> | $Enums.order_details_status | null
+  message?: Prisma.MessageListRelationFilter
   customer?: Prisma.XOR<Prisma.CustomerNullableScalarRelationFilter, Prisma.CustomerWhereInput> | null
   driver?: Prisma.XOR<Prisma.DriverNullableScalarRelationFilter, Prisma.DriverWhereInput> | null
   itinerary?: Prisma.XOR<Prisma.ItineraryNullableScalarRelationFilter, Prisma.ItineraryWhereInput> | null
@@ -301,6 +302,7 @@ export type Order_DetailsOrderByWithRelationInput = {
   time_for_dropoff?: Prisma.SortOrderInput | Prisma.SortOrder
   date_of_transaction?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrderInput | Prisma.SortOrder
+  message?: Prisma.messageOrderByRelationAggregateInput
   customer?: Prisma.CustomerOrderByWithRelationInput
   driver?: Prisma.DriverOrderByWithRelationInput
   itinerary?: Prisma.ItineraryOrderByWithRelationInput
@@ -321,6 +323,7 @@ export type Order_DetailsWhereUniqueInput = Prisma.AtLeast<{
   time_for_dropoff?: Prisma.DateTimeNullableFilter<"Order_Details"> | Date | string | null
   date_of_transaction?: Prisma.DateTimeNullableFilter<"Order_Details"> | Date | string | null
   status?: Prisma.Enumorder_details_statusNullableFilter<"Order_Details"> | $Enums.order_details_status | null
+  message?: Prisma.MessageListRelationFilter
   customer?: Prisma.XOR<Prisma.CustomerNullableScalarRelationFilter, Prisma.CustomerWhereInput> | null
   driver?: Prisma.XOR<Prisma.DriverNullableScalarRelationFilter, Prisma.DriverWhereInput> | null
   itinerary?: Prisma.XOR<Prisma.ItineraryNullableScalarRelationFilter, Prisma.ItineraryWhereInput> | null
@@ -369,6 +372,7 @@ export type Order_DetailsCreateInput = {
   time_for_dropoff?: Date | string | null
   date_of_transaction?: Date | string | null
   status?: $Enums.order_details_status | null
+  message?: Prisma.messageCreateNestedManyWithoutOrder_detailsInput
   customer?: Prisma.CustomerCreateNestedOneWithoutOrder_detailsInput
   driver?: Prisma.DriverCreateNestedOneWithoutOrder_detailsInput
   itinerary?: Prisma.ItineraryCreateNestedOneWithoutOrder_detailsInput
@@ -386,6 +390,7 @@ export type Order_DetailsUncheckedCreateInput = {
   time_for_dropoff?: Date | string | null
   date_of_transaction?: Date | string | null
   status?: $Enums.order_details_status | null
+  message?: Prisma.messageUncheckedCreateNestedManyWithoutOrder_detailsInput
 }
 
 export type Order_DetailsUpdateInput = {
@@ -395,6 +400,7 @@ export type Order_DetailsUpdateInput = {
   time_for_dropoff?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   date_of_transaction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableEnumorder_details_statusFieldUpdateOperationsInput | $Enums.order_details_status | null
+  message?: Prisma.messageUpdateManyWithoutOrder_detailsNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutOrder_detailsNestedInput
   driver?: Prisma.DriverUpdateOneWithoutOrder_detailsNestedInput
   itinerary?: Prisma.ItineraryUpdateOneWithoutOrder_detailsNestedInput
@@ -412,6 +418,7 @@ export type Order_DetailsUncheckedUpdateInput = {
   time_for_dropoff?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   date_of_transaction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableEnumorder_details_statusFieldUpdateOperationsInput | $Enums.order_details_status | null
+  message?: Prisma.messageUncheckedUpdateManyWithoutOrder_detailsNestedInput
 }
 
 export type Order_DetailsCreateManyInput = {
@@ -519,6 +526,11 @@ export type Order_DetailsSumOrderByAggregateInput = {
   driver_ID?: Prisma.SortOrder
   itinerary_ID?: Prisma.SortOrder
   number_of_PAX?: Prisma.SortOrder
+}
+
+export type Order_DetailsNullableScalarRelationFilter = {
+  is?: Prisma.Order_DetailsWhereInput | null
+  isNot?: Prisma.Order_DetailsWhereInput | null
 }
 
 export type Order_DetailsCreateNestedManyWithoutCustomerInput = {
@@ -651,6 +663,22 @@ export type NullableEnumorder_details_statusFieldUpdateOperationsInput = {
   set?: $Enums.order_details_status | null
 }
 
+export type Order_DetailsCreateNestedOneWithoutMessageInput = {
+  create?: Prisma.XOR<Prisma.Order_DetailsCreateWithoutMessageInput, Prisma.Order_DetailsUncheckedCreateWithoutMessageInput>
+  connectOrCreate?: Prisma.Order_DetailsCreateOrConnectWithoutMessageInput
+  connect?: Prisma.Order_DetailsWhereUniqueInput
+}
+
+export type Order_DetailsUpdateOneWithoutMessageNestedInput = {
+  create?: Prisma.XOR<Prisma.Order_DetailsCreateWithoutMessageInput, Prisma.Order_DetailsUncheckedCreateWithoutMessageInput>
+  connectOrCreate?: Prisma.Order_DetailsCreateOrConnectWithoutMessageInput
+  upsert?: Prisma.Order_DetailsUpsertWithoutMessageInput
+  disconnect?: Prisma.Order_DetailsWhereInput | boolean
+  delete?: Prisma.Order_DetailsWhereInput | boolean
+  connect?: Prisma.Order_DetailsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.Order_DetailsUpdateToOneWithWhereWithoutMessageInput, Prisma.Order_DetailsUpdateWithoutMessageInput>, Prisma.Order_DetailsUncheckedUpdateWithoutMessageInput>
+}
+
 export type Order_DetailsCreateWithoutCustomerInput = {
   number_of_PAX?: number | null
   date_of_travel?: Date | string | null
@@ -658,6 +686,7 @@ export type Order_DetailsCreateWithoutCustomerInput = {
   time_for_dropoff?: Date | string | null
   date_of_transaction?: Date | string | null
   status?: $Enums.order_details_status | null
+  message?: Prisma.messageCreateNestedManyWithoutOrder_detailsInput
   driver?: Prisma.DriverCreateNestedOneWithoutOrder_detailsInput
   itinerary?: Prisma.ItineraryCreateNestedOneWithoutOrder_detailsInput
 }
@@ -672,6 +701,7 @@ export type Order_DetailsUncheckedCreateWithoutCustomerInput = {
   time_for_dropoff?: Date | string | null
   date_of_transaction?: Date | string | null
   status?: $Enums.order_details_status | null
+  message?: Prisma.messageUncheckedCreateNestedManyWithoutOrder_detailsInput
 }
 
 export type Order_DetailsCreateOrConnectWithoutCustomerInput = {
@@ -724,6 +754,7 @@ export type Order_DetailsCreateWithoutDriverInput = {
   time_for_dropoff?: Date | string | null
   date_of_transaction?: Date | string | null
   status?: $Enums.order_details_status | null
+  message?: Prisma.messageCreateNestedManyWithoutOrder_detailsInput
   customer?: Prisma.CustomerCreateNestedOneWithoutOrder_detailsInput
   itinerary?: Prisma.ItineraryCreateNestedOneWithoutOrder_detailsInput
 }
@@ -739,6 +770,7 @@ export type Order_DetailsUncheckedCreateWithoutDriverInput = {
   time_for_dropoff?: Date | string | null
   date_of_transaction?: Date | string | null
   status?: $Enums.order_details_status | null
+  message?: Prisma.messageUncheckedCreateNestedManyWithoutOrder_detailsInput
 }
 
 export type Order_DetailsCreateOrConnectWithoutDriverInput = {
@@ -774,6 +806,7 @@ export type Order_DetailsCreateWithoutItineraryInput = {
   time_for_dropoff?: Date | string | null
   date_of_transaction?: Date | string | null
   status?: $Enums.order_details_status | null
+  message?: Prisma.messageCreateNestedManyWithoutOrder_detailsInput
   customer?: Prisma.CustomerCreateNestedOneWithoutOrder_detailsInput
   driver?: Prisma.DriverCreateNestedOneWithoutOrder_detailsInput
 }
@@ -789,6 +822,7 @@ export type Order_DetailsUncheckedCreateWithoutItineraryInput = {
   time_for_dropoff?: Date | string | null
   date_of_transaction?: Date | string | null
   status?: $Enums.order_details_status | null
+  message?: Prisma.messageUncheckedCreateNestedManyWithoutOrder_detailsInput
 }
 
 export type Order_DetailsCreateOrConnectWithoutItineraryInput = {
@@ -817,6 +851,74 @@ export type Order_DetailsUpdateManyWithWhereWithoutItineraryInput = {
   data: Prisma.XOR<Prisma.Order_DetailsUpdateManyMutationInput, Prisma.Order_DetailsUncheckedUpdateManyWithoutItineraryInput>
 }
 
+export type Order_DetailsCreateWithoutMessageInput = {
+  number_of_PAX?: number | null
+  date_of_travel?: Date | string | null
+  time_for_pickup?: Date | string | null
+  time_for_dropoff?: Date | string | null
+  date_of_transaction?: Date | string | null
+  status?: $Enums.order_details_status | null
+  customer?: Prisma.CustomerCreateNestedOneWithoutOrder_detailsInput
+  driver?: Prisma.DriverCreateNestedOneWithoutOrder_detailsInput
+  itinerary?: Prisma.ItineraryCreateNestedOneWithoutOrder_detailsInput
+}
+
+export type Order_DetailsUncheckedCreateWithoutMessageInput = {
+  order_ID?: number
+  customer_ID?: number | null
+  payment_ID?: number | null
+  driver_ID?: number | null
+  itinerary_ID?: number | null
+  number_of_PAX?: number | null
+  date_of_travel?: Date | string | null
+  time_for_pickup?: Date | string | null
+  time_for_dropoff?: Date | string | null
+  date_of_transaction?: Date | string | null
+  status?: $Enums.order_details_status | null
+}
+
+export type Order_DetailsCreateOrConnectWithoutMessageInput = {
+  where: Prisma.Order_DetailsWhereUniqueInput
+  create: Prisma.XOR<Prisma.Order_DetailsCreateWithoutMessageInput, Prisma.Order_DetailsUncheckedCreateWithoutMessageInput>
+}
+
+export type Order_DetailsUpsertWithoutMessageInput = {
+  update: Prisma.XOR<Prisma.Order_DetailsUpdateWithoutMessageInput, Prisma.Order_DetailsUncheckedUpdateWithoutMessageInput>
+  create: Prisma.XOR<Prisma.Order_DetailsCreateWithoutMessageInput, Prisma.Order_DetailsUncheckedCreateWithoutMessageInput>
+  where?: Prisma.Order_DetailsWhereInput
+}
+
+export type Order_DetailsUpdateToOneWithWhereWithoutMessageInput = {
+  where?: Prisma.Order_DetailsWhereInput
+  data: Prisma.XOR<Prisma.Order_DetailsUpdateWithoutMessageInput, Prisma.Order_DetailsUncheckedUpdateWithoutMessageInput>
+}
+
+export type Order_DetailsUpdateWithoutMessageInput = {
+  number_of_PAX?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  date_of_travel?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  time_for_pickup?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  time_for_dropoff?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  date_of_transaction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.NullableEnumorder_details_statusFieldUpdateOperationsInput | $Enums.order_details_status | null
+  customer?: Prisma.CustomerUpdateOneWithoutOrder_detailsNestedInput
+  driver?: Prisma.DriverUpdateOneWithoutOrder_detailsNestedInput
+  itinerary?: Prisma.ItineraryUpdateOneWithoutOrder_detailsNestedInput
+}
+
+export type Order_DetailsUncheckedUpdateWithoutMessageInput = {
+  order_ID?: Prisma.IntFieldUpdateOperationsInput | number
+  customer_ID?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  payment_ID?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  driver_ID?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  itinerary_ID?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  number_of_PAX?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  date_of_travel?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  time_for_pickup?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  time_for_dropoff?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  date_of_transaction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.NullableEnumorder_details_statusFieldUpdateOperationsInput | $Enums.order_details_status | null
+}
+
 export type Order_DetailsCreateManyCustomerInput = {
   order_ID?: number
   driver_ID?: number | null
@@ -836,6 +938,7 @@ export type Order_DetailsUpdateWithoutCustomerInput = {
   time_for_dropoff?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   date_of_transaction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableEnumorder_details_statusFieldUpdateOperationsInput | $Enums.order_details_status | null
+  message?: Prisma.messageUpdateManyWithoutOrder_detailsNestedInput
   driver?: Prisma.DriverUpdateOneWithoutOrder_detailsNestedInput
   itinerary?: Prisma.ItineraryUpdateOneWithoutOrder_detailsNestedInput
 }
@@ -850,6 +953,7 @@ export type Order_DetailsUncheckedUpdateWithoutCustomerInput = {
   time_for_dropoff?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   date_of_transaction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableEnumorder_details_statusFieldUpdateOperationsInput | $Enums.order_details_status | null
+  message?: Prisma.messageUncheckedUpdateManyWithoutOrder_detailsNestedInput
 }
 
 export type Order_DetailsUncheckedUpdateManyWithoutCustomerInput = {
@@ -884,6 +988,7 @@ export type Order_DetailsUpdateWithoutDriverInput = {
   time_for_dropoff?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   date_of_transaction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableEnumorder_details_statusFieldUpdateOperationsInput | $Enums.order_details_status | null
+  message?: Prisma.messageUpdateManyWithoutOrder_detailsNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutOrder_detailsNestedInput
   itinerary?: Prisma.ItineraryUpdateOneWithoutOrder_detailsNestedInput
 }
@@ -899,6 +1004,7 @@ export type Order_DetailsUncheckedUpdateWithoutDriverInput = {
   time_for_dropoff?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   date_of_transaction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableEnumorder_details_statusFieldUpdateOperationsInput | $Enums.order_details_status | null
+  message?: Prisma.messageUncheckedUpdateManyWithoutOrder_detailsNestedInput
 }
 
 export type Order_DetailsUncheckedUpdateManyWithoutDriverInput = {
@@ -934,6 +1040,7 @@ export type Order_DetailsUpdateWithoutItineraryInput = {
   time_for_dropoff?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   date_of_transaction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableEnumorder_details_statusFieldUpdateOperationsInput | $Enums.order_details_status | null
+  message?: Prisma.messageUpdateManyWithoutOrder_detailsNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutOrder_detailsNestedInput
   driver?: Prisma.DriverUpdateOneWithoutOrder_detailsNestedInput
 }
@@ -949,6 +1056,7 @@ export type Order_DetailsUncheckedUpdateWithoutItineraryInput = {
   time_for_dropoff?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   date_of_transaction?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableEnumorder_details_statusFieldUpdateOperationsInput | $Enums.order_details_status | null
+  message?: Prisma.messageUncheckedUpdateManyWithoutOrder_detailsNestedInput
 }
 
 export type Order_DetailsUncheckedUpdateManyWithoutItineraryInput = {
@@ -965,6 +1073,35 @@ export type Order_DetailsUncheckedUpdateManyWithoutItineraryInput = {
 }
 
 
+/**
+ * Count Type Order_DetailsCountOutputType
+ */
+
+export type Order_DetailsCountOutputType = {
+  message: number
+}
+
+export type Order_DetailsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  message?: boolean | Order_DetailsCountOutputTypeCountMessageArgs
+}
+
+/**
+ * Order_DetailsCountOutputType without action
+ */
+export type Order_DetailsCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Order_DetailsCountOutputType
+   */
+  select?: Prisma.Order_DetailsCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * Order_DetailsCountOutputType without action
+ */
+export type Order_DetailsCountOutputTypeCountMessageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.messageWhereInput
+}
+
 
 export type Order_DetailsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   order_ID?: boolean
@@ -978,9 +1115,11 @@ export type Order_DetailsSelect<ExtArgs extends runtime.Types.Extensions.Interna
   time_for_dropoff?: boolean
   date_of_transaction?: boolean
   status?: boolean
+  message?: boolean | Prisma.Order_Details$messageArgs<ExtArgs>
   customer?: boolean | Prisma.Order_Details$customerArgs<ExtArgs>
   driver?: boolean | Prisma.Order_Details$driverArgs<ExtArgs>
   itinerary?: boolean | Prisma.Order_Details$itineraryArgs<ExtArgs>
+  _count?: boolean | Prisma.Order_DetailsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["order_Details"]>
 
 
@@ -1001,14 +1140,17 @@ export type Order_DetailsSelectScalar = {
 
 export type Order_DetailsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"order_ID" | "customer_ID" | "payment_ID" | "driver_ID" | "itinerary_ID" | "number_of_PAX" | "date_of_travel" | "time_for_pickup" | "time_for_dropoff" | "date_of_transaction" | "status", ExtArgs["result"]["order_Details"]>
 export type Order_DetailsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  message?: boolean | Prisma.Order_Details$messageArgs<ExtArgs>
   customer?: boolean | Prisma.Order_Details$customerArgs<ExtArgs>
   driver?: boolean | Prisma.Order_Details$driverArgs<ExtArgs>
   itinerary?: boolean | Prisma.Order_Details$itineraryArgs<ExtArgs>
+  _count?: boolean | Prisma.Order_DetailsCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $Order_DetailsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Order_Details"
   objects: {
+    message: Prisma.$messagePayload<ExtArgs>[]
     customer: Prisma.$CustomerPayload<ExtArgs> | null
     driver: Prisma.$DriverPayload<ExtArgs> | null
     itinerary: Prisma.$ItineraryPayload<ExtArgs> | null
@@ -1365,6 +1507,7 @@ readonly fields: Order_DetailsFieldRefs;
  */
 export interface Prisma__Order_DetailsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  message<T extends Prisma.Order_Details$messageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order_Details$messageArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$messagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   customer<T extends Prisma.Order_Details$customerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order_Details$customerArgs<ExtArgs>>): Prisma.Prisma__CustomerClient<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   driver<T extends Prisma.Order_Details$driverArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order_Details$driverArgs<ExtArgs>>): Prisma.Prisma__DriverClient<runtime.Types.Result.GetResult<Prisma.$DriverPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   itinerary<T extends Prisma.Order_Details$itineraryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order_Details$itineraryArgs<ExtArgs>>): Prisma.Prisma__ItineraryClient<runtime.Types.Result.GetResult<Prisma.$ItineraryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -1748,6 +1891,30 @@ export type Order_DetailsDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Order_Details to delete.
    */
   limit?: number
+}
+
+/**
+ * Order_Details.message
+ */
+export type Order_Details$messageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the message
+   */
+  select?: Prisma.messageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the message
+   */
+  omit?: Prisma.messageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.messageInclude<ExtArgs> | null
+  where?: Prisma.messageWhereInput
+  orderBy?: Prisma.messageOrderByWithRelationInput | Prisma.messageOrderByWithRelationInput[]
+  cursor?: Prisma.messageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MessageScalarFieldEnum | Prisma.MessageScalarFieldEnum[]
 }
 
 /**

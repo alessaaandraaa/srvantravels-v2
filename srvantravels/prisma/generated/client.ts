@@ -33,7 +33,7 @@ export * from "./enums.ts"
  * const custom_Itineraries = await prisma.custom_Itinerary.findMany()
  * ```
  * 
- * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ * Read more in our [docs](https://pris.ly/d/client).
  */
 export const PrismaClient = $Class.getPrismaClientClass()
 export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>
@@ -114,3 +114,8 @@ export type tag = Prisma.tagModel
  * 
  */
 export type package_itinerary_tag = Prisma.package_itinerary_tagModel
+/**
+ * Model message
+ * 
+ */
+export type message = Prisma.messageModel
