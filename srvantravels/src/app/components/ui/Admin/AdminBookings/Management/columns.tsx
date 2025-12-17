@@ -34,6 +34,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useRouter } from "next/navigation";
 
 export type Driver = {
   driverid: number;
@@ -99,9 +100,11 @@ export const getColumns = (
   {
     accessorKey: "driver",
     header: "Driver",
-    cell: () => {
+    cell: ({ row }) => {
       const [open, setOpen] = React.useState(false);
       const [value, setValue] = React.useState("");
+      const router = useRouter();
+
       return (
         <div className="max-w-[150px]">
           <Popover open={open} onOpenChange={setOpen}>
@@ -110,50 +113,53 @@ export const getColumns = (
                 variant="outline"
                 role="combobox"
                 aria-expanded={open}
-                aria-label="Select Driver"
                 className={cn(
-                  `w-full justify-between`,
+                  "w-full justify-between",
                   value ? "text-green-300" : "text-destructive"
                 )}
               >
-                {value
-                  ? (() => {
-                      const driver = drivers.find((d) => d.name === value);
-                      if (!driver) return "Unassigned";
-                      return driver.name.length > 8
-                        ? `${driver.name.substring(0, 8)}...`
-                        : driver.name;
-                    })()
-                  : "Unassigned"}
-                <ChevronDown className="opacity-50 flex-shrink-0" />
+                {value || "Unassigned"}
+                <ChevronDown className="opacity-50" />
               </Button>
             </PopoverTrigger>
+
             <PopoverContent className="w-full p-0">
               <Command>
-                <CommandInput
-                  placeholder="Search framework..."
-                  className="h-9"
-                />
+                <CommandInput placeholder="Search Driver..." />
                 <CommandList>
-                  <CommandEmpty>Driver Unvailable.</CommandEmpty>
-                  <ScrollArea className="h-[150px] mt-4 overflow-y-auto pr-4">
-                    <CommandGroup className="flex flex-col gap-4">
-                      {drivers.map((drivers) => (
+                  <CommandEmpty>No drivers available.</CommandEmpty>
+                  <ScrollArea className="h-[150px]">
+                    <CommandGroup>
+                      {drivers.map((driver) => (
                         <CommandItem
-                          key={drivers.driverid}
-                          value={drivers.name}
-                          onSelect={(currentValue) => {
-                            setValue(
-                              currentValue === value ? "" : currentValue
-                            );
+                          key={driver.driverid}
+                          value={driver.name}
+                          onSelect={async () => {
+                            setValue(driver.name);
                             setOpen(false);
+
+                            await fetch(
+                              "/api/admin/manage-bookings/assign-driver",
+                              {
+                                method: "POST",
+                                headers: {
+                                  "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                  orderId: row.original.orderid,
+                                  driverId: driver.driverid,
+                                }),
+                              }
+                            );
+
+                            router.refresh();
                           }}
                         >
-                          {drivers.name}
+                          {driver.name}
                           <Check
                             className={cn(
                               "ml-auto",
-                              value === drivers.name
+                              value === driver.name
                                 ? "opacity-100"
                                 : "opacity-0"
                             )}
@@ -219,11 +225,11 @@ export const getColumns = (
                   <CommandEmpty>Van Unvailable.</CommandEmpty>
                   <ScrollArea className="h-[150px] mt-4 overflow-y-autos pr-4">
                     <CommandGroup className="flex flex-col gap-4">
-                      {vans.map((vans) => (
+                      {vans.map((van) => (
                         <CommandItem
-                          key={vans.vanplatenumber}
-                          value={vans.vanplatenumber}
-                          keywords={[String(vans.capacity)]}
+                          key={van.vanplatenumber}
+                          value={van.vanplatenumber}
+                          keywords={[String(van.capacity)]}
                           onSelect={(currentValue) => {
                             setValue(
                               currentValue === value ? "" : currentValue
@@ -231,11 +237,11 @@ export const getColumns = (
                             setOpen(false);
                           }}
                         >
-                          {`${vans.capacity} Seats —  ${vans.vanplatenumber}`}
+                          {`${van.capacity} Seats —  ${van.vanplatenumber}`}
                           <Check
                             className={cn(
                               "ml-auto",
-                              value === vans.vanplatenumber
+                              value === van.vanplatenumber
                                 ? "opacity-100"
                                 : "opacity-0"
                             )}

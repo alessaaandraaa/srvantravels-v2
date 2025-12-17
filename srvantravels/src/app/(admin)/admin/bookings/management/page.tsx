@@ -3,6 +3,7 @@ import AdminManageTable from "@/src/app/components/ui/Admin/AdminBookings/Manage
 import NumberBookingsWeekWrapper from "@/src/app/components/ui/Admin/AdminBookings/Management/AdminManageBookingsWeekWrapper";
 import NeedsDriverWrapper from "@/src/app/components/ui/Admin/AdminBookings/Management/AdminNeedsDriverWrapper";
 import NeedsVanWrapper from "@/src/app/components/ui/Admin/AdminBookings/Management/AdminNeedsVanWrapper";
+import AdminManageTableWrapper from "@/src/app/components/ui/Admin/AdminBookings/Management/AdminManageTableWrapper";
 
 const page = async () => {
   return (
@@ -20,7 +21,7 @@ const page = async () => {
         <AdminManageCalendar />
       </div>
       <div className="bg-primary-foreground p-4 rounded-lg col-span-2">
-        <AdminManageTable />
+        <AdminManageTableWrapper />
       </div>
     </div>
   );
