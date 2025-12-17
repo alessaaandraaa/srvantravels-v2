@@ -10,80 +10,80 @@ import {
   CardTitle,
 } from "../../card"
 
-export function NeedsVan() {
+export function NumberBookingsWeek({ total }: { total: number }) {
   return (
     <div className="">
       <Card className="max-h-[150px]">
         <CardHeader>
-          <CardDescription>Total Sales</CardDescription>
+          <CardDescription>Number of Bookings this Week</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            $1,250.00
+            {total}
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
               <TrendingUp />
-              +12.5%
+              +19.5%
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Trending up this month <TrendingUp className="size-4" />
+            Trending up this Week <TrendingUp className="size-4" />
           </div>
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }
 
-export function NeedsDriver() {
+export function NeedsDriver({ total }: { total: number }) {
   return (
     <div className="">
       <Card className="max-h-[150px]">
         <CardHeader>
-          <CardDescription>Total Revenue</CardDescription>
+          <CardDescription>Needs Driver</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            $1,250.00
-          </CardTitle>  
+            {total}
+          </CardTitle>
           <CardAction>
             <Badge variant="outline">
               <TrendingUp />
-              +12.5%
+              +42.5%
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Trending up this month <TrendingUp className="size-4" />
+            Driver Assignment Needed <TrendingUp className="size-4" />
           </div>
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }
 
-export function NumberBookingsWeek() {
+export function NeedsVan({ total }: { total: number }) {
   return (
     <div className="">
       <Card className="max-h-[150px]">
-        <CardHeader className="aspect-auto h-auto">
-          <CardDescription>Total Customers</CardDescription>
+        <CardHeader>
+          <CardDescription>Needs Van</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            $1,250.00
+            {total}
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
-              <TrendingDown />
-              +12.5%
-            </Badge>  
+              <TrendingUp />
+              +19.5%
+            </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Trending up this month <TrendingUp className="size-4" />
+            In Recruitment of Vans <TrendingUp className="size-4" />
           </div>
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }

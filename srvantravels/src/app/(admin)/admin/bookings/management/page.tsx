@@ -1,22 +1,20 @@
-import {
-  NeedsDriver,
-  NeedsVan,
-  NumberBookingsWeek,
-} from "@/src/app/components/ui/Admin/AdminBookings/Management/AdminManageKPIS";
 import AdminManageCalendar from "@/src/app/components/ui/Admin/AdminBookings/Management/AdminManageCalendar";
 import AdminManageTable from "@/src/app/components/ui/Admin/AdminBookings/Management/AdminManageTable";
+import NumberBookingsWeekWrapper from "@/src/app/components/ui/Admin/AdminBookings/Management/AdminManageBookingsWeekWrapper";
+import NeedsDriverWrapper from "@/src/app/components/ui/Admin/AdminBookings/Management/AdminNeedsDriverWrapper";
+import NeedsVanWrapper from "@/src/app/components/ui/Admin/AdminBookings/Management/AdminNeedsVanWrapper";
 
 const page = async () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 2xl:grid-cols-3 gap-2 mb-4">
       <div className="bg-primary-foreground rounded-lg max-h-[150px]">
-        <NumberBookingsWeek />
+        <NumberBookingsWeekWrapper />
       </div>
       <div className="bg-primary-foreground rounded-lg max-h-[150px]">
-        <NeedsDriver />
+        <NeedsDriverWrapper />
       </div>
       <div className="bg-primary-foreground rounded-lg max-h-[150px]">
-        <NeedsVan />
+        <NeedsVanWrapper />
       </div>
       <div className="bg-primary-foreground rounded-lg col-span-1">
         <AdminManageCalendar />
