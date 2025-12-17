@@ -175,6 +175,7 @@ model Payment {
   payment_status Payment_payment_status
   customer       Customer[]
 
+
   @@map("payment")
 }
 
