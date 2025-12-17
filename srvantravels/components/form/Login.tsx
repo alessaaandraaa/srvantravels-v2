@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, getSession } from "next-auth/react"; // 1. Added getSession
 import { useRouter } from "next/navigation";
 
 const images = [
@@ -32,6 +32,8 @@ export default function Login() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrorMessage(""); // Clear previous errors
+
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
@@ -42,10 +44,26 @@ export default function Login() {
       password,
     });
 
-    if (!data?.error) {
-      router.push("/home");
+    if (data?.error) {
+      setErrorMessage("Login Error: " + data.error);
     } else {
-      setErrorMessage("Login Error: " + data?.error);
+      const session = await getSession();
+
+      if (session?.user) {
+        router.refresh();
+
+        switch (session.user.role) {
+          case "MANAGER":
+            router.push("/admin");
+            break;
+          case "DRIVER":
+            router.push("/driver/schedule");
+            break;
+          default:
+            router.push("/home");
+            break;
+        }
+      }
     }
   };
 
@@ -79,12 +97,14 @@ export default function Login() {
               type="email"
               name="email"
               placeholder="Email"
+              required
               className="p-3 sm:p-4 rounded-lg border border-[#79C6D180] focus:outline-none focus:ring-2 focus:ring-[#36B9CB] text-base bg-white/90 placeholder-gray-400"
             />
             <input
               type="password"
               name="password"
               placeholder="Password"
+              required
               className="p-3 sm:p-4 rounded-lg border border-[#79C6D180] focus:outline-none focus:ring-2 focus:ring-[#36B9CB] text-base bg-white/90 placeholder-gray-400"
             />
             <button className="mt-2 bg-[#F3B54D] hover:bg-[#e3a645] text-white font-bold py-2 sm:py-3 rounded-lg shadow-md transition-all duration-200 text-base">
