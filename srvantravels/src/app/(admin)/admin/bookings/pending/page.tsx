@@ -21,18 +21,20 @@ export interface PendingBookingSummary {
 }
 
 const PendingBookingsPage = () => {
-  const [bookings, setBookings] = useState<PendingBookingSummary[]>([])
+  const [bookings, setBookings] = useState<any[]>([])
   const [selectedOrderId, setSelectedOrderId] = useState<number | null>(null)
 
+  const fetchBookings = async () => {
+    const res = await fetch("/api/pending-bookings", {
+      cache: "no-store",
+    })
+    const data = await res.json()
+    setBookings(data)
+  }
+
+
   useEffect(() => {
-    fetch("/api/pending-bookings")
-      .then(res => res.json())
-      .then(data => {
-        setBookings(data)
-        if (data.length > 0) {
-          setSelectedOrderId(data[0].order_ID)
-        }
-      })
+    fetchBookings()
   }, [])
 
   return (
@@ -46,10 +48,20 @@ const PendingBookingsPage = () => {
       </div>
 
       <div className="bg-primary-foreground rounded-lg col-span-2 p-4">
-        <AdminCustomRightPanel orderId={selectedOrderId} />
+        <AdminCustomRightPanel
+          orderId={selectedOrderId}
+          onActionComplete={(processedId) => {
+            setBookings(prev =>
+              prev.filter(b => b.order_ID !== processedId)
+            )
+
+            setSelectedOrderId(null)
+          }}
+        />
       </div>
     </div>
   )
 }
+
 
 export default PendingBookingsPage

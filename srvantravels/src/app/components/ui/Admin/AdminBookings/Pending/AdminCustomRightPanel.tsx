@@ -6,11 +6,13 @@ import { Button } from "../../button"
 
 interface Props {
   orderId: number | null
+  onActionComplete?: (orderId: number) => void
 }
 
-const AdminCustomRightPanel = ({ orderId }: Props) => {
+const AdminCustomRightPanel = ({ orderId, onActionComplete }: Props) => {
   const [booking, setBooking] = useState<any>(null)
   const [loading, setLoading] = useState(false)
+  const [actionLoading, setActionLoading] = useState(false)
 
   useEffect(() => {
     if (!orderId) {
@@ -20,11 +22,11 @@ const AdminCustomRightPanel = ({ orderId }: Props) => {
 
     setLoading(true)
 
-    fetch(`/api/pending-bookings/${orderId}`)
+    fetch(`/api/pending-bookings/${orderId}`, {
+      cache: "no-store",
+    })
       .then(res => {
-        if (!res.ok) {
-          throw new Error("Failed to fetch booking")
-        }
+        if (!res.ok) throw new Error("Failed to fetch booking")
         return res.json()
       })
       .then(data => {
@@ -39,7 +41,59 @@ const AdminCustomRightPanel = ({ orderId }: Props) => {
       })
   }, [orderId])
 
-  // 🔹 No selection yet
+  const handleApprove = async () => {
+      if (!orderId) return
+
+      setActionLoading(true)
+
+      try {
+        const res = await fetch(`/api/pending-bookings/${orderId}/approve`, {
+          method: "PATCH",
+        })
+
+        if (!res.ok) {
+          throw new Error("Approve failed")
+        }
+
+        onActionComplete?.(orderId)
+        setBooking(null)
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setActionLoading(false)
+      }
+    }
+
+    const handleReject = async () => {
+      if (!orderId) return
+
+      setActionLoading(true)
+
+      try {
+        const res = await fetch(`/api/pending-bookings/${orderId}/reject`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            reason: "Booking rejected by administrator.",
+          }),
+        })
+
+        if (!res.ok) {
+          throw new Error("Reject failed")
+        }
+
+        onActionComplete?.(orderId)
+        setBooking(null)
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setActionLoading(false)
+      }
+    }
+
+
   if (!orderId) {
     return (
       <div className="p-8 text-muted-foreground">
@@ -48,7 +102,6 @@ const AdminCustomRightPanel = ({ orderId }: Props) => {
     )
   }
 
-  // 🔹 Loading state
   if (loading) {
     return (
       <div className="p-8 text-muted-foreground">
@@ -57,13 +110,8 @@ const AdminCustomRightPanel = ({ orderId }: Props) => {
     )
   }
 
-  // 🔹 API returned nothing
   if (!booking) {
-    return (
-      <div className="p-8 text-muted-foreground">
-        Booking not found
-      </div>
-    )
+    return null 
   }
 
   return (
@@ -88,11 +136,12 @@ const AdminCustomRightPanel = ({ orderId }: Props) => {
         <span className="text-muted-foreground text-[12px]">Stops</span>
         <div className="grid grid-cols-3 gap-x-6 gap-y-1">
           {booking.stops.map((stop: string, index: number) => (
-            <div key={index} className="flex items-start">
-              <span className="text-[13px] before:content-['•'] before:mr-2">
-                {stop}
-              </span>
-            </div>
+            <span
+              key={index}
+              className="text-[13px] before:content-['•'] before:mr-2"
+            >
+              {stop}
+            </span>
           ))}
         </div>
       </div>
@@ -101,60 +150,70 @@ const AdminCustomRightPanel = ({ orderId }: Props) => {
 
       {/* Date / Time */}
       <div className="grid grid-cols-2 gap-4 text-sm">
-        <div className="flex flex-col">
+        <div>
           <span className="text-muted-foreground text-[12px]">Date</span>
-          <span className="font-medium">
+          <div className="font-medium">
             {booking.date
               ? new Date(booking.date).toLocaleDateString()
               : "—"}
-          </span>
+          </div>
         </div>
-        <div className="flex flex-col">
+        <div>
           <span className="text-muted-foreground text-[12px]">Time</span>
-          <span className="font-medium">
+          <div className="font-medium">
             {booking.time
               ? new Date(booking.time).toLocaleTimeString([], {
                   hour: "2-digit",
                   minute: "2-digit",
                 })
               : "—"}
-          </span>
+          </div>
         </div>
       </div>
 
       {/* Pax / Luggage */}
       <div className="grid grid-cols-2 gap-4 text-sm">
-        <div className="flex flex-col">
+        <div>
           <span className="text-muted-foreground text-[12px]">
             Number of Party Members
           </span>
-          <span className="font-medium">{booking.pax ?? "—"}</span>
+          <div className="font-medium">{booking.pax ?? "—"}</div>
         </div>
-        <div className="flex flex-col">
+        <div>
           <span className="text-muted-foreground text-[12px]">
             Luggage
           </span>
-          <span className="font-medium">{booking.luggage ?? "—"}</span>
+          <div className="font-medium">{booking.luggage ?? "—"}</div>
         </div>
       </div>
 
       {/* Payment */}
-      <div className="flex flex-col text-sm">
+      <div className="text-sm">
         <span className="text-muted-foreground text-[12px]">
           Payment Method
         </span>
-        <span className="font-medium flex items-center gap-1">
+        <div className="flex items-center gap-1 font-medium">
           <CreditCard className="h-4 w-4 text-muted-foreground" />
           {booking.paymentMethod ?? "—"}
-        </span>
+        </div>
       </div>
 
       {/* Footer */}
       <div className="mt-auto pt-4 flex gap-2">
-        <Button variant="destructive" className="w-1/2">
+        <Button
+          variant="destructive"
+          className="w-1/2"
+          onClick={handleReject}
+          disabled={actionLoading}
+        >
           Reject
         </Button>
-        <Button className="w-1/2">
+
+        <Button
+          className="w-1/2"
+          onClick={handleApprove}
+          disabled={actionLoading}
+        >
           Approve
         </Button>
       </div>
