@@ -12,18 +12,15 @@ export default function AdminManageTableWrapper() {
   useEffect(() => {
     fetch("/api/management-bookings/table")
       .then(res => res.json())
-      .then(setData)
-      .catch(console.error);
+      .then(setData);
 
     fetch("/api/management-bookings/drivers")
       .then(res => res.json())
-      .then(setDrivers)
-      .catch(console.error);
+      .then(setDrivers);
 
     fetch("/api/management-bookings/vans")
       .then(res => res.json())
-      .then(setVans)
-      .catch(console.error);
+      .then(setVans);
   }, []);
 
   return (
@@ -31,6 +28,8 @@ export default function AdminManageTableWrapper() {
       data={data}
       drivers={drivers}
       vans={vans}
+      setDrivers={setDrivers}  
+      setVans={setVans}
     />
   );
 }

@@ -16,7 +16,8 @@ export async function GET() {
       customer: {
         include: {
           person: true,
-          payment: true
+          payment: true,
+          van: true
         },
       },
       itinerary: true,
@@ -48,7 +49,7 @@ export async function GET() {
             ? o.date_of_travel.toISOString().split("T")[0]
             : "—",
         driver: o.driver?.employee?.person?.name ?? "—",
-        vanplatenumber: o.driver?.plate_number ?? "—",
+        vanplatenumber: o.customer?.van?.[0]?.plate_number ?? "—",
         };
     })
     );

@@ -7,17 +7,22 @@ type Props = {
   data: Order[];
   drivers: Driver[];
   vans: Van[];
+  setDrivers: React.Dispatch<React.SetStateAction<Driver[]>>;
+  setVans: React.Dispatch<React.SetStateAction<Van[]>>;
 };
 
-const AdminManageTable = ({ data, drivers, vans }: Props) => {
+const AdminManageTable = ({
+  data,
+  drivers,
+  vans,
+  setDrivers,
+  setVans,
+}: Props) => {
   return (
-    <div>
-      <div className="px-2 py-2 bg-secondary rounded-md">
-        <h1 className="font-semibold">All Payments</h1>
-      </div>
-
-      <DataTable columns={getColumns(drivers, vans)} data={data} />
-    </div>
+    <DataTable
+      columns={getColumns(drivers, vans, setDrivers, setVans)}
+      data={data}
+    />
   );
 };
 
