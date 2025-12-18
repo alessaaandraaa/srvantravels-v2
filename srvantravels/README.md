@@ -1,8 +1,5 @@
-## Connecting to DCISM Server
+# CREATING A COPY
 
-ssh -p 22077 -L 3307:localhost:3306 s24100314@web.dcism.org
-Password is RedHeart104
-
-Create new terminal
-
-do npx prisma db pull
+1. Fork the repository
+2. Clone the fork to your local machine: `https://github.com/YOUR_USERNAME/srvantravels-v2.git`
+3. Install dependencies: `npm install`

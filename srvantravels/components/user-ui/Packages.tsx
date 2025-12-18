@@ -2,10 +2,6 @@ import Image from "next/image";
 import PackageButton from "./PackageButton";
 import { PackageWithTags } from "@/types/package.types";
 
-interface Tag {
-  tag_id: number;
-}
-
 export default function Packages(props: PackageWithTags) {
   return (
     <div className="m-5 flex items-start">
@@ -33,13 +29,13 @@ export default function Packages(props: PackageWithTags) {
         </p>
 
         <div className="flex items-start gap-5 mt-10">
-          {props.package_itinerary_tag.map((tag: any) => (
+          {props.package_itinerary_tag.map(({ tag }) => (
             <p
-              key={tag.tag.tag_id}
+              key={tag.tag_ID}
               className="p-2 rounded-2xl text-white max-w-fit shadow-md"
-              style={{ backgroundColor: tag.tag.color }}
+              style={{ backgroundColor: tag.color }}
             >
-              {tag.tag.name}
+              {tag.name}
             </p>
           ))}
         </div>
