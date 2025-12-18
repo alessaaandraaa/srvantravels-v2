@@ -23,14 +23,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../dropdown-menu"
-import { Label } from "../../../../../../components/ui/label"
-import { Input } from "../../../../../../components/ui/input"
-import { Textarea } from "../../../../../../components/ui/textarea"
-import { ScrollArea } from "../../../../../../components/ui/scroll-area"
+import { Label } from "../label"
+import { Input } from "../input"
+import { Textarea } from "../textarea"
+import { ScrollArea } from "../scroll-area"
 
 export type packageItinerary = {
   id: number

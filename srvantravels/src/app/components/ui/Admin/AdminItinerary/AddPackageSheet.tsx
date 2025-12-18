@@ -11,10 +11,10 @@ import {
   SheetDescription,
 } from "../Sidebar/sheet";
 import { Input } from "../input";
-import { Label } from "../../../../../../components/ui/label";
-import { Textarea } from "../../../../../../components/ui/textarea";
+import { Label } from "../../../../components/ui/Admin/label";
+import { Textarea } from "../../../../components/ui/Admin/textarea";
 import { ScrollArea } from "../scroll-area";
-import { Button } from "@/components/ui/button";
+import { Button } from "../../../../components/ui/Admin/button";
 import { Plus } from "lucide-react";
 
 export function AddPackageSheet({ onAdded }: { onAdded?: () => void }) {
