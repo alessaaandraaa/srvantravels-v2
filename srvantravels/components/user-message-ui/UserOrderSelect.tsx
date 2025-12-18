@@ -3,10 +3,16 @@
 import { Session } from "next-auth";
 import { useState, useEffect } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
+import type { UnfinishedOrdersListType } from "@/types/order.types";
 
 interface OrderSelectProps {
   user_id: number | null;
   registration: Partial<UseFormRegisterReturn>;
+}
+
+interface ApiResponse {
+  orders?: UnfinishedOrdersListType;
+  unfin_orders?: UnfinishedOrdersListType;
 }
 
 type OrderSimple = {
@@ -26,16 +32,20 @@ export default function OrderSelect({
   useEffect(() => {
     fetch(`/api/orders/unfin?customerId=${user_id}`)
       .then((response) => response.json())
-      .then((data) => {
+      .then((data: ApiResponse) => {
         const rawResponse = data.orders || data.unfin_orders || [];
+
         const allOrders = rawResponse.flatMap(
-          (customer: any) => customer.order_details
+          (customer) => customer.order_details
         );
 
-        const formattedList = allOrders.map((order: any) => {
+        const formattedList = allOrders.map((order) => {
+          const pkgName = order.itinerary?.package_itinerary?.package_name;
+          const isCustom = order.itinerary?.custom_itinerary?.custom_ID;
+
           return {
             orderName:
-              order.itinerary?.package_itinerary?.package_name || "Custom",
+              pkgName || (isCustom ? "Custom Itinerary" : "Unknown Order"),
             orderId: order.order_ID,
           };
         });
