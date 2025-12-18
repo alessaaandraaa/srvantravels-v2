@@ -13,7 +13,7 @@ const UserInboxRightPanel = ({ session }: PanelProps) => {
   return (
     <Tabs defaultValue="support" className="flex flex-col">
       <TabsList className="grid w-full grid-cols-3">
-        <TabsTrigger value="support">General Support</TabsTrigger>
+        <TabsTrigger value="support">General Inquiries</TabsTrigger>
         <TabsTrigger value="cancel">Cancel Booking</TabsTrigger>
         <TabsTrigger value="rebook">Rebook</TabsTrigger>
       </TabsList>
