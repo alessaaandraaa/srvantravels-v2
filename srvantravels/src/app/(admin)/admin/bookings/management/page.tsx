@@ -1,5 +1,4 @@
 import AdminManageCalendar from "@/src/app/components/ui/Admin/AdminBookings/Management/AdminManageCalendar";
-import AdminManageTable from "@/src/app/components/ui/Admin/AdminBookings/Management/AdminManageTable";
 import NumberBookingsWeekWrapper from "@/src/app/components/ui/Admin/AdminBookings/Management/AdminManageBookingsWeekWrapper";
 import NeedsDriverWrapper from "@/src/app/components/ui/Admin/AdminBookings/Management/AdminNeedsDriverWrapper";
 import NeedsVanWrapper from "@/src/app/components/ui/Admin/AdminBookings/Management/AdminNeedsVanWrapper";

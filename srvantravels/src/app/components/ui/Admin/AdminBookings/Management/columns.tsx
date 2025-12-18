@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export type Driver = {
   driverid: number;
@@ -45,7 +46,9 @@ export type Driver = {
 export type Van = {
   vanplatenumber: string;
   capacity: number;
+  available: boolean;
 };
+
 
 export type Order = {
   paymentstatus: "FULLY PAID" | "NOT PAID" | "PARTIALLY PAID";
@@ -59,7 +62,9 @@ export type Order = {
 
 export const getColumns = (
   drivers: Driver[],
-  vans: Van[]
+  vans: Van[],
+  setDrivers: React.Dispatch<React.SetStateAction<Driver[]>>,
+  setVans: React.Dispatch<React.SetStateAction<Van[]>>
 ): ColumnDef<Order>[] => [
   {
     accessorKey: "paymentstatus",
@@ -101,53 +106,153 @@ export const getColumns = (
     accessorKey: "driver",
     header: "Driver",
     cell: ({ row }) => {
-      const [open, setOpen] = React.useState(false);
-      const [value, setValue] = React.useState("");
       const router = useRouter();
+      const assigned = row.original.driver;
 
-      return (
-        <div className="max-w-[150px]">
-          <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-              <Button
+      if (assigned && assigned !== "—") {
+        return <Button
                 variant="outline"
                 role="combobox"
-                aria-expanded={open}
-                className={cn(
-                  "w-full justify-between",
-                  value ? "text-green-300" : "text-destructive"
-                )}
-              >
-                {value || "Unassigned"}
+                className= "w-[145px] justify-between text-green-300"
+          >
+                {row.original.driver !== "—"
+                  ? row.original.driver
+                  : "Unassigned"}
                 <ChevronDown className="opacity-50" />
-              </Button>
-            </PopoverTrigger>
+          </Button>;
+      }
 
-            <PopoverContent className="w-full p-0">
-              <Command>
-                <CommandInput placeholder="Search Driver..." />
-                <CommandList>
-                  <CommandEmpty>No drivers available.</CommandEmpty>
-                  <ScrollArea className="h-[150px]">
-                    <CommandGroup>
-                      {drivers.map((driver) => (
+      return (
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              className="w-[145px] justify-between text-destructive"
+            >
+              Unassigned
+              <ChevronDown className="opacity-50" />
+            </Button>
+          </PopoverTrigger>
+
+          <PopoverContent className="w-[200px] p-0">
+            <Command>
+              <CommandInput placeholder="Search Driver..." />
+              <CommandList>
+                <CommandEmpty>No drivers available.</CommandEmpty>
+
+                <ScrollArea className="h-[150px]">
+                  <CommandGroup>
+                    {drivers
+                      .filter(d => d.availability) 
+                      .map(driver => (
                         <CommandItem
                           key={driver.driverid}
                           value={driver.name}
                           onSelect={async () => {
-                            setValue(driver.name);
-                            setOpen(false);
+                            row.original.driver = driver.name;
+
+                            setDrivers(prev =>
+                              prev.map(d =>
+                                d.driverid === driver.driverid
+                                  ? { ...d, availability: false }
+                                  : d
+                              )
+                            );
 
                             await fetch(
-                              "/api/admin/manage-bookings/assign-driver",
+                              "/api/management-bookings/assign-driver",
                               {
                                 method: "POST",
-                                headers: {
-                                  "Content-Type": "application/json",
-                                },
+                                headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify({
                                   orderId: row.original.orderid,
                                   driverId: driver.driverid,
+                                }),
+                              }
+                            );
+                            toast.success(`${driver.name} assigned`);
+
+                            router.refresh();
+                          }}
+                        >
+                          {driver.name}
+                          <Check className="ml-auto" />
+                        </CommandItem>
+                      ))}
+                  </CommandGroup>
+                </ScrollArea>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+      );
+    },
+  },
+  {
+    accessorKey: "vanplatenumber",
+    header: "Plate Number",
+    cell: ({ row }) => {
+      const router = useRouter();
+      const assignedVan = row.original.vanplatenumber;
+
+      if (assignedVan && assignedVan !== "—") {
+        return (
+          <Button
+                variant="outline"
+                role="combobox"
+                className= "w-[120px] justify-between text-green-300"
+          >
+                {row.original.vanplatenumber}
+                <ChevronDown className="opacity-50" />
+          </Button>
+        );
+      }
+
+      return (
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              className="w-[120px] justify-between text-destructive"
+            >
+              Unassigned
+              <ChevronDown className="opacity-50" />
+            </Button>
+          </PopoverTrigger>
+
+          <PopoverContent className="w-[220px] p-0">
+            <Command>
+              <CommandInput placeholder="Search Van..." />
+              <CommandList>
+                <CommandEmpty>No vans available.</CommandEmpty>
+
+                <ScrollArea className="h-[150px]">
+                  <CommandGroup>
+                    {vans
+                      .filter(v => v.available)
+                      .map(van => (
+                        <CommandItem
+                          key={van.vanplatenumber}
+                          value={van.vanplatenumber}
+                          onSelect={async () => {
+                            row.original.vanplatenumber = van.vanplatenumber;
+
+                            setVans(prev =>
+                              prev.map(v =>
+                                v.vanplatenumber === van.vanplatenumber
+                                  ? { ...v, available: false }
+                                  : v
+                              )
+                            );
+
+                            await fetch(
+                              "/api/management-bookings/assign-van",
+                              {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                  orderId: row.original.orderid,
+                                  plateNumber: van.vanplatenumber,
                                 }),
                               }
                             );
@@ -155,106 +260,16 @@ export const getColumns = (
                             router.refresh();
                           }}
                         >
-                          {driver.name}
-                          <Check
-                            className={cn(
-                              "ml-auto",
-                              value === driver.name
-                                ? "opacity-100"
-                                : "opacity-0"
-                            )}
-                          />
+                          {`${van.capacity} Seats — ${van.vanplatenumber}`}
+                          <Check className="ml-auto" />
                         </CommandItem>
                       ))}
-                    </CommandGroup>
-                  </ScrollArea>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "vanplatenumber",
-    header: "Plate Number",
-    cell: () => {
-      const [open, setOpen] = React.useState(false);
-      const [value, setValue] = React.useState("");
-      return (
-        <div className="max-w-[150px]">
-          <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={open}
-                aria-label="Select Driver"
-                className={cn(
-                  `w-full justify-between`,
-                  value ? "text-green-300" : "text-destructive"
-                )}
-              >
-                {value
-                  ? (() => {
-                      const driver = vans.find(
-                        (d) => d.vanplatenumber === value
-                      );
-                      if (!driver) return "Unassigned";
-                      return driver.vanplatenumber.length > 8
-                        ? `${driver.vanplatenumber.substring(0, 8)}...`
-                        : driver.vanplatenumber;
-                    })()
-                  : "Unassigned"}
-                <ChevronDown className="opacity-50 flex-shrink-0" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-full p-0">
-              <Command
-                filter={(value, search) => {
-                  const van = vans.find((v) => v.vanplatenumber === value);
-                  return van &&
-                    String(van.capacity).includes(search.toLowerCase())
-                    ? 1
-                    : 0;
-                }}
-              >
-                <CommandInput placeholder="Search Van..." className="h-9" />
-                <CommandList>
-                  <CommandEmpty>Van Unvailable.</CommandEmpty>
-                  <ScrollArea className="h-[150px] mt-4 overflow-y-autos pr-4">
-                    <CommandGroup className="flex flex-col gap-4">
-                      {vans.map((van) => (
-                        <CommandItem
-                          key={van.vanplatenumber}
-                          value={van.vanplatenumber}
-                          keywords={[String(van.capacity)]}
-                          onSelect={(currentValue) => {
-                            setValue(
-                              currentValue === value ? "" : currentValue
-                            );
-                            setOpen(false);
-                          }}
-                        >
-                          {`${van.capacity} Seats —  ${van.vanplatenumber}`}
-                          <Check
-                            className={cn(
-                              "ml-auto",
-                              value === van.vanplatenumber
-                                ? "opacity-100"
-                                : "opacity-0"
-                            )}
-                          />
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </ScrollArea>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
-        </div>
+                  </CommandGroup>
+                </ScrollArea>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
       );
     },
   },

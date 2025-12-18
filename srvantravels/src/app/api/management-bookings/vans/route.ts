@@ -3,16 +3,23 @@ import { prisma } from "@/lib/db";
 
 export async function GET() {
   const vans = await prisma.van.findMany({
-    where: {
-      customer_ID: null,
-      payment_ID: null,
+    select: {
+      plate_number: true,
+      passenger_capacity: true,
+      driver_ID: true,
+      customer_ID: true,
+      payment_ID: true,
     },
   });
 
   return NextResponse.json(
-    vans.map((v) => ({
+    vans.map(v => ({
       vanplatenumber: v.plate_number,
       capacity: v.passenger_capacity ?? 0,
+      available:
+        v.driver_ID === null &&
+        v.customer_ID === null &&
+        v.payment_ID === null,
     }))
   );
 }
