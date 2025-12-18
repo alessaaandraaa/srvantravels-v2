@@ -57,7 +57,7 @@ const AdminSideBar = () => {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <Link href="/admin/profile">
+                <Link href="/admin">
                   <Image src="/FlinsEmo.jpg" alt="GAY" width={20} height={20}/>
                   <span>Mikoro Leonardo</span>
                 </Link>
@@ -79,7 +79,6 @@ const AdminSideBar = () => {
                                         <span>{item.title}</span>
                                     </Link>
                                 </SidebarMenuButton>
-                                {/* Good For Notifications */}
                                 {item.title === "Inbox" && (
                                   <SidebarMenuBadge>29</SidebarMenuBadge>
                                 )}
@@ -131,10 +130,9 @@ const AdminSideBar = () => {
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
-            <SidebarGroup>
+            {/* <SidebarGroup>
               <SidebarGroupLabel>Locations</SidebarGroupLabel>
               <SidebarGroupAction>
-                {/* Good for Adding a Package or Sorting Data | Shortcut to Projects Page*/}
                 <span className="sr-only">Add Locations</span>
               </SidebarGroupAction>
               <SidebarGroupContent>
@@ -148,62 +146,7 @@ const AdminSideBar = () => {
                   </SidebarMenuItem>
                 </SidebarMenu>
               </SidebarGroupContent>
-            </SidebarGroup>
-            {/* Collapsible */}
-            {/* <Collapsible defaultOpen className="group/collapsible">       
-              <SidebarGroup>
-                <SidebarGroupLabel asChild>
-                  <CollapsibleTrigger>
-                    Locations
-                    <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-                  </CollapsibleTrigger>
-                </SidebarGroupLabel>
-                <SidebarGroupContent>
-                  <CollapsibleContent>
-                    <SidebarMenu>
-                      <SidebarMenuItem>
-                        <SidebarMenuButton asChild>
-                          <Link href="/">
-                            <Projector/> See All Locations
-                          </Link>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                      <SidebarMenuItem>
-                        <SidebarMenuButton asChild>
-                          <Link href="/">
-                            <Plus/> Add Location
-                          </Link>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    </SidebarMenu>
-                  </CollapsibleContent>
-                </SidebarGroupContent>
-              </SidebarGroup> */}
-            {/* </Collapsible>    */}
-            {/* NESTED */}
-            {/* <SidebarGroup>
-              <SidebarGroupLabel>Nested Items</SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link href="/">
-                        <Projector/> See All Packages
-                      </Link>
-                    </SidebarMenuButton>
-                    <SidebarMenuSub>  
-                      <SidebarMenuSubItem>
-                         <SidebarMenuSubButton asChild>
-                          <Link href="/">
-                            <Plus/> Add Project
-                          </Link>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                    </SidebarMenuSub>
-                  </SidebarMenuItem>
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>  */}
+            </SidebarGroup> */}
         </SidebarContent>
         <SidebarFooter>
           <SidebarMenu>

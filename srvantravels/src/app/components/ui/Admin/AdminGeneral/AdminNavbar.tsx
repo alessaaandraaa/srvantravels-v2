@@ -36,8 +36,8 @@ const AdminNavbar = () => {
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" sideOffset={10}>
-                        <DropdownMenuItem onClick={() => setTheme("light")}>
-                        Light
+                        <DropdownMenuItem onClick={() => setTheme("white")}>
+                        Main Theme
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => setTheme("dark")}>
                         Dark
