@@ -3,10 +3,13 @@ import { PackageItineraryService } from "@/services/package-itinerary-services"
 
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
   const body = await req.json()
-  await PackageItineraryService.updatePackage(Number(params.id), body)
+
+  await PackageItineraryService.updatePackage(Number(id), body)
 
   return NextResponse.json({ success: true })
 }
+

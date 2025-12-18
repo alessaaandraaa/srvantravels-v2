@@ -41,7 +41,7 @@ const page = () => {
         <Inactives />
       </div>
       <div className="bg-primary-foreground rounded-lg col-span-3 p-4">
-        <DataTable columns={getColumns()} data={data} onAdded={fetchData}/>
+        <DataTable columns={getColumns(fetchData)} data={data} onAdded={fetchData}/>
       </div>
     </div>
   );

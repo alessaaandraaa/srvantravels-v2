@@ -43,7 +43,9 @@ export type packageItinerary = {
   description?: string
 }
 
-export const getColumns = (): ColumnDef<packageItinerary>[] => [
+export const getColumns = (
+  onUpdated?: () => void
+): ColumnDef<packageItinerary>[] => [
   {
     accessorKey: "createdby",
     header: "Created by",
@@ -73,10 +75,8 @@ export const getColumns = (): ColumnDef<packageItinerary>[] => [
     header: "Status",
     cell: ({ row }) => {
       const pkg = row.original
-      const [status, setStatus] = useState<"Active" | "Inactive">(pkg.status)
 
       const updateStatus = async (newStatus: "Active" | "Inactive") => {
-        setStatus(newStatus)
         await fetch(`/api/packages-itinerary/${pkg.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -84,6 +84,8 @@ export const getColumns = (): ColumnDef<packageItinerary>[] => [
             is_available: newStatus === "Active",
           }),
         })
+
+        onUpdated?.()
       }
 
       return (
@@ -93,23 +95,17 @@ export const getColumns = (): ColumnDef<packageItinerary>[] => [
               variant="outline"
               className={cn(
                 "flex items-center gap-2 w-[120px] justify-center",
-                status === "Active"
+                pkg.status === "Active"
                   ? "border-emerald-500/60 bg-emerald-100/30 text-emerald-700"
                   : "border-rose-500/60 bg-rose-100/30 text-rose-700"
               )}
             >
-              {status === "Active" ? (
-                <CheckCircle2 className="h-4 w-4" />
-              ) : (
-                <XCircle className="h-4 w-4" />
-              )}
-              {status}
-              <ChevronDown className="h-4 w-4" />
+              {pkg.status === "Active" ? <CheckCircle2 /> : <XCircle />}
+              {pkg.status}
+              <ChevronDown />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Status</DropdownMenuLabel>
-            <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => updateStatus("Active")}>
               Active
             </DropdownMenuItem>
@@ -119,7 +115,7 @@ export const getColumns = (): ColumnDef<packageItinerary>[] => [
           </DropdownMenuContent>
         </DropdownMenu>
       )
-    },
+    }
   },
   {
     id: "edit",
@@ -135,7 +131,6 @@ export const getColumns = (): ColumnDef<packageItinerary>[] => [
       const [routeInput, setRouteInput] = useState("")
       const [inclusions, setInclusions] = useState<string[]>([])
       const [inclusionInput, setInclusionInput] = useState("")
-      const [status, setStatus] = useState<"Active" | "Inactive">(pkg.status)
 
       useEffect(() => {
         setRoutes(pkg.routes ?? [])
@@ -164,11 +159,11 @@ export const getColumns = (): ColumnDef<packageItinerary>[] => [
             routes,
             inclusions,
             description,
-            is_available: status === "Active",
+            // is_available: pkg.status === "Active",
           }),
         })
         setOpen(false)
-        router.refresh()
+        onUpdated?.()
       }
 
       return (

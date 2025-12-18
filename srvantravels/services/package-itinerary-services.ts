@@ -33,10 +33,10 @@ export class PackageItineraryService {
     name: string
     price: number
     pax: number
-    routes: string[]
-    inclusions: string[]
-    description: string
-    managerId: number
+    routes?: string[]
+    inclusions?: string[]
+    description?: string
+    managerId?: number
   }) {
     return prisma.itinerary.create({
       data: {
@@ -46,8 +46,12 @@ export class PackageItineraryService {
           create: {
             package_name: data.name,
             number_of_PAX: data.pax,
-            route: data.routes.join(" -> "),
-            inclusions: data.inclusions.join(" -> "),
+            route: Array.isArray(data.routes)
+              ? data.routes.join(" -> ")
+              : undefined,
+            inclusions: Array.isArray(data.inclusions)
+              ? data.inclusions.join(" -> ")
+              : undefined,
             description: data.description,
             is_made_by_manager: data.managerId,
             is_available: true,
@@ -57,27 +61,50 @@ export class PackageItineraryService {
     })
   }
 
-  static async updatePackage(packageId: number, data: {
-    name: string
-    price: number
-    routes: string[]
-    inclusions: string[]
-    description: string
-    is_available: boolean
-  }) {
+  static async updatePackage(
+    packageId: number,
+    data: {
+      name?: string
+      price?: number
+      routes?: string[]
+      inclusions?: string[]
+      description?: string
+      is_available?: boolean
+    }
+  ) {
+    const updateData: any = {}
+
+    if (typeof data.name === "string") {
+      updateData.package_name = data.name
+    }
+
+    if (Array.isArray(data.routes)) {
+      updateData.route = data.routes.join(" -> ")
+    }
+
+    if (Array.isArray(data.inclusions)) {
+      updateData.inclusions = data.inclusions.join(" -> ")
+    }
+
+    if (typeof data.description === "string") {
+      updateData.description = data.description
+    }
+
+    if (typeof data.is_available === "boolean") {
+      updateData.is_available = data.is_available
+    }
+
     return prisma.package_Itinerary.update({
       where: { package_ID: packageId },
       data: {
-        package_name: data.name,
-        route: data.routes.join(" -> "),
-        inclusions: data.inclusions.join(" -> "),
-        description: data.description,
-        is_available: data.is_available,
-        itinerary: {
-          update: {
-            price: data.price,
+        ...updateData,
+        ...(typeof data.price === "number" && {
+          itinerary: {
+            update: {
+              price: data.price,
+            },
           },
-        },
+        }),
       },
     })
   }
