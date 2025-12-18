@@ -279,6 +279,16 @@ export const getColumns = (
       const order = row.original;
       const [open, setOpen] = React.useState(false);
 
+      const [details, setDetails] = React.useState<any>(null);
+
+      React.useEffect(() => {
+        if (!open) return;
+
+        fetch(`/api/management-bookings/order/${order.orderid}`)
+          .then(res => res.json())
+          .then(setDetails);
+      }, [open]);
+
       return (
         <Dialog open={open} onOpenChange={setOpen}>
           <DropdownMenu>
@@ -305,23 +315,23 @@ export const getColumns = (
 
           <DialogContent className="w-[88vw] h-[80vh] max-w-none rounded-md overflow-y-auto">
             <div className="flex flex-col gap-4 rounded-lg">
+              {/* TOP BANNER — KEEP EMPTY */}
               <div className="mt-6 flex flex-col gap-1">
                 <div className="bg-primary-foreground w-auto h-[120px] rounded-lg"></div>
-                {/* 
-                        <h2 className="text-lg font-semibold tracking-tight">
-                        [Itinerary Booking Request]
-                        </h2> */}
+
                 <span className="ml-1 mt-2 text-sm text-muted-foreground">
                   Requested by:{" "}
                   <span className="font-medium text-foreground">
-                    Cerydra Lava Hysilens
+                    {details?.clientName ?? "—"}
                   </span>
                 </span>
               </div>
 
               <div className="border-t" />
 
+              {/* MAIN INFO */}
               <div className="space-y-3 text-sm">
+                {/* PICKUP */}
                 <div className="flex items-start gap-2">
                   <MapPin className="h-4 w-4 text-muted-foreground mt-[2px]" />
                   <div className="flex flex-col">
@@ -329,84 +339,79 @@ export const getColumns = (
                       Pick-up Location
                     </span>
                     <span className="font-medium">
-                      Ayala Station, Makati City
+                      {details?.stops?.[0]?.name ?? "—"}
                     </span>
                   </div>
                 </div>
 
+                {/* STOPS */}
                 <div className="flex flex-col gap-1 mb-6">
                   <span className="text-muted-foreground text-[12px]">
-                    Stops (up to 12)
+                    Stops ({details?.stops?.length ?? 0})
                   </span>
 
                   <div className="grid grid-cols-3 gap-x-6 gap-y-1">
-                    {[
-                      "Rizal Park",
-                      "Intramuros",
-                      "SM Mall of Asia",
-                      "Tagaytay Viewpoint",
-                      "Ayala Triangle",
-                      "Manila Ocean Park",
-                      "Binondo Church",
-                      "Fort Santiago",
-                      "Greenbelt Park",
-                      "National Museum",
-                      "Manila Cathedral",
-                      "Robinsons Place",
-                    ].map((stop, index) => (
-                      <div key={index} className="flex items-start">
-                        <span className="text-[13px] text-foreground before:content-['•'] before:mr-2 before:text-muted-foreground">
-                          {stop}
-                        </span>
-                      </div>
-                    ))}
+                    {details?.stops?.length ? (
+                      details.stops.map((stop: any, index: number) => (
+                        <div key={index} className="flex items-start">
+                          <span className="text-[13px] text-foreground before:content-['•'] before:mr-2 before:text-muted-foreground">
+                            {stop.name}
+                          </span>
+                        </div>
+                      ))
+                    ) : (
+                      <span className="text-muted-foreground">No stops available</span>
+                    )}
                   </div>
                 </div>
 
                 <div className="border-t my-2" />
 
+                {/* GRID INFO */}
                 <div className="grid grid-cols-3 gap-4 mt-6">
                   <div className="flex flex-col">
-                    <span className="text-muted-foreground text-[12px]">
-                      Date
+                    <span className="text-muted-foreground text-[12px]">Date</span>
+                    <span className="font-medium">
+                      {details?.date
+                        ? new Date(details.date).toLocaleDateString()
+                        : "—"}
                     </span>
-                    <span className="font-medium">December 27, 2020</span>
                   </div>
+
                   <div className="flex flex-col">
                     <span className="text-muted-foreground text-[12px]">
-                      Number of Party Members
+                      Party Members
                     </span>
-                    <span className="font-medium">5</span>
+                    <span className="font-medium">{details?.pax ?? "—"}</span>
                   </div>
+
                   <div className="flex flex-col">
-                    <span className="text-muted-foreground text-[12px]">
-                      Number of Pit Stops
-                    </span>
-                    <span className="font-medium">4</span>
+                    <span className="text-muted-foreground text-[12px]">Driver</span>
+                    <span className="font-medium">{details?.driver ?? "Unassigned"}</span>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-4">
                   <div className="flex flex-col">
-                    <span className="text-muted-foreground text-[12px]">
-                      Time
+                    <span className="text-muted-foreground text-[12px]">Time</span>
+                    <span className="font-medium">
+                      {details?.timePickup ?? "—"}
                     </span>
-                    <span className="font-medium">11:01 PM</span>
                   </div>
+
                   <div className="flex flex-col">
                     <span className="text-muted-foreground text-[12px]">
                       Payment Method
                     </span>
                     <span className="font-medium flex items-center gap-1">
-                      <CreditCard className="h-4 w-4 text-muted-foreground" />{" "}
-                      Credit Card
+                      <CreditCard className="h-4 w-4 text-muted-foreground" />
+                      {details?.paymentMethod ?? "—"}
                     </span>
                   </div>
+
                   <div className="flex flex-col">
-                    <span className="text-muted-foreground text-[12px]">
-                      Luggages
-                    </span>
-                    <span className="font-medium">3</span>
+                    <span className="text-muted-foreground text-[12px]">Luggage</span>
+                    <span className="font-medium">{details?.luggage ?? "—"}</span>
                   </div>
                 </div>
               </div>

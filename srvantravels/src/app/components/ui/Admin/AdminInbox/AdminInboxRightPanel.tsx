@@ -7,15 +7,34 @@ interface Props {
   messageId: number | null
 }
 
+interface InboxMessage {
+  subject: string | null
+  content: string
+  sent_at: string
+  sender?: {
+    name: string | null
+  } | null
+}
+
 const AdminInboxRightPanel = ({ messageId }: Props) => {
-  const [message, setMessage] = useState<any>(null)
+  const [message, setMessage] = useState<InboxMessage | null>(null)
 
   useEffect(() => {
-    if (!messageId) return
+    if (!messageId) {
+      setMessage(null)
+      return
+    }
 
     fetch(`/api/inbox/${messageId}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to fetch message")
+        return res.json() as Promise<InboxMessage>
+      })
       .then(setMessage)
+      .catch(err => {
+        console.error(err)
+        setMessage(null)
+      })
   }, [messageId])
 
   if (!message) {

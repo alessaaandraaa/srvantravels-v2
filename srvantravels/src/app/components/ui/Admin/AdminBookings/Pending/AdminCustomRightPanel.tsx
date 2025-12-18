@@ -9,10 +9,21 @@ interface Props {
   onActionComplete?: (orderId: number) => void
 }
 
+interface BookingDetails {
+  itineraryType: "PACKAGE" | "CUSTOM"
+  customerName: string
+  stops: string[]
+  date: string | null
+  time: string | null
+  pax: number | null
+  luggage: number | null
+  paymentMethod: string | null
+}
+
 const AdminCustomRightPanel = ({ orderId, onActionComplete }: Props) => {
-  const [booking, setBooking] = useState<any>(null)
-  const [loading, setLoading] = useState(false)
-  const [actionLoading, setActionLoading] = useState(false)
+  const [booking, setBooking] = useState<BookingDetails | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [actionLoading, setActionLoading] = useState<boolean>(false)
 
   useEffect(() => {
     if (!orderId) {
@@ -27,7 +38,7 @@ const AdminCustomRightPanel = ({ orderId, onActionComplete }: Props) => {
     })
       .then(res => {
         if (!res.ok) throw new Error("Failed to fetch booking")
-        return res.json()
+        return res.json() as Promise<BookingDetails>
       })
       .then(data => {
         setBooking(data)
@@ -42,57 +53,56 @@ const AdminCustomRightPanel = ({ orderId, onActionComplete }: Props) => {
   }, [orderId])
 
   const handleApprove = async () => {
-      if (!orderId) return
+    if (!orderId) return
 
-      setActionLoading(true)
+    setActionLoading(true)
 
-      try {
-        const res = await fetch(`/api/pending-bookings/${orderId}/approve`, {
-          method: "PATCH",
-        })
+    try {
+      const res = await fetch(`/api/pending-bookings/${orderId}/approve`, {
+        method: "PATCH",
+      })
 
-        if (!res.ok) {
-          throw new Error("Approve failed")
-        }
-
-        onActionComplete?.(orderId)
-        setBooking(null)
-      } catch (err) {
-        console.error(err)
-      } finally {
-        setActionLoading(false)
+      if (!res.ok) {
+        throw new Error("Approve failed")
       }
+
+      onActionComplete?.(orderId)
+      setBooking(null)
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setActionLoading(false)
     }
+  }
 
-    const handleReject = async () => {
-      if (!orderId) return
+  const handleReject = async () => {
+    if (!orderId) return
 
-      setActionLoading(true)
+    setActionLoading(true)
 
-      try {
-        const res = await fetch(`/api/pending-bookings/${orderId}/reject`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            reason: "Booking rejected by administrator.",
-          }),
-        })
+    try {
+      const res = await fetch(`/api/pending-bookings/${orderId}/reject`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          reason: "Booking rejected by administrator.",
+        }),
+      })
 
-        if (!res.ok) {
-          throw new Error("Reject failed")
-        }
-
-        onActionComplete?.(orderId)
-        setBooking(null)
-      } catch (err) {
-        console.error(err)
-      } finally {
-        setActionLoading(false)
+      if (!res.ok) {
+        throw new Error("Reject failed")
       }
-    }
 
+      onActionComplete?.(orderId)
+      setBooking(null)
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setActionLoading(false)
+    }
+  }
 
   if (!orderId) {
     return (
@@ -111,7 +121,7 @@ const AdminCustomRightPanel = ({ orderId, onActionComplete }: Props) => {
   }
 
   if (!booking) {
-    return null 
+    return null
   }
 
   return (
@@ -135,7 +145,7 @@ const AdminCustomRightPanel = ({ orderId, onActionComplete }: Props) => {
       <div className="space-y-2 text-sm">
         <span className="text-muted-foreground text-[12px]">Stops</span>
         <div className="grid grid-cols-3 gap-x-6 gap-y-1">
-          {booking.stops.map((stop: string, index: number) => (
+          {booking.stops.map((stop, index) => (
             <span
               key={index}
               className="text-[13px] before:content-['•'] before:mr-2"

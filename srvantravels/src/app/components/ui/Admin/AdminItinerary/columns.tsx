@@ -22,7 +22,7 @@ import { ScrollArea } from "../../../../../../components/ui/scroll-area";
 export type packageItinerary = {
   id : Number;
   name: string;
-  price: Number;
+  price?: number | null;
   status: "Active" | "Inactive";
   createdby: string;
 }
@@ -162,7 +162,7 @@ export const getColumns = (): ColumnDef<packageItinerary>[] => [
               {/* Price per PAX */}
               <div className="space-y-2">
                 <Label>Price per PAX</Label>
-                <Input type="number" placeholder="₱ price" defaultValue={pkg.price as any} />
+                <Input type="number" placeholder="₱ price" defaultValue={pkg.price ?? undefined} />
               </div>
 
               {/* ROUTE SECTION */}
