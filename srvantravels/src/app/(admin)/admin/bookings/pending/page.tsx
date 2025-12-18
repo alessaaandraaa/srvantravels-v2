@@ -1,23 +1,23 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import AdminCustomLeftPanel from "@/src/app/components/ui/Admin/AdminBookings/Pending/AdminCustomLeftPanel"
-import AdminCustomRightPanel from "@/src/app/components/ui/Admin/AdminBookings/Pending/AdminCustomRightPanel"
+import { useEffect, useState } from "react";
+import AdminCustomLeftPanel from "@/src/app/components/ui/Admin/AdminBookings/Pending/AdminCustomLeftPanel";
+import AdminCustomRightPanel from "@/src/app/components/ui/Admin/AdminBookings/Pending/AdminCustomRightPanel";
 
 export interface PendingBookingSummary {
-  order_ID: number
-  date_of_travel: string | null
+  order_ID: number;
+  date_of_travel: string | null;
   itinerary: {
-    type: "PACKAGE" | "CUSTOM"
+    type: "PACKAGE" | "CUSTOM";
     package_itinerary?: {
-      package_name: string | null
-    }
-  }
+      package_name: string | null;
+    };
+  };
   customer: {
     person: {
-      name: string | null
-    }
-  }
+      name: string | null;
+    };
+  };
 }
 
 const PendingBookingsPage = () => {
@@ -34,8 +34,8 @@ const PendingBookingsPage = () => {
   }
 
   useEffect(() => {
-    fetchBookings()
-  }, [])
+    fetchBookings();
+  }, []);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 mb-4">
@@ -59,7 +59,7 @@ const PendingBookingsPage = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default PendingBookingsPage

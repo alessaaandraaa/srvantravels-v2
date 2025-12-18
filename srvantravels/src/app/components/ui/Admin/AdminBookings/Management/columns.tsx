@@ -49,7 +49,6 @@ export type Van = {
   available: boolean;
 };
 
-
 export type Order = {
   paymentstatus: "FULLY PAID" | "NOT PAID" | "PARTIALLY PAID";
   orderid: number;
@@ -110,16 +109,16 @@ export const getColumns = (
       const assigned = row.original.driver;
 
       if (assigned && assigned !== "—") {
-        return <Button
-                variant="outline"
-                role="combobox"
-                className= "w-[145px] justify-between text-green-300"
+        return (
+          <Button
+            variant="outline"
+            role="combobox"
+            className="w-[145px] justify-between text-green-300"
           >
-                {row.original.driver !== "—"
-                  ? row.original.driver
-                  : "Unassigned"}
-                <ChevronDown className="opacity-50" />
-          </Button>;
+            {row.original.driver !== "—" ? row.original.driver : "Unassigned"}
+            <ChevronDown className="opacity-50" />
+          </Button>
+        );
       }
 
       return (
@@ -143,16 +142,16 @@ export const getColumns = (
                 <ScrollArea className="h-[150px]">
                   <CommandGroup>
                     {drivers
-                      .filter(d => d.availability) 
-                      .map(driver => (
+                      .filter((d) => d.availability)
+                      .map((driver) => (
                         <CommandItem
                           key={driver.driverid}
                           value={driver.name}
                           onSelect={async () => {
                             row.original.driver = driver.name;
 
-                            setDrivers(prev =>
-                              prev.map(d =>
+                            setDrivers((prev) =>
+                              prev.map((d) =>
                                 d.driverid === driver.driverid
                                   ? { ...d, availability: false }
                                   : d
@@ -198,12 +197,12 @@ export const getColumns = (
       if (assignedVan && assignedVan !== "—") {
         return (
           <Button
-                variant="outline"
-                role="combobox"
-                className= "w-[120px] justify-between text-green-300"
+            variant="outline"
+            role="combobox"
+            className="w-[120px] justify-between text-green-300"
           >
-                {row.original.vanplatenumber}
-                <ChevronDown className="opacity-50" />
+            {row.original.vanplatenumber}
+            <ChevronDown className="opacity-50" />
           </Button>
         );
       }
@@ -229,33 +228,30 @@ export const getColumns = (
                 <ScrollArea className="h-[150px]">
                   <CommandGroup>
                     {vans
-                      .filter(v => v.available)
-                      .map(van => (
+                      .filter((v) => v.available)
+                      .map((van) => (
                         <CommandItem
                           key={van.vanplatenumber}
                           value={van.vanplatenumber}
                           onSelect={async () => {
                             row.original.vanplatenumber = van.vanplatenumber;
 
-                            setVans(prev =>
-                              prev.map(v =>
+                            setVans((prev) =>
+                              prev.map((v) =>
                                 v.vanplatenumber === van.vanplatenumber
                                   ? { ...v, available: false }
                                   : v
                               )
                             );
 
-                            await fetch(
-                              "/api/management-bookings/assign-van",
-                              {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({
-                                  orderId: row.original.orderid,
-                                  plateNumber: van.vanplatenumber,
-                                }),
-                              }
-                            );
+                            await fetch("/api/management-bookings/assign-van", {
+                              method: "POST",
+                              headers: { "Content-Type": "application/json" },
+                              body: JSON.stringify({
+                                orderId: row.original.orderid,
+                                plateNumber: van.vanplatenumber,
+                              }),
+                            });
 
                             router.refresh();
                           }}
