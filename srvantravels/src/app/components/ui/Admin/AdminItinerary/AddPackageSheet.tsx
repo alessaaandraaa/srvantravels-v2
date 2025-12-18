@@ -2,7 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "../Sidebar/sheet";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "../Sidebar/sheet";
 import { Input } from "../input";
 import { Label } from "../../../../../../components/ui/label";
 import { Textarea } from "../../../../../../components/ui/textarea";
@@ -10,19 +17,24 @@ import { ScrollArea } from "../scroll-area";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
-export function AddPackageSheet() {
+export function AddPackageSheet({ onAdded }: { onAdded?: () => void }) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // open sheet if URL contains ?add=true
   const isAddFromUrl = searchParams.get("add") === "true";
+  const [open, setOpen] = useState(false);
 
-  const [open, setOpen] = useState(isAddFromUrl);
-
-  // keep sheet state synced when URL changes
   useEffect(() => {
-    setOpen(isAddFromUrl);
+    if (isAddFromUrl) {
+      setOpen(true);
+    }
   }, [isAddFromUrl]);
+
+
+  const [name, setName] = useState("");
+  const [pax, setPax] = useState<number | "">("");
+  const [price, setPrice] = useState<number | "">("");
+  const [description, setDescription] = useState("");
 
   const [routes, setRoutes] = useState<string[]>([]);
   const [routeInput, setRouteInput] = useState("");
@@ -43,27 +55,47 @@ export function AddPackageSheet() {
   };
 
   const resetForm = () => {
+    setName("");
+    setPax("");
+    setPrice("");
+    setDescription("");
     setRoutes([]);
     setInclusions([]);
     setRouteInput("");
     setInclusionInput("");
   };
 
-  // when opening the sheet through button click
-  const handleOpen = () => {
-    router.push("?add=true", { scroll: false });
+  const handleClose = () => {
+    setOpen(false);
+    resetForm();
   };
 
-  // when closing the sheet through "X" or cancel button
-  const handleClose = () => {
-    router.push("?add=false", { scroll: false });
-    setOpen(false);
-  };
+  const handleSubmit = async () => {
+    await fetch("/api/packages-itinerary", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        price,
+        pax,
+        routes,
+        inclusions,
+        description,
+      }),
+    })
+
+    await onAdded?.()   
+    resetForm()
+    setOpen(false)    
+  }
+
 
   return (
-    <Sheet open={open} onOpenChange={(state) => state ? handleOpen() : handleClose()}>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button className=""><Plus/></Button>
+        <Button>
+          <Plus />
+        </Button>
       </SheetTrigger>
 
       <SheetContent className="overflow-y-auto p-4">
@@ -75,46 +107,47 @@ export function AddPackageSheet() {
         </SheetHeader>
 
         <div className="space-y-6">
-          
-          {/* Package Name */}
+
           <div className="space-y-2">
             <Label>Package Name</Label>
-            <Input placeholder="Enter package name" />
+            <Input value={name} onChange={e => setName(e.target.value)} />
           </div>
 
-          {/* Passenger Count */}
           <div className="space-y-2">
             <Label>Passenger Count</Label>
-            <Input type="number" placeholder="e.g. 20" />
+            <Input
+              type="number"
+              value={pax}
+              onChange={e => setPax(e.target.valueAsNumber || "")}
+            />
           </div>
 
-          {/* Price per PAX */}
           <div className="space-y-2">
             <Label>Price per PAX</Label>
-            <Input type="number" placeholder="₱ price" />
+            <Input
+              type="number"
+              value={price}
+              onChange={e => setPrice(e.target.valueAsNumber || "")}
+            />
           </div>
 
-          {/* Route Section */}
           <div className="space-y-2">
             <Label>Route</Label>
-
             <div className="flex gap-2">
               <Input
-                placeholder="Enter route"
                 value={routeInput}
-                onChange={(e) => setRouteInput(e.target.value)}
+                onChange={e => setRouteInput(e.target.value)}
               />
               <Button onClick={addRoute}>Add</Button>
             </div>
 
-            <ScrollArea className="h-24 w-full rounded-md border p-2">
+            <ScrollArea className="h-24 border p-2">
               {routes.length === 0 && (
                 <p className="text-sm text-muted-foreground">No routes added.</p>
               )}
-
               <ul className="space-y-1">
                 {routes.map((r, i) => (
-                  <li key={i} className="text-sm flex justify-between">
+                  <li key={i} className="flex justify-between text-sm">
                     {r}
                     <button
                       className="text-red-500 text-xs"
@@ -128,31 +161,27 @@ export function AddPackageSheet() {
             </ScrollArea>
           </div>
 
-          {/* Inclusions Section */}
           <div className="space-y-2">
             <Label>Inclusions</Label>
-
             <div className="flex gap-2">
               <Input
-                placeholder="Enter inclusion"
                 value={inclusionInput}
-                onChange={(e) => setInclusionInput(e.target.value)}
+                onChange={e => setInclusionInput(e.target.value)}
               />
               <Button onClick={addInclusion}>Add</Button>
             </div>
 
-            <ScrollArea className="h-24 w-full rounded-md border p-2">
+            <ScrollArea className="h-24 border p-2">
               {inclusions.length === 0 && (
                 <p className="text-sm text-muted-foreground">No inclusions added.</p>
               )}
-
               <ul className="space-y-1">
-                {inclusions.map((inc, i) => (
-                  <li key={i} className="text-sm flex justify-between">
-                    {inc}
+                {inclusions.map((i, idx) => (
+                  <li key={idx} className="flex justify-between text-sm">
+                    {i}
                     <button
                       className="text-red-500 text-xs"
-                      onClick={() => setInclusions(inclusions.filter((_, idx) => idx !== i))}
+                      onClick={() => setInclusions(inclusions.filter((_, id) => id !== idx))}
                     >
                       Remove
                     </button>
@@ -162,26 +191,22 @@ export function AddPackageSheet() {
             </ScrollArea>
           </div>
 
-          {/* Description */}
           <div className="space-y-2">
             <Label>Description</Label>
-            <Textarea placeholder="Enter package description..." />
+            <Textarea
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+            />
           </div>
 
-          {/* Attach Image */}
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <Label>Attach Image</Label>
             <Input type="file" accept="image/*" />
-          </div>
+          </div> */}
 
-          {/* Footer Buttons */}
-          <div className="pt-4 flex justify-end gap-2">
-            <Button variant="outline" onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button onClick={() => console.log("Add package submitted")}>
-              Add Package
-            </Button>
+          <div className="flex justify-end gap-2 pt-4">
+            <Button variant="outline" onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleSubmit}>Add Package</Button>
           </div>
 
         </div>

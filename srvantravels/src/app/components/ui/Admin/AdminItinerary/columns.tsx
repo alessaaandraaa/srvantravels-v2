@@ -1,11 +1,24 @@
 "use client"
 
-import { ColumnDef } from "@tanstack/react-table";
-import { useState } from "react";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "../Sidebar/sheet";
-import { Button } from "../button";
-import { ArrowUpDown, CheckCircle2, ChevronDown, Ellipsis, MoreHorizontal, XCircle } from "lucide-react";
-import { cn } from "../../../../../../lib/utils";
+import { ColumnDef } from "@tanstack/react-table"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../Sidebar/sheet"
+import { Button } from "../button"
+import {
+  ArrowUpDown,
+  CheckCircle2,
+  ChevronDown,
+  XCircle,
+} from "lucide-react"
+import { cn } from "../../../../../../lib/utils"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,17 +27,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../dropdown-menu"
-import { Label } from "../../../../../../components/ui/label";
-import { Input } from "../../../../../../components/ui/input";
-import { Textarea } from "../../../../../../components/ui/textarea";
-import { ScrollArea } from "../../../../../../components/ui/scroll-area";
+import { Label } from "../../../../../../components/ui/label"
+import { Input } from "../../../../../../components/ui/input"
+import { Textarea } from "../../../../../../components/ui/textarea"
+import { ScrollArea } from "../../../../../../components/ui/scroll-area"
 
 export type packageItinerary = {
-  id : Number;
-  name: string;
-  price?: number | null;
-  status: "Active" | "Inactive";
-  createdby: string;
+  id: number
+  name: string
+  price?: number | null
+  status: "Active" | "Inactive"
+  createdby: string
+  routes?: string[]
+  inclusions?: string[]
+  description?: string
 }
 
 export const getColumns = (): ColumnDef<packageItinerary>[] => [
@@ -34,17 +50,15 @@ export const getColumns = (): ColumnDef<packageItinerary>[] => [
   },
   {
     accessorKey: "id",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Package ID
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Package ID
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
   },
   {
     accessorKey: "name",
@@ -55,142 +69,149 @@ export const getColumns = (): ColumnDef<packageItinerary>[] => [
     header: "Price",
   },
   {
-    id: "actions",
+    id: "status",
     header: "Status",
-    cell: () => {
-      const [status, setStatus] = useState("Inactive");
- 
+    cell: ({ row }) => {
+      const pkg = row.original
+      const [status, setStatus] = useState<"Active" | "Inactive">(pkg.status)
+
+      const updateStatus = async (newStatus: "Active" | "Inactive") => {
+        setStatus(newStatus)
+        await fetch(`/api/packages-itinerary/${pkg.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            is_available: newStatus === "Active",
+          }),
+        })
+      }
+
       return (
         <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          className={cn(
-            "flex items-center gap-2 w-[120px] justify-center rounded-md border transition-colors",
-            status === "Active"
-              ? "border-emerald-500/60 bg-emerald-100/30 text-emerald-700 hover:bg-emerald-100/50"
-              : "border-rose-500/60 bg-rose-100/30 text-rose-700 hover:bg-rose-100/50"
-          )}
-        >
-          {status === "Active" ? (
-            <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-          ) : (
-            <XCircle className="h-4 w-4 text-rose-600" />
-          )}
-          <span className="text-sm font-medium">{status}</span>
-          <ChevronDown className="h-4 w-4 text-muted-foreground" />
-        </Button>
-      </DropdownMenuTrigger>
-
-      <DropdownMenuContent align="end" className="w-[140px]">
-        <DropdownMenuLabel className="text-xs text-muted-foreground">
-          Change status
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem
-          onClick={() => setStatus("Active")}
-          className="flex items-center gap-2"
-        >
-          <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-          Active
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => setStatus("Inactive")}
-          className="flex items-center gap-2"
-        >
-          <XCircle className="h-4 w-4 text-rose-600" />
-          Inactive
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="outline"
+              className={cn(
+                "flex items-center gap-2 w-[120px] justify-center",
+                status === "Active"
+                  ? "border-emerald-500/60 bg-emerald-100/30 text-emerald-700"
+                  : "border-rose-500/60 bg-rose-100/30 text-rose-700"
+              )}
+            >
+              {status === "Active" ? (
+                <CheckCircle2 className="h-4 w-4" />
+              ) : (
+                <XCircle className="h-4 w-4" />
+              )}
+              {status}
+              <ChevronDown className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Status</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => updateStatus("Active")}>
+              Active
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => updateStatus("Inactive")}>
+              Inactive
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       )
     },
   },
   {
-  id: "action1",
-  cell: ({ row }) => {
-    const pkg = row.original;
+    id: "edit",
+    cell: ({ row }) => {
+      const pkg = row.original
+      const router = useRouter()
 
-    const [open, setOpen] = useState(false);
-    const [routes, setRoutes] = useState<string[]>([]);
-    const [routeInput, setRouteInput] = useState("");
+      const [open, setOpen] = useState(false)
+      const [name, setName] = useState(pkg.name)
+      const [price, setPrice] = useState<number | undefined>(pkg.price ?? undefined)
+      const [description, setDescription] = useState(pkg.description ?? "")
+      const [routes, setRoutes] = useState<string[]>([])
+      const [routeInput, setRouteInput] = useState("")
+      const [inclusions, setInclusions] = useState<string[]>([])
+      const [inclusionInput, setInclusionInput] = useState("")
+      const [status, setStatus] = useState<"Active" | "Inactive">(pkg.status)
 
-    const [inclusions, setInclusions] = useState<string[]>([]);
-    const [inclusionInput, setInclusionInput] = useState("");
+      useEffect(() => {
+        setRoutes(pkg.routes ?? [])
+        setInclusions(pkg.inclusions ?? [])
+      }, [])
 
-    const addRoute = () => {
-      if (!routeInput.trim()) return;
-      setRoutes(prev => [...prev, routeInput.trim()]);
-      setRouteInput("");
-    };
+      const addRoute = () => {
+        if (!routeInput.trim()) return
+        setRoutes(prev => [...prev, routeInput.trim()])
+        setRouteInput("")
+      }
 
-    const addInclusion = () => {
-      if (!inclusionInput.trim()) return;
-      setInclusions(prev => [...prev, inclusionInput.trim()]);
-      setInclusionInput("");
-    };
+      const addInclusion = () => {
+        if (!inclusionInput.trim()) return
+        setInclusions(prev => [...prev, inclusionInput.trim()])
+        setInclusionInput("")
+      }
 
-    return (
-      <div className="w-[50px]">
+      const handleSave = async () => {
+        await fetch(`/api/packages-itinerary/${pkg.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name,
+            price,
+            routes,
+            inclusions,
+            description,
+            is_available: status === "Active",
+          }),
+        })
+        setOpen(false)
+        router.refresh()
+      }
+
+      return (
         <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger>
-            View more info
+          <SheetTrigger asChild>
+            <Button variant="ghost">View more info</Button>
           </SheetTrigger>
-
           <SheetContent className="overflow-y-auto p-4">
             <SheetHeader>
               <SheetTitle>Edit Package</SheetTitle>
-              <SheetDescription>
-                Update package details below.
-              </SheetDescription>
+              <SheetDescription>Update package details</SheetDescription>
             </SheetHeader>
 
             <div className="mt-6 space-y-6">
-
-              {/* Package Name */}
               <div className="space-y-2">
                 <Label>Package Name</Label>
-                <Input placeholder="Enter package name" defaultValue={pkg.name} />
+                <Input value={name} onChange={e => setName(e.target.value)} />
               </div>
 
-              {/* Passenger Count */}
-              <div className="space-y-2">
-                <Label>Passenger Count</Label>
-                <Input type="number" placeholder="e.g. 20" />
-              </div>
-
-              {/* Price per PAX */}
               <div className="space-y-2">
                 <Label>Price per PAX</Label>
-                <Input type="number" placeholder="₱ price" defaultValue={pkg.price ?? undefined} />
+                <Input
+                  type="number"
+                  value={price ?? ""}
+                  onChange={e => setPrice(e.target.valueAsNumber)}
+                />
               </div>
 
-              {/* ROUTE SECTION */}
               <div className="space-y-2">
                 <Label>Route</Label>
-
                 <div className="flex gap-2">
                   <Input
-                    placeholder="Enter route"
                     value={routeInput}
-                    onChange={(e) => setRouteInput(e.target.value)}
+                    onChange={e => setRouteInput(e.target.value)}
                   />
                   <Button onClick={addRoute}>Add</Button>
                 </div>
-
-                <ScrollArea className="h-24 w-full rounded-md border p-2">
-                  {routes.length === 0 && (
-                    <p className="text-sm text-muted-foreground">No routes added.</p>
-                  )}
-
+                <ScrollArea className="h-24 border p-2">
                   <ul className="space-y-1">
                     {routes.map((r, i) => (
-                      <li key={i} className="text-sm flex justify-between">
+                      <li key={i} className="flex justify-between text-sm">
                         {r}
-                        <button
-                          className="text-red-500 text-xs"
-                          onClick={() => setRoutes(routes.filter((_, idx) => idx !== i))}
-                        >
+                        <button onClick={() => setRoutes(routes.filter((_, idx) => idx !== i))}>
                           Remove
                         </button>
                       </li>
@@ -199,32 +220,21 @@ export const getColumns = (): ColumnDef<packageItinerary>[] => [
                 </ScrollArea>
               </div>
 
-              {/* INCLUSIONS SECTION */}
               <div className="space-y-2">
-                <Label>Inclusions List</Label>
-
+                <Label>Inclusions</Label>
                 <div className="flex gap-2">
                   <Input
-                    placeholder="Enter inclusion"
                     value={inclusionInput}
-                    onChange={(e) => setInclusionInput(e.target.value)}
+                    onChange={e => setInclusionInput(e.target.value)}
                   />
                   <Button onClick={addInclusion}>Add</Button>
                 </div>
-
-                <ScrollArea className="h-24 w-full rounded-md border p-2">
-                  {inclusions.length === 0 && (
-                    <p className="text-sm text-muted-foreground">No inclusions added.</p>
-                  )}
-
+                <ScrollArea className="h-24 border p-2">
                   <ul className="space-y-1">
-                    {inclusions.map((item, i) => (
-                      <li key={i} className="text-sm flex justify-between">
-                        {item}
-                        <button
-                          className="text-red-500 text-xs"
-                          onClick={() => setInclusions(inclusions.filter((_, idx) => idx !== i))}
-                        >
+                    {inclusions.map((i, idx) => (
+                      <li key={idx} className="flex justify-between text-sm">
+                        {i}
+                        <button onClick={() => setInclusions(inclusions.filter((_, id) => id !== idx))}>
                           Remove
                         </button>
                       </li>
@@ -233,34 +243,24 @@ export const getColumns = (): ColumnDef<packageItinerary>[] => [
                 </ScrollArea>
               </div>
 
-              {/* Description */}
               <div className="space-y-2">
                 <Label>Description</Label>
-                <Textarea placeholder="Enter package description..." />
+                <Textarea
+                  value={description}
+                  onChange={e => setDescription(e.target.value)}
+                />
               </div>
 
-              {/* Attach Image */}
-              <div className="space-y-2">
-                <Label>Attach Image</Label>
-                <Input type="file" accept="image/*" />
-              </div>
-
-              {/* Footer */}
-              <div className="pt-4 flex justify-end gap-2">
+              <div className="flex justify-end gap-2">
                 <Button variant="outline" onClick={() => setOpen(false)}>
                   Cancel
                 </Button>
-                <Button>Save Changes</Button>
+                <Button onClick={handleSave}>Save Changes</Button>
               </div>
-
             </div>
           </SheetContent>
         </Sheet>
-      </div>
-    );
-  }
-}
-
+      )
+    },
+  },
 ]
-
-

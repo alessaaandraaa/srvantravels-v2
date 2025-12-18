@@ -1,5 +1,6 @@
 import { TrendingUp, TrendingDown } from "lucide-react"
 
+import { useState, useEffect } from "react";
 import { Badge } from "../badge"
 import {
   Card,
@@ -11,24 +12,32 @@ import {
 } from "../card"
 
 export function TotalItineraries() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    fetch("/api/packages-itinerary/kpis")
+      .then(res => res.json())
+      .then(data => setCount(data.total));
+  }, []);
+
   return (
     <div className="">
       <Card className="max-h-[150px]">
         <CardHeader>
-          <CardDescription>Total Sales</CardDescription>
+          <CardDescription>Total Packages</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            $1,250.00
+            {count}
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
               <TrendingUp />
-              +12.5%
+              +17.5%
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Trending up this month <TrendingUp className="size-4" />
+            More Packages to Add <TrendingUp className="size-4" />
           </div>
         </CardFooter>
       </Card>
@@ -37,24 +46,33 @@ export function TotalItineraries() {
 }
 
 export function Actives() {
+
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    fetch("/api/packages-itinerary/kpis")
+      .then(res => res.json())
+      .then(data => setCount(data.active));
+  }, []);
+
   return (
     <div className="">
       <Card className="max-h-[150px]">
         <CardHeader>
-          <CardDescription>Total Revenue</CardDescription>
+          <CardDescription>Total Active Packages</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            $1,250.00
+            {count}
           </CardTitle>  
           <CardAction>
             <Badge variant="outline">
               <TrendingUp />
-              +12.5%
+              +21.5%
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Trending up this month <TrendingUp className="size-4" />
+            Set Packages for Availability <TrendingUp className="size-4" />
           </div>
         </CardFooter>
       </Card>
@@ -63,24 +81,33 @@ export function Actives() {
 }
 
 export function Inactives() {
+
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    fetch("/api/packages-itinerary/kpis")
+      .then(res => res.json())
+      .then(data => setCount(data.inactive));
+  }, []);
+
   return (
     <div className="">
       <Card className="max-h-[150px]">
         <CardHeader className="aspect-auto h-auto">
-          <CardDescription>Total Customers</CardDescription>
+          <CardDescription>Total Inactive Packages</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            $1,250.00
+            {count}
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
               <TrendingDown />
-              +12.5%
+              +37.5%
             </Badge>  
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Trending up this month <TrendingUp className="size-4" />
+            Unavailable Packages this Month <TrendingUp className="size-4" />
           </div>
         </CardFooter>
       </Card>

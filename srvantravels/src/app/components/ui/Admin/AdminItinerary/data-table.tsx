@@ -28,11 +28,13 @@ import { AddPackageSheet } from "./AddPackageSheet"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  onAdded?: () => void
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  onAdded,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -65,7 +67,7 @@ export function DataTable<TData, TValue>({
             }
             className="max-w-sm"
           />
-          <AddPackageSheet/>
+          <AddPackageSheet onAdded={onAdded}/>
         </div>
         <div className="overflow-hidden rounded-md border">
           <Table>
