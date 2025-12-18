@@ -148,32 +148,6 @@ const AdminSideBar = () => {
               </SidebarGroupContent>
             </SidebarGroup> */}
         </SidebarContent>
-        <SidebarFooter>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <SidebarMenuButton>
-                    <User2/> Flins Varka <ChevronUp className="ml-auto"/>
-                  </SidebarMenuButton>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator/>
-                  <DropdownMenuItem>
-                    <ShipWheel/> Account
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Settings2Icon/> Setting
-                  </DropdownMenuItem>
-                  <DropdownMenuItem variant="destructive">
-                    <LogOut/> Sign Out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarFooter>
       </Sidebar>
     )
 }

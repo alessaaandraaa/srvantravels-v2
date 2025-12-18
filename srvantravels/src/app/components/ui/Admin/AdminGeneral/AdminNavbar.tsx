@@ -56,7 +56,7 @@ const AdminNavbar = () => {
                             <span className="sr-only">Open Menu</span>
                         </Avatar>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent sideOffset={10}>
+                    {/* <DropdownMenuContent sideOffset={10}>
                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                         <DropdownMenuSeparator/>
                         <DropdownMenuItem>
@@ -71,7 +71,7 @@ const AdminNavbar = () => {
                             <LogOut className="h-{1.2rem} w-{1.2rem} mr-2"/>Log Out
                             <span className="sr-only">Log Out</span>
                         </DropdownMenuItem>
-                    </DropdownMenuContent>
+                    </DropdownMenuContent> */}
                 </DropdownMenu>
             </div>
         </nav>
