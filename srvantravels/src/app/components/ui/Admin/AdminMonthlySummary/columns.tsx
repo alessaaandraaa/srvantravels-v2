@@ -1,10 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table";
 
 export type orderSummary = {
-    orderid: Number;
+    orderid: number;
     username: string;
     type: "Custom" | "Package";
-    revenue: Number;
+    revenue: number;
 }
 
 export const getColumns = (): ColumnDef<orderSummary>[] => [
