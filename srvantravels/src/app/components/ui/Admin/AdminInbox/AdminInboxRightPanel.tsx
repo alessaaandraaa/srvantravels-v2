@@ -26,14 +26,16 @@ const AdminInboxRightPanel = ({ messageId }: Props) => {
     <div className="flex flex-col p-8 gap-4 border-2 rounded-lg h-full">
       <div className="flex gap-4">
         <CircleDollarSign />
-        [{message.subject}]
+        [{message.subject ?? "No Subject"}]
       </div>
 
       <span className="text-[12px] text-muted-foreground">
-        by {message.sender.name}
+        by {message.sender?.name ?? "Unknown Sender"}
       </span>
 
-      <div className="text-sm pt-4">{message.content}</div>
+      <div className="text-sm pt-4">
+        {message.content}
+      </div>
 
       <div className="mt-auto flex justify-between">
         <span className="text-[12px] text-muted-foreground">

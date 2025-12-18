@@ -26,7 +26,7 @@ const InboxPage = () => {
         console.log(data);
         setMessages(data)
         if (data.length > 0) {
-          setSelectedId(data[0].message_ID) // auto-select first
+          setSelectedId(data[0].message_ID) 
         }
       })
   }, [])

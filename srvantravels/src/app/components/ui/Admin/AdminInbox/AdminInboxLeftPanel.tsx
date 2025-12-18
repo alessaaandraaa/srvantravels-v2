@@ -18,6 +18,7 @@ const AdminInboxLeftPanel = ({ messages, selectedId, onSelect }: Props) => {
         <MailWarning />
         <p>Pending Mails</p>
       </div>
+      
 
       <ScrollArea className="h-[460px] mt-4 pr-4">
         <div className="flex flex-col gap-4">

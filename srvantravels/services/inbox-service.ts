@@ -1,4 +1,3 @@
-// services/inbox-service.ts
 const { prisma } = await import("@/lib/db");
 
 export class InboxService {
@@ -12,7 +11,7 @@ export class InboxService {
         subject: true,
         type: true,
         sent_at: true,
-        sender: {
+        person_message_sender_IDToperson: {
           select: {
             name: true,
           },
@@ -21,20 +20,19 @@ export class InboxService {
     });
   }
 
-  /** Get single message by ID */
   static async getMessageById(messageId: number) {
     return prisma.message.findUnique({
       where: {
         message_ID: messageId,
       },
       include: {
-        sender: {
+        person_message_sender_IDToperson: {
           select: {
             name: true,
             email: true,
           },
         },
-        order: true,
+        order_details: true,
       },
     });
   }

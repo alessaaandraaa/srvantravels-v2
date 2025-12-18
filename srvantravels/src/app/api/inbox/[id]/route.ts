@@ -6,18 +6,18 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const messageId = Number(params.id)
+    const raw = await InboxService.getMessageById(Number(params.id))
 
-    const message = await InboxService.getMessageById(messageId)
-
-    if (!message) {
-      return NextResponse.json(
-        { error: "Message not found" },
-        { status: 404 }
-      )
+    if (!raw) {
+      return NextResponse.json(null)
     }
 
-    return NextResponse.json(message)
+    const formatted = {
+      ...raw,
+      sender: raw.person_message_sender_IDToperson,
+    }
+
+    return NextResponse.json(formatted)
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to fetch message" },
@@ -25,3 +25,4 @@ export async function GET(
     )
   }
 }
+
