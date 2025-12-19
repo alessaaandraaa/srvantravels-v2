@@ -6,90 +6,35 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const UserInboxLeftPanel = () => {
   return (
-    <div className="">
-      <div className="flex gap-4 pl-1">
-        <MailWarning />
-        <p>Current Requests</p>
+    <Card className="p-4 shadow-lg">
+      <div className="flex items-center gap-3 mb-4">
+        <MailWarning className="text-[#36B9CB]" />
+        <h2 className="text-lg font-bold">Current Requests</h2>
       </div>
-      {/* PENDING LISTS */}
-      <ScrollArea className="h-115 mt-4 overflow-y-auto pr-4">
-        {/* LIST ITEMS */}
-        <div className="flex flex-col gap-4">
-          <Card>
-            <div className="flex items-center gap-4 pl-4">
-              <Flower className="h-4" />
-              <label className="text-sm text-muted-foreground">
-                1. Lorem ipsum dolor, sit amet consectetur adipisicing elit. |
-                Erika Lave
-              </label>
-            </div>
-          </Card>
-          <Card>
-            <div className="flex items-center gap-4 pl-4">
-              <Flower className="h-4" />
-              <label className="text-sm text-muted-foreground">
-                2. Lorem ipsum dolor, sit amet consectetur adipisicing elit. |
-                Cliff Jao
-              </label>
-            </div>
-          </Card>
-          <Card>
-            <div className="flex items-center gap-4 pl-4">
-              <Flower className="h-4" />
-              <label className="text-sm text-muted-foreground">
-                3. Lorem ipsum dolor, sit amet consectetur adipisicing elit. |
-                Columbina Canon
-              </label>
-            </div>
-          </Card>
-          <Card>
-            <div className="flex items-center gap-4 pl-4">
-              <Flower className="h-4" />
-              <label className="text-sm text-muted-foreground">
-                4. Lorem ipsum dolor, sit amet consectetur adipisicing elit. |
-                Hello Lyre
-              </label>
-            </div>
-          </Card>
-          <Card>
-            <div className="flex items-center gap-4 pl-4">
-              <Flower className="h-4" />
-              <label className="text-sm text-muted-foreground">
-                5. Lorem ipsum dolor, sit amet consectetur adipisicing elit. |
-                Keepy Tepo
-              </label>
-            </div>
-          </Card>
-          <Card>
-            <div className="flex items-center gap-4 pl-4">
-              <Flower className="h-4" />
-              <label className="text-sm text-muted-foreground">
-                6. Lorem ipsum dolor, sit amet consectetur adipisicing elit. |
-                Keepy Tepo
-              </label>
-            </div>
-          </Card>
-          <Card>
-            <div className="flex items-center gap-4 pl-4">
-              <Flower className="h-4" />
-              <label className="text-sm text-muted-foreground">
-                7. Lorem ipsum dolor, sit amet consectetur adipisicing elit. |
-                Keepy Tepo
-              </label>
-            </div>
-          </Card>
-          <Card>
-            <div className="flex items-center gap-4 pl-4">
-              <Flower className="h-4" />
-              <label className="text-sm text-muted-foreground">
-                8. Lorem ipsum dolor, sit amet consectetur adipisicing elit. |
-                Keepy Tepo
-              </label>
-            </div>
-          </Card>
+
+      <ScrollArea className="h-[420px] pr-3">
+        <div className="flex flex-col gap-3">
+          {[...Array(8)].map((_, i) => (
+            <Card
+              key={i}
+              className="
+                p-3
+                cursor-pointer
+                hover:bg-gray-50
+                transition
+              "
+            >
+              <div className="flex items-center gap-3">
+                <Flower className="h-4 text-muted-foreground" />
+                <p className="text-sm text-muted-foreground line-clamp-2">
+                  {i + 1}. Sample request preview | User Name
+                </p>
+              </div>
+            </Card>
+          ))}
         </div>
       </ScrollArea>
-    </div>
+    </Card>
   );
 };
 
