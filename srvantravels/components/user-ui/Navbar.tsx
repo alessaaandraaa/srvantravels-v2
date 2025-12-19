@@ -8,12 +8,7 @@ export default async function Navbar() {
 
   return (
     <nav className="w-full sticky top-0 z-50">
-      <div
-        className="
-          bg-[#36B9CB]
-          border-b border-white/20
-        "
-      >
+      <div className="bg-[#36B9CB] border-b border-white/20">
         <div
           className="
             max-w-7xl mx-auto
@@ -46,37 +41,45 @@ export default async function Navbar() {
             </Link>
           </div>
 
+          {/* RIGHT: User */}
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-start sm:items-center">
+            {session?.user && (
+              <Link
+                href="/profile"
+                className="
+                  px-4 py-2 rounded-xl
+                  bg-white/20 text-white text-sm font-semibold
+                  backdrop-blur-md
+                  shadow-sm
+                  hover:bg-white/30
+                  hover:-translate-y-0.5
+                  hover:shadow-lg
+                  transition-all duration-200
+                "
+              >
+                {session.user.name}
+              </Link>
+            )}
 
-         {/* RIGHT: User */}
-<div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-start sm:items-center">
-  {session?.user && (
-    <Link
-      href="/profile"
-      className="nav-link-main text-sm"
-    >
-      {session.user.name}
-    </Link>
-  )}
-
-  {session?.user ? (
-    <SignOut className="signout-btn" />
-  ) : (
-    <Link
-      href="/login"
-      className="
-        px-5 py-2 rounded-xl
-        bg-[#F3B54D]
-        text-white font-semibold
-        shadow-md
-        hover:shadow-lg hover:-translate-y-0.5
-        transition-all duration-200
-      "
-    >
-      Login
-    </Link>
-  )}
-</div>
-
+            {session?.user ? (
+              <SignOut className="signout-btn" />
+            ) : (
+              <Link
+                href="/login"
+                className="
+                  px-5 py-2 rounded-xl
+                  bg-[#F3B54D]
+                  text-white font-semibold
+                  shadow-md
+                  hover:shadow-lg
+                  hover:-translate-y-0.5
+                  transition-all duration-200
+                "
+              >
+                Login
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </nav>
