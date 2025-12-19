@@ -174,3 +174,44 @@
     @apply bg-background text-foreground;
   }
 }
+
+.nav-link-main {
+  @apply relative px-4 py-2 rounded-xl
+         font-semibold text-white
+         transition-all duration-200 ease-out;
+}
+
+/* Yellow underline animation */
+.nav-link-main::after {
+  content: "";
+  @apply absolute left-1/2 bottom-0
+         w-0 h-[2px]
+         bg-[#F3B54D]
+         transition-all duration-300 ease-out;
+  transform: translateX(-50%);
+}
+
+/* Hover effects */
+.nav-link-main:hover {
+  @apply bg-white/20
+         translate-y-[-2px];
+}
+
+.nav-link-main:hover::after {
+  @apply w-3/4;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.2s ease-out;
+}

@@ -7,66 +7,74 @@ export default async function Navbar() {
   const session = await getServerSession(authOptions);
 
   return (
-    <div className="flex justify-around p-5 bg-teal-500 shadow-2xs">
-      <div>
-        <Link
-          href="/home"
-          className="text-white hover:text-teal-800 hover:font-bold"
+    <nav className="w-full sticky top-0 z-50">
+      <div
+        className="
+          bg-[#36B9CB]
+          border-b border-white/20
+        "
+      >
+        <div
+          className="
+            max-w-7xl mx-auto
+            px-6 pt-4 pb-6
+            flex flex-col md:flex-row
+            md:items-center md:justify-between
+            gap-5 md:gap-0
+          "
         >
-          Home
-        </Link>
+          {/* LEFT: Navigation */}
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-6">
+            <Link href="/home" className="nav-link-main">
+              Home
+            </Link>
+
+            <Link href="/packages" className="nav-link-main">
+              Book Package
+            </Link>
+
+            <Link href="/itinerary" className="nav-link-main">
+              Book Itinerary
+            </Link>
+
+            <Link href="/help" className="nav-link-main">
+              Help
+            </Link>
+
+            <Link href="/about" className="nav-link-main">
+              About Us
+            </Link>
+          </div>
+
+
+          {/* RIGHT: User */}
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-start sm:items-center">
+            {session?.user && (
+              <span className="text-sm font-semibold text-white">
+                {session.user.name}
+              </span>
+            )}
+
+            {session?.user ? (
+              <SignOut />
+            ) : (
+              <Link
+                href="/login"
+                className="
+                  px-5 py-2 rounded-xl
+                  bg-[#F3B54D]
+                  text-white font-semibold
+                  shadow-md
+                  hover:shadow-lg hover:-translate-y-0.5
+                  transition-all duration-200
+                "
+              >
+                Login
+              </Link>
+            )}
+          </div>
+        </div>
       </div>
-      <div>
-        <Link
-          href="/packages"
-          className="text-white hover:text-teal-800 hover:font-bold"
-        >
-          Book Package
-        </Link>
-      </div>
-      <div>
-        <Link
-          href="/itinerary"
-          className="text-white hover:text-teal-800 hover:font-bold"
-        >
-          Book Itinerary
-        </Link>
-      </div>
-      <div>
-        <Link
-          href="/help"
-          className="text-white hover:text-teal-800 hover:font-bold"
-        >
-          Help
-        </Link>
-      </div>
-      <div>
-        <Link
-          href="/about"
-          className="text-white hover:text-teal-800 hover:font-bold"
-        >
-          About Us
-        </Link>
-      </div>
-      <div>
-        <Link
-          href="/message"
-          className="text-white hover:text-teal-800 hover:font-bold"
-        >
-          Inbox
-        </Link>
-      </div>
-      <div>
-        <Link
-          href="/profile"
-          className="text-white hover:text-teal-800 hover:font-bold"
-        >
-          {session?.user?.name}
-        </Link>
-      </div>
-      <div className="text-white hover:text-teal-800 hover:font-bold">
-        {session?.user ? <SignOut /> : <Link href="/login">Login</Link>}
-      </div>
-    </div>
+    </nav>
   );
 }

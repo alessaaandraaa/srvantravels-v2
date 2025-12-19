@@ -2,10 +2,21 @@
 
 import { useEffect, useState } from "react";
 import Packages from "./Packages";
-import { PackageWithTags } from "@/types/package.types";
+
+interface Package {
+  package_ID: number;
+  package_name: string;
+  inclusions: string;
+  number_of_PAX: number;
+  route: string;
+  description: string;
+  is_made_by_manager: number;
+  is_available: boolean;
+  package_picture: string;
+}
 
 export default function PackageList() {
-  const [packages, setPackages] = useState<PackageWithTags[]>([]);
+  const [packages, setPackages] = useState<Package[]>([]);
 
   useEffect(() => {
     fetch("/api/packages")
@@ -14,22 +25,16 @@ export default function PackageList() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#79C6D1]/50 to-white px-6 py-14">
-      
-      {/* HEADER */}
-      <h2 className="text-4xl md:text-5xl font-extrabold text-center text-[#36B9CB] mb-10 tracking-tight">
-        WELCOME TO SR VAN TRAVELS!
-      </h2>
+    <main className="min-h-screen bg-[rgba(121,198,209,0.52)] px-10 py-14">
+      <h1 className="text-4xl font-bold text-center text-[#36B9CB] mb-12">
+        Available Travel Packages
+      </h1>
 
-      {/* CARD LIST */}
-      <ul className="flex flex-col items-center gap-2">
-        {Array.isArray(packages) &&
-          packages.map((pack) => (
-            <li key={pack.package_ID} className="w-full max-w-6xl">
-              <Packages {...pack} />
-            </li>
-          ))}
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        {packages.map((pack: Package) => (
+          <Packages key={pack.package_ID} {...pack} />
+        ))}
       </ul>
-    </div>
+    </main>
   );
 }
