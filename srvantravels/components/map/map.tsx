@@ -369,8 +369,7 @@ export default function MapComponent({
               disabled={markers.length < 2}
             />
             {summary && (
-              <div className="absolute z-10  top-4 right-4
-lg:top-24 lg:right-6 bg-white rounded-xl shadow-md px-3 py-2 text-sm">
+              <div className="absolute z-10 top-4 right-4 lg:top-24 lg:right-6 bg-white rounded-xl shadow-md px-3 py-2 text-sm text-gray-900">
                 <div>
                   <span className="font-medium">Distance:</span>{" "}
                   {summary.distanceText}

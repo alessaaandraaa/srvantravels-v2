@@ -38,39 +38,68 @@ export default function PackageBooking({ package_ID }: { package_ID: number }) {
   }, [package_ID]);
 
   return (
-    <main className="min-h-screen bg-[rgba(121,198,209,0.52)] flex justify-center px-6 py-12">
-      <div className="w-full max-w-5xl bg-white rounded-3xl shadow-xl p-10 space-y-10">
-        {/* Package Details */}
-        {pack ? (
-          <Packages key={pack.package_ID} {...pack} />
-        ) : (
-          <p className="text-center text-cyan-700 text-lg">
-            Loading package...
+    <main className="flex justify-center px-4 md:px-6">
+      <div className="w-full max-w-5xl">
+        {/* Header Card */}
+        <div className="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl p-6 md:p-10 mb-6">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-[#36B9CB] mb-2">
+            Package Details
+          </h1>
+          <p className="text-gray-600 text-sm md:text-base">
+            Review the package information and book your travel experience
           </p>
-        )}
+        </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-6 justify-between">
-          <Link
-            href="/packages"
-            className="flex-1 text-center py-4 rounded-2xl 
-                       bg-[#36B9CB] text-white font-semibold
-                       hover:bg-cyan-800 transition"
-          >
-            ← Back to Plans
-          </Link>
+        {/* Package Details Card */}
+        <div className="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl p-6 md:p-10 mb-6">
+          {pack ? (
+            <Packages key={pack.package_ID} {...pack} />
+          ) : (
+            <div className="flex items-center justify-center py-12">
+              <div className="animate-spin w-8 h-8 border-4 border-[#36B9CB] border-t-transparent rounded-full" />
+              <p className="text-center text-[#36B9CB] text-lg ml-3">
+                Loading package details...
+              </p>
+            </div>
+          )}
+        </div>
 
-          <Link
-            href={`/packages/${package_ID}/booking/page1`}
-            onClick={() => {
-              if (pack) setBookedPackage(pack);
-            }}
-            className="flex-1 text-center py-4 rounded-2xl 
-                       bg-[#F3B54D] text-white font-semibold
-                       hover:bg-orange-600 transition"
-          >
-            Book this Package
-          </Link>
+        {/* Action Buttons Card */}
+        <div className="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl p-6 md:p-8">
+          <div className="flex flex-col sm:flex-row gap-4 md:gap-6">
+            <Link
+              href="/packages"
+              className="
+                flex-1 text-center py-4 md:py-5 rounded-2xl 
+                bg-gradient-to-r from-[#36B9CB] to-[#2fa6b6]
+                text-white font-bold text-lg
+                shadow-lg
+                hover:shadow-xl hover:-translate-y-1
+                active:translate-y-0
+                transition-all duration-200
+              "
+            >
+              ← Back to Plans
+            </Link>
+
+            <Link
+              href={`/packages/${package_ID}/booking/page1`}
+              onClick={() => {
+                if (pack) setBookedPackage(pack);
+              }}
+              className="
+                flex-1 text-center py-4 md:py-5 rounded-2xl 
+                bg-gradient-to-r from-[#F3B54D] to-[#eaa93f]
+                text-white font-bold text-lg
+                shadow-lg
+                hover:shadow-xl hover:-translate-y-1
+                active:translate-y-0
+                transition-all duration-200
+              "
+            >
+              Book this Package →
+            </Link>
+          </div>
         </div>
       </div>
     </main>

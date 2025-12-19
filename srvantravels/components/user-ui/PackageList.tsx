@@ -72,7 +72,7 @@ export default function PackageList() {
         {/* ================= HERO ================= */}
         <div className="text-center max-w-4xl mx-auto mb-20">
           <h1
-            className="text-5xl md:text-7xl font-extrabold text-white mb-6"
+            className="text-7xl md:text-7xl font-extrabold text-white mb-6"
             style={{
               textShadow: `
                 -2px -2px 0 #000,
@@ -248,6 +248,9 @@ export default function PackageList() {
           <Link href="/help" className="hover:underline">
             Help
           </Link>
+          <Link href="https://www.facebook.com/profile.php?id=61569662235289" className="hover:underline">
+            Facebook
+          </Link> 
         </div>
       </footer>
     </div>

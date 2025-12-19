@@ -120,10 +120,10 @@ return (
         top-4
         left-1/2 -translate-x-1/2
         lg:left-6 lg:translate-x-0
-        bg-white/90 backdrop-blur-md
+        bg-white/95 backdrop-blur-md
         rounded-2xl
         shadow-xl
-        border border-black/5
+        border border-[#36B9CB]/20
         p-1
       "
     >
@@ -132,12 +132,12 @@ return (
       type="text"
       placeholder={placeholder}
       className="
-        w-[320px] sm:w-[360px]
+        w-[280px] sm:w-[320px] md:w-[360px]
         px-5 py-3
         rounded-xl
-        bg-transparent
+        bg-white
         text-gray-800
-        placeholder-gray-400
+        placeholder-gray-500
         focus:outline-none
         focus:ring-2 focus:ring-[#36B9CB]
         focus:ring-offset-0
