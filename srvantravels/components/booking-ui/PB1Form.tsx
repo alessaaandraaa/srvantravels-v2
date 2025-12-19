@@ -11,7 +11,6 @@ import Link from "next/link";
 type customerForm = {
   pax: number;
   pickup_date: string;
-  // pickup_address: string,
   luggage: number;
   file_image: FileList;
 };
@@ -41,7 +40,6 @@ export default function PB1Form({ user_id }: id) {
       base64Image = await toBase64(file);
     }
 
-    // Save all form data to Zustand
     setCustomerDetails({
       customer_id: Number(user_id),
       itinerary_id: itinerary_id,
@@ -64,97 +62,179 @@ export default function PB1Form({ user_id }: id) {
     });
 
   return (
-    <>
-      <form className="w-full max-w-lg m-10" onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-wrap -mx-3 mb-6">
-          <div className="w-full px-3">
+    <section
+      className="
+        relative
+        min-h-screen
+        bg-cover
+        bg-center
+        bg-no-repeat
+        py-16
+        px-6
+      "
+      style={{
+        backgroundImage: "url('/bg-images/bg3.jpg')",
+      }}
+    >
+      {/* OVERLAY */}
+      <div className="absolute inset-0 bg-black/40" />
+
+      {/* CONTENT */}
+      <div className="relative z-10 max-w-3xl mx-auto">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="
+            bg-white
+            rounded-3xl
+            shadow-xl
+            p-8 md:p-10
+            space-y-8
+          "
+        >
+          <h1 className="text-3xl md:text-4xl font-extrabold text-[#36B9CB] text-center">
+            PACKAGE BOOKING DETAILS
+          </h1>
+
+          <hr className="border-gray-300" />
+
+          {/* PASSENGERS */}
+          <div>
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
               htmlFor="pax"
+              className="block text-xs font-semibold tracking-wide text-gray-600 mb-2 uppercase"
             >
               Number of Passengers
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="pax"
               type="number"
               {...register("pax")}
+              className="
+                block w-full
+                rounded-xl
+                border border-gray-300
+                bg-white
+                px-4 py-3
+                text-gray-800
+                focus:outline-none
+                focus:ring-2 focus:ring-[#36B9CB]
+              "
             />
           </div>
-        </div>
-        <div className="flex flex-wrap -mx-3 mb-2">
-          <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-            <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              htmlFor="pickup_date"
-            >
-              Pickup Date
-            </label>
-            <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="pickup_date"
-              type="date"
-              {...register("pickup_date")}
-            />
+
+          {/* DATE + LUGGAGE */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label
+                htmlFor="pickup_date"
+                className="block text-xs font-semibold tracking-wide text-gray-600 mb-2 uppercase"
+              >
+                Pickup Date
+              </label>
+              <input
+                id="pickup_date"
+                type="date"
+                {...register("pickup_date")}
+                className="
+                  block w-full
+                  rounded-xl
+                  border border-gray-300
+                  bg-white
+                  px-4 py-3
+                  text-gray-800
+                  focus:outline-none
+                  focus:ring-2 focus:ring-[#36B9CB]
+                "
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="luggage"
+                className="block text-xs font-semibold tracking-wide text-gray-600 mb-2 uppercase"
+              >
+                Number of Luggage (optional)
+              </label>
+              <input
+                id="luggage"
+                type="number"
+                {...register("luggage")}
+                className="
+                  block w-full
+                  rounded-xl
+                  border border-gray-300
+                  bg-white
+                  px-4 py-3
+                  text-gray-800
+                  focus:outline-none
+                  focus:ring-2 focus:ring-[#36B9CB]
+                "
+              />
+            </div>
           </div>
-          {/*<div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 mt-2">
+
+          {/* FILE UPLOAD */}
+          <div>
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              htmlFor="pickup_address"
-            >
-              Pickup Address
-            </label>
-            <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="pickup_address"
-              type="text"
-            />
-          </div>*/}
-          <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0 mt-2">
-            <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              htmlFor="luggage"
-            >
-              No. of Luggage (optional)
-            </label>
-            <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="luggage"
-              type="number"
-              {...register("luggage")}
-            />
-          </div>
-          <div className="w-full mt-5">
-            <label
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               htmlFor="file_image"
+              className="block text-xs font-semibold tracking-wide text-gray-600 mb-2 uppercase"
             >
-              Upload image
+              Upload Valid ID
             </label>
             <input
-              className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
               id="file_image"
               type="file"
               accept=".png, .jpg, .jpeg"
               {...register("file_image")}
+              className="
+                block w-full
+                text-sm
+                text-gray-700
+                border border-gray-300
+                rounded-xl
+                cursor-pointer
+                bg-gray-50
+                focus:outline-none
+                focus:ring-2 focus:ring-[#36B9CB]
+              "
             />
           </div>
-        </div>
-        <div className="flex m-10 gap-4">
-          <Link
-            className="bg-red-700 text-amber-50 p-4 hover:bg-red-800"
-            href="/packages"
-          >
-            Back to Packages
-          </Link>
-          <button
-            type="submit"
-            className="bg-amber-500 text-amber-50 p-4 hover:bg-amber-800"
-          >
-            Proceed to Summary
-          </button>
-        </div>
-      </form>
-    </>
+
+          {/* ACTIONS */}
+          <div className="flex flex-col sm:flex-row justify-center gap-4 pt-6">
+            <Link
+              href="/packages"
+              className="
+                px-6 py-3
+                rounded-2xl
+                bg-red-600
+                text-white
+                font-semibold
+                text-center
+                hover:bg-red-700
+                transition
+              "
+            >
+              Back to Packages
+            </Link>
+
+            <button
+              type="submit"
+              className="
+                px-6 py-3
+                rounded-2xl
+                bg-[#F3B54D]
+                text-white
+                font-bold
+                hover:bg-[#eaa93f]
+                transition
+              "
+            >
+              Proceed to Summary →
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
   );
 }

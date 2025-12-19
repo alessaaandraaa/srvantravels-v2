@@ -24,29 +24,71 @@ export default function PB1PackageDisplay() {
   }, [hydrated, bookedPackage, params.id, router]);
 
   if (!hydrated) {
-    return <p>Loading...</p>; // wait for Zustand hydration
+    return <p className="text-center mt-10">Loading...</p>;
   }
 
   if (!bookedPackage || bookedPackage.package_ID.toString() !== params.id) {
-    return <p>Redirecting...</p>;
+    return <p className="text-center mt-10">Redirecting...</p>;
   }
 
   return (
-    <div className="border-amber-600 m-10">
-      <h1>PACKAGE SUMMARY</h1>
-      <hr />
-      <p>
-        <b>Name:</b> {bookedPackage.package_name}
-      </p>
-      <p>
-        <b>Description:</b> {bookedPackage.description}
-      </p>
-      <p>
-        <b>Route:</b> {bookedPackage.route}
-      </p>
-      <p>
-        <b>Inclusions:</b> {bookedPackage.inclusions}
-      </p>
-    </div>
+    <section
+      className="
+        relative
+        min-h-screen
+        bg-cover
+        bg-center
+        bg-no-repeat
+        py-16
+        px-6
+      "
+      style={{
+        backgroundImage: "url('/bg-images/bg3.jpg')",
+      }}
+    >
+      {/* OVERLAY */}
+      <div className="absolute inset-0 bg-black/40" />
+
+      {/* CONTENT */}
+      <div className="relative z-10 max-w-4xl mx-auto">
+        <div
+          className="
+            bg-white
+            rounded-3xl
+            shadow-xl
+            p-8 md:p-10
+            space-y-6
+          "
+        >
+          <h1 className="text-3xl md:text-4xl font-extrabold text-[#36B9CB] text-center">
+            PACKAGE SUMMARY
+          </h1>
+
+          <hr className="border-gray-300" />
+
+          <div className="space-y-4 text-gray-800 text-sm md:text-base">
+            <p>
+              <span className="font-semibold">Name:</span>{" "}
+              {bookedPackage.package_name}
+            </p>
+
+            <p>
+              <span className="font-semibold">Description:</span>{" "}
+              {bookedPackage.description}
+            </p>
+
+            <p>
+              <span className="font-semibold">Route:</span>{" "}
+              {bookedPackage.route}
+            </p>
+
+            <p>
+              <span className="font-semibold">Inclusions:</span>{" "}
+              {bookedPackage.inclusions}
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
