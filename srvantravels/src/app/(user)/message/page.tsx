@@ -25,25 +25,25 @@ export default async function MessagePage() {
         bg-cover
         bg-center
         bg-no-repeat
-        px-6
-        py-20
+        px-4 md:px-6 lg:px-8
+        py-8 md:py-14
       "
       style={{
         backgroundImage: "url('/bg-images/bg3.jpg')",
       }}
     >
       {/* OVERLAY */}
-      <div className="absolute inset-0 bg-black/40" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black/40" />
 
       {/* CONTENT */}
-      <div className="relative z-10 max-w-7xl mx-auto space-y-10">
-        {/* HEADER */}
-        <div className="text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-3">
-            Inbox
+      <div className="relative z-10 max-w-7xl mx-auto">
+        {/* HEADER CARD */}
+        <div className="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl p-6 md:p-8 mb-8 text-center">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#36B9CB] mb-2">
+            Your Inbox
           </h1>
-          <p className="text-white/80 max-w-2xl mx-auto">
-            Manage your inquiries, cancellations, and rebooking requests here.
+          <p className="text-gray-600 text-sm md:text-base">
+            Manage your inquiries, cancellations, and rebooking requests all in one place.
           </p>
         </div>
 
@@ -53,7 +53,7 @@ export default async function MessagePage() {
             grid
             grid-cols-1
             lg:grid-cols-3
-            gap-8
+            gap-6 md:gap-8
             items-start
           "
         >

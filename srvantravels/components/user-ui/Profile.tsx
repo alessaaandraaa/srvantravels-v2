@@ -30,9 +30,9 @@ export default function UserProfile({
   };
 
   const tabs = [
-    { id: "profile" as TabType, label: "Profile", icon: "👤" },
-    { id: "orders" as TabType, label: "Orders", icon: "📋" },
-    { id: "settings" as TabType, label: "Settings", icon: "⚙️" },
+    { id: "profile" as TabType, label: "Profile" },
+    { id: "orders" as TabType, label: "Orders" },
+    { id: "settings" as TabType, label: "Settings" },
   ];
 
   return (
@@ -71,16 +71,15 @@ export default function UserProfile({
                   onClick={() => setActiveTab(tab.id)}
                   className={`
                     flex-1 px-4 md:px-6 py-4
-                    font-bold text-sm md:text-base
+                    font-semibold text-sm md:text-base
                     border-b-4 transition-all duration-200
                     ${
                       activeTab === tab.id
-                        ? "border-[#36B9CB] bg-[#36B9CB]/5 text-[#36B9CB]"
-                        : "border-gray-200 text-gray-700 hover:text-[#36B9CB]"
+                        ? "border-[#36B9CB] text-[#36B9CB]"
+                        : "border-gray-200 text-gray-600 hover:text-gray-800"
                     }
                   `}
                 >
-                  <span className="hidden sm:inline mr-2">{tab.icon}</span>
                   {tab.label}
                 </button>
               ))}

@@ -130,7 +130,7 @@ export default function UserCancel({ user_id }: id) {
           </div>
         </CardContent>
 
-        <CardFooter className="flex justify-end">
+        <CardFooter className="flex justify-end pt-8 mt-6 border-t border-gray-200">
           <Button
             type="submit"
             disabled={isSubmitting}
