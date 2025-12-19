@@ -13,47 +13,26 @@ const UserInboxRightPanel = ({ session }: PanelProps) => {
   const id = session?.user?.id ? Number(session.user.id) : null;
 
   return (
-    <Card
-      className="
-        bg-slate-50
-        border
-        border-slate-200
-        shadow-md
-        p-6
-        w-full
-      "
-    >
-      <Tabs
-        defaultValue="support"
-        className="flex flex-col gap-6 w-full"
-      >
-        <TabsList
-          className="
-            grid
-            grid-cols-3
-            w-full
-            bg-white
-            border
-            border-slate-200
-            rounded-2xl
-            p-1
-          "
-        >
+    <Card className="bg-slate-50 border border-slate-200 shadow-md p-6 w-full">
+      <Tabs defaultValue="support" className="flex flex-col gap-4 w-full">
+        <TabsList className="grid grid-cols-3 w-full bg-white border border-slate-200 rounded-2xl p-1">
           <TabsTrigger
             value="support"
             className="
-              h-10
-              w-full
-              rounded-xl
+              h-9
+              px-3
+              rounded-lg
               text-sm
               font-semibold
-              text-slate-700
               flex
               items-center
               justify-center
+              relative
+              z-10
+              text-slate-700
               data-[state=active]:bg-[#36B9CB]
               data-[state=active]:text-white
-              data-[state=active]:shadow
+              data-[state=active]:shadow-sm
               transition-all
             "
           >
@@ -63,18 +42,20 @@ const UserInboxRightPanel = ({ session }: PanelProps) => {
           <TabsTrigger
             value="cancel"
             className="
-              h-10
-              w-full
-              rounded-xl
+              h-9
+              px-3
+              rounded-lg
               text-sm
               font-semibold
-              text-slate-700
               flex
               items-center
               justify-center
+              relative
+              z-10
+              text-slate-700
               data-[state=active]:bg-[#F87171]
               data-[state=active]:text-white
-              data-[state=active]:shadow
+              data-[state=active]:shadow-sm
               transition-all
             "
           >
@@ -84,18 +65,20 @@ const UserInboxRightPanel = ({ session }: PanelProps) => {
           <TabsTrigger
             value="rebook"
             className="
-              h-10
-              w-full
-              rounded-xl
+              h-9
+              px-3
+              rounded-lg
               text-sm
               font-semibold
-              text-slate-700
               flex
               items-center
               justify-center
+              relative
+              z-10
+              text-slate-700
               data-[state=active]:bg-[#F3B54D]
               data-[state=active]:text-white
-              data-[state=active]:shadow
+              data-[state=active]:shadow-sm
               transition-all
             "
           >
