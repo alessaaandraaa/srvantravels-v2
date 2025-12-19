@@ -63,13 +63,20 @@ export default function UserRebook({ user_id }: id) {
   };
 
   return (
-    <Card className="shadow-md border border-gray-200">
+    <Card
+      className="
+        bg-slate-50
+        border
+        border-slate-200
+        shadow-md
+      "
+    >
       <CardHeader className="space-y-2">
         <CardTitle className="text-xl font-bold text-[#36B9CB]">
           Rebooking Request
         </CardTitle>
 
-        <CardDescription className="text-sm text-gray-600">
+        <CardDescription className="text-sm text-slate-600">
           Request a new date for your existing booking. Our team will review and
           confirm availability before approval.
         </CardDescription>
@@ -79,7 +86,7 @@ export default function UserRebook({ user_id }: id) {
         <CardContent className="space-y-6">
           {/* ORDER SELECT */}
           <div className="space-y-2">
-            <Label className="text-sm font-semibold text-gray-700">
+            <Label className="text-sm font-semibold text-slate-700">
               Select Booking
             </Label>
 
@@ -101,7 +108,7 @@ export default function UserRebook({ user_id }: id) {
           <div className="space-y-2">
             <Label
               htmlFor="rebook_date"
-              className="text-sm font-semibold text-gray-700"
+              className="text-sm font-semibold text-slate-700"
             >
               Preferred Rebooking Date
             </Label>
@@ -112,6 +119,12 @@ export default function UserRebook({ user_id }: id) {
               {...register("rebook_date", {
                 required: "Rebooking date is required",
               })}
+              className="
+                bg-white
+                border-slate-300
+                focus:border-[#36B9CB]
+                focus:ring-[#36B9CB]
+              "
             />
 
             {errors.rebook_date && (
@@ -125,7 +138,7 @@ export default function UserRebook({ user_id }: id) {
           <div className="space-y-2">
             <Label
               htmlFor="message"
-              className="text-sm font-semibold text-gray-700"
+              className="text-sm font-semibold text-slate-700"
             >
               Reason for Rebooking
             </Label>
@@ -136,6 +149,12 @@ export default function UserRebook({ user_id }: id) {
               {...register("message", {
                 required: "Reason is required",
               })}
+              className="
+                bg-white
+                border-slate-300
+                focus:border-[#36B9CB]
+                focus:ring-[#36B9CB]
+              "
             />
 
             {errors.message && (

@@ -13,23 +13,87 @@ const UserInboxRightPanel = ({ session }: PanelProps) => {
   const id = session?.user?.id ? Number(session.user.id) : null;
 
   return (
-    <Card className="p-4 shadow-lg">
-      <Tabs defaultValue="support" className="flex flex-col gap-4">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="support">General</TabsTrigger>
-          <TabsTrigger value="cancel">Cancel</TabsTrigger>
-          <TabsTrigger value="rebook">Rebook</TabsTrigger>
+    <Card
+      className="
+        bg-slate-50
+        border
+        border-slate-200
+        shadow-md
+        p-6
+      "
+    >
+      <Tabs defaultValue="support" className="flex flex-col gap-6">
+        {/* TAB HEADER */}
+        <TabsList
+          className="
+            grid
+            grid-cols-3
+            bg-white
+            border
+            border-slate-200
+            rounded-2xl
+            p-1
+          "
+        >
+          <TabsTrigger
+            value="support"
+            className="
+              rounded-xl
+              text-sm
+              font-semibold
+              text-slate-600
+              data-[state=active]:bg-[#36B9CB]
+              data-[state=active]:text-white
+              data-[state=active]:shadow
+              transition
+            "
+          >
+            General
+          </TabsTrigger>
+
+          <TabsTrigger
+            value="cancel"
+            className="
+              rounded-xl
+              text-sm
+              font-semibold
+              text-slate-600
+              data-[state=active]:bg-[#F87171]
+              data-[state=active]:text-white
+              data-[state=active]:shadow
+              transition
+            "
+          >
+            Cancel
+          </TabsTrigger>
+
+          <TabsTrigger
+            value="rebook"
+            className="
+              rounded-xl
+              text-sm
+              font-semibold
+              text-slate-600
+              data-[state=active]:bg-[#F3B54D]
+              data-[state=active]:text-white
+              data-[state=active]:shadow
+              transition
+            "
+          >
+            Rebook
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="support">
+        {/* TAB CONTENT */}
+        <TabsContent value="support" className="mt-2">
           <UserSupport user_id={id} />
         </TabsContent>
 
-        <TabsContent value="cancel">
+        <TabsContent value="cancel" className="mt-2">
           <UserCancel user_id={id} />
         </TabsContent>
 
-        <TabsContent value="rebook">
+        <TabsContent value="rebook" className="mt-2">
           <UserRebook user_id={id} />
         </TabsContent>
       </Tabs>

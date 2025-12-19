@@ -47,9 +47,7 @@ export default function UserCancel({ user_id }: id) {
 
     const response = await fetch("/api/message", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
 
@@ -62,15 +60,22 @@ export default function UserCancel({ user_id }: id) {
   };
 
   return (
-    <Card className="shadow-md border border-gray-200">
+    <Card
+      className="
+        bg-slate-50
+        border
+        border-slate-200
+        shadow-md
+      "
+    >
       <CardHeader className="space-y-2">
         <CardTitle className="text-xl font-bold text-[#36B9CB]">
           Cancellation Request
         </CardTitle>
 
-        <CardDescription className="text-sm text-gray-600">
-          Request to cancel a booking. Our team will review your request and get
-          back to you as soon as possible.
+        <CardDescription className="text-sm text-slate-600">
+          Request to cancel a booking. Our team will review your request and
+          respond as soon as possible.
         </CardDescription>
       </CardHeader>
 
@@ -78,7 +83,7 @@ export default function UserCancel({ user_id }: id) {
         <CardContent className="space-y-6">
           {/* ORDER SELECT */}
           <div className="space-y-2">
-            <Label className="text-sm font-semibold text-gray-700">
+            <Label className="text-sm font-semibold text-slate-700">
               Select Booking
             </Label>
 
@@ -100,7 +105,7 @@ export default function UserCancel({ user_id }: id) {
           <div className="space-y-2">
             <Label
               htmlFor="message"
-              className="text-sm font-semibold text-gray-700"
+              className="text-sm font-semibold text-slate-700"
             >
               Reason for Cancellation
             </Label>
@@ -109,6 +114,12 @@ export default function UserCancel({ user_id }: id) {
               id="message"
               placeholder="Please explain why you want to cancel this booking..."
               {...register("message", { required: "Reason is required" })}
+              className="
+                bg-white
+                border-slate-300
+                focus:border-[#36B9CB]
+                focus:ring-[#36B9CB]
+              "
             />
 
             {errors.message && (

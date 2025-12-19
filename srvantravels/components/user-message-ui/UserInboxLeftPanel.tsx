@@ -6,27 +6,44 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const UserInboxLeftPanel = () => {
   return (
-    <Card className="p-4 shadow-lg">
-      <div className="flex items-center gap-3 mb-4">
+    <Card
+      className="
+        bg-slate-50
+        border
+        border-slate-200
+        shadow-md
+        p-5
+      "
+    >
+      {/* HEADER */}
+      <div className="flex items-center gap-3 mb-5">
         <MailWarning className="text-[#36B9CB]" />
-        <h2 className="text-lg font-bold">Current Requests</h2>
+        <h2 className="text-lg font-bold text-slate-800">
+          Current Requests
+        </h2>
       </div>
 
+      {/* LIST */}
       <ScrollArea className="h-[420px] pr-3">
         <div className="flex flex-col gap-3">
           {[...Array(8)].map((_, i) => (
             <Card
               key={i}
               className="
+                bg-white
+                border
+                border-slate-200
                 p-3
                 cursor-pointer
-                hover:bg-gray-50
-                transition
+                hover:bg-slate-100
+                hover:border-[#36B9CB]
+                transition-all
               "
             >
               <div className="flex items-center gap-3">
-                <Flower className="h-4 text-muted-foreground" />
-                <p className="text-sm text-muted-foreground line-clamp-2">
+                <Flower className="h-4 w-4 text-[#36B9CB]" />
+
+                <p className="text-sm text-slate-600 line-clamp-2">
                   {i + 1}. Sample request preview | User Name
                 </p>
               </div>

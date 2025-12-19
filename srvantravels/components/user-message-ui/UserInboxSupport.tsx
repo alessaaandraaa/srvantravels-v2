@@ -12,7 +12,6 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import { toast, Toaster } from "sonner";
 
 type SupportFormValues = {
@@ -22,16 +21,12 @@ type SupportFormValues = {
 type id = { user_id: number | null };
 
 export default function UserSupport({ user_id }: id) {
-  const router = useRouter();
-
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<SupportFormValues>({
-    defaultValues: {
-      message: "",
-    },
+    defaultValues: { message: "" },
   });
 
   const onSubmit = async (formData: SupportFormValues) => {
@@ -51,23 +46,28 @@ export default function UserSupport({ user_id }: id) {
     if (response.ok) {
       toast.success("Your message has been sent!");
     } else {
-      const errorData = await response.json().catch(() => null);
-      console.error("SERVER ERROR:", response.status, errorData);
       toast.error("Something went wrong. Please try again.");
     }
   };
 
   return (
     <>
-      <Card className="shadow-md border border-gray-200">
+      <Card
+        className="
+          bg-slate-50
+          border
+          border-slate-200
+          shadow-md
+        "
+      >
         <CardHeader className="space-y-2">
           <CardTitle className="text-xl font-bold text-[#36B9CB]">
             Contact Support
           </CardTitle>
 
-          <CardDescription className="text-sm text-gray-600">
-            Have a question or concern? Send us a message and we’ll get back to
-            you as soon as possible.
+          <CardDescription className="text-sm text-slate-600">
+            Have a question or concern? Send us a message and we’ll respond as
+            soon as possible.
           </CardDescription>
         </CardHeader>
 
@@ -76,7 +76,7 @@ export default function UserSupport({ user_id }: id) {
             <div className="space-y-2">
               <Label
                 htmlFor="message"
-                className="text-sm font-semibold text-gray-700"
+                className="text-sm font-semibold text-slate-700"
               >
                 Your Message
               </Label>
@@ -85,6 +85,12 @@ export default function UserSupport({ user_id }: id) {
                 id="message"
                 placeholder="Type your concern or question here..."
                 {...register("message", { required: "Message is required" })}
+                className="
+                  bg-white
+                  border-slate-300
+                  focus:border-[#36B9CB]
+                  focus:ring-[#36B9CB]
+                "
               />
 
               {errors.message && (
@@ -104,7 +110,6 @@ export default function UserSupport({ user_id }: id) {
                 text-white
                 font-semibold
                 hover:bg-[#2ea8b9]
-                transition
               "
             >
               {isSubmitting ? "Sending..." : "Send Message"}
