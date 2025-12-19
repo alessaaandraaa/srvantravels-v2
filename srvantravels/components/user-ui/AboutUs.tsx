@@ -2,9 +2,24 @@ import Image from "next/image";
 
 export default function AboutUs() {
   return (
-    <section className="bg-[rgba(121,198,209,0.52)] py-16 px-6">
-      <div className="max-w-6xl mx-auto bg-white rounded-3xl shadow-xl p-12 space-y-10">
-        
+    <section
+      className="
+        relative
+        bg-cover
+        bg-center
+        bg-no-repeat
+        py-16
+        px-6
+      "
+      style={{
+        backgroundImage: "url('/bg-images/bg9.jpg')",
+      }}
+    >
+      {/* OVERLAY FOR READABILITY */}
+      <div className="absolute inset-0 bg-[rgba(121,198,209,0.52)]" />
+
+      {/* CONTENT */}
+      <div className="relative z-10 max-w-6xl mx-auto bg-white rounded-3xl shadow-xl p-12 space-y-10">
         <div className="flex flex-col items-center text-center space-y-4">
           <div className="w-36 h-36 md:w-40 md:h-40 flex items-center justify-center">
             <Image
@@ -48,42 +63,41 @@ export default function AboutUs() {
         </div>
 
         <div className="space-y-6">
-        <h3 className="text-3xl font-bold text-black text-center">
-          Contact Us
-        </h3>
+          <h3 className="text-3xl font-bold text-black text-center">
+            Contact Us
+          </h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-black">
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-            <h4 className="font-bold mb-2">Facebook</h4>
-            <p>SR Van Travels</p>
-          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-black">
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+              <h4 className="font-bold mb-2">Facebook</h4>
+              <p>SR Van Travels</p>
+            </div>
 
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-            <h4 className="font-bold mb-2">Email</h4>
-            <p>srvantravels@gmail.com</p>
-          </div>
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+              <h4 className="font-bold mb-2">Email</h4>
+              <p>srvantravels@gmail.com</p>
+            </div>
 
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-            <h4 className="font-bold mb-4">Phone Numbers</h4>
-            <div className="grid grid-cols-2 gap-2 text-sm">
-              <p>09452866649</p>
-              <p>09478196739</p>
-              <p>09166240642</p>
-              <p>09166629657</p>
-              <p>0916660527</p>
-              <p>09569430826</p>
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+              <h4 className="font-bold mb-4">Phone Numbers</h4>
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                <p>09452866649</p>
+                <p>09478196739</p>
+                <p>09166240642</p>
+                <p>09166629657</p>
+                <p>0916660527</p>
+                <p>09569430826</p>
+              </div>
+            </div>
+
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+              <h4 className="font-bold mb-2">Location</h4>
+              <p>
+                Jugan, Consolacion, Cebu City, Philippines
+              </p>
             </div>
           </div>
-
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-            <h4 className="font-bold mb-2">Location</h4>
-            <p>
-              Jugan, Consolacion, Cebu City, Philippines
-            </p>
-          </div>
         </div>
-      </div>
-
       </div>
     </section>
   );

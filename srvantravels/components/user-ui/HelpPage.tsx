@@ -1,8 +1,23 @@
 export default function HelpPage() {
   return (
-    <section className="bg-[rgba(121,198,209,0.52)] py-16 px-6">
-      <div className="max-w-6xl mx-auto bg-white rounded-3xl shadow-xl p-12 space-y-12">
+    <section
+      className="
+        relative
+        bg-cover
+        bg-center
+        bg-no-repeat
+        py-16
+        px-6
+      "
+      style={{
+        backgroundImage: "url('/bg-images/bg3.jpg')",
+      }}
+    >
+      {/* OPTIONAL OVERLAY FOR READABILITY */}
+      <div className="absolute inset-0 bg-[rgba(121,198,209,0.52)]" />
 
+      {/* CONTENT */}
+      <div className="relative z-10 max-w-6xl mx-auto bg-white rounded-3xl shadow-xl p-12 space-y-12">
         <div className="text-center space-y-4">
           <h1 className="text-5xl md:text-6xl font-extrabold text-black">
             HELP CENTER
@@ -117,7 +132,6 @@ export default function HelpPage() {
           Let us help you travel better. Thank you for choosing SR Van Travels —
           your reliable itinerary companion.
         </p>
-
       </div>
     </section>
   );
