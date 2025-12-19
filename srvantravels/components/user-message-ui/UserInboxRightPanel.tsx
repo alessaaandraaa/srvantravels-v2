@@ -20,14 +20,18 @@ const UserInboxRightPanel = ({ session }: PanelProps) => {
         border-slate-200
         shadow-md
         p-6
+        w-full
       "
     >
-      <Tabs defaultValue="support" className="flex flex-col gap-6">
-        {/* TAB HEADER */}
+      <Tabs
+        defaultValue="support"
+        className="flex flex-col gap-6 w-full"
+      >
         <TabsList
           className="
             grid
             grid-cols-3
+            w-full
             bg-white
             border
             border-slate-200
@@ -38,14 +42,19 @@ const UserInboxRightPanel = ({ session }: PanelProps) => {
           <TabsTrigger
             value="support"
             className="
+              h-10
+              w-full
               rounded-xl
               text-sm
               font-semibold
-              text-slate-600
+              text-slate-700
+              flex
+              items-center
+              justify-center
               data-[state=active]:bg-[#36B9CB]
               data-[state=active]:text-white
               data-[state=active]:shadow
-              transition
+              transition-all
             "
           >
             General
@@ -54,14 +63,19 @@ const UserInboxRightPanel = ({ session }: PanelProps) => {
           <TabsTrigger
             value="cancel"
             className="
+              h-10
+              w-full
               rounded-xl
               text-sm
               font-semibold
-              text-slate-600
+              text-slate-700
+              flex
+              items-center
+              justify-center
               data-[state=active]:bg-[#F87171]
               data-[state=active]:text-white
               data-[state=active]:shadow
-              transition
+              transition-all
             "
           >
             Cancel
@@ -70,30 +84,34 @@ const UserInboxRightPanel = ({ session }: PanelProps) => {
           <TabsTrigger
             value="rebook"
             className="
+              h-10
+              w-full
               rounded-xl
               text-sm
               font-semibold
-              text-slate-600
+              text-slate-700
+              flex
+              items-center
+              justify-center
               data-[state=active]:bg-[#F3B54D]
               data-[state=active]:text-white
               data-[state=active]:shadow
-              transition
+              transition-all
             "
           >
             Rebook
           </TabsTrigger>
         </TabsList>
 
-        {/* TAB CONTENT */}
-        <TabsContent value="support" className="mt-2">
+        <TabsContent value="support" className="mt-2 w-full">
           <UserSupport user_id={id} />
         </TabsContent>
 
-        <TabsContent value="cancel" className="mt-2">
+        <TabsContent value="cancel" className="mt-2 w-full">
           <UserCancel user_id={id} />
         </TabsContent>
 
-        <TabsContent value="rebook" className="mt-2">
+        <TabsContent value="rebook" className="mt-2 w-full">
           <UserRebook user_id={id} />
         </TabsContent>
       </Tabs>
