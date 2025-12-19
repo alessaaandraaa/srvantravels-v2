@@ -40,13 +40,8 @@ const toDateStr = (v?: string | number | Date | null | undefined) => {
 };
 
 function timeToSeconds(timeString: string) {
-  const [hours, minutes, seconds = 0] = timeString.split(":").map(Number);
-
-  return hours * 3600 + minutes * 60 + seconds;
-}
-
-function isItineraryValid(itineraryTime: number, stopsTime: number) {
-  return itineraryTime > stopsTime;
+  const [h, m, s = 0] = timeString.split(":").map(Number);
+  return h * 3600 + m * 60 + s;
 }
 
 export default function CustomForm({
@@ -76,7 +71,7 @@ export default function CustomForm({
   const {
     register,
     handleSubmit,
-    formState: { isValid, isSubmitting, errors },
+    formState: { isValid, isSubmitting },
   } = useForm<FormDetails>({
     mode: "onChange",
     defaultValues: {
@@ -88,174 +83,108 @@ export default function CustomForm({
 
   const canSubmit = isValid && selectedCount >= 2 && isRouted && time > 0;
 
-  const onSubmit = async (FormData: FormDetails) => {
-    const pickupSec = timeToSeconds(FormData.time_for_pickup);
-    const dropoffSec = timeToSeconds(FormData.time_for_dropoff);
+  const onSubmit = (data: FormDetails) => {
+    const pickup = timeToSeconds(data.time_for_pickup);
+    const dropoff = timeToSeconds(data.time_for_dropoff);
+    const allocated = Math.max(0, dropoff - pickup);
 
-    let allocatedTime = dropoffSec - pickupSec;
-    if (allocatedTime < 0) {
-      allocatedTime = 0;
-    }
-
-    const drivingTimeOnly = Math.max(0, time);
+    const drivingTime = Math.max(0, time);
     const stopsTime = selectedCount * SECONDS_PER_STOP;
-    const totalRequiredTime = drivingTimeOnly + stopsTime;
+    const totalNeeded = drivingTime + stopsTime;
 
-    if (!canSubmit) {
-      if (!isValid) alert("Please fill up the form.");
-      else if (selectedCount < 2)
-        alert("Please select at least two locations.");
-      else if (!isRouted) alert("Please route your itinerary!");
-      else if (time <= 0)
-        alert("Route invalid (Time is 0). Please clear and re-route.");
-      return;
-    }
+    if (!canSubmit) return;
 
-    if (allocatedTime < drivingTimeOnly) {
-      alert(`Your itinerary is too short for your allocated time!`);
-      return;
-    }
-
-    if (allocatedTime < totalRequiredTime) {
-      setPendingData(FormData);
+    if (allocated < totalNeeded) {
+      setPendingData(data);
       setOpenDialog(true);
       return;
     }
 
-    navigate(FormData);
+    navigate(data);
   };
 
   return (
-  <>
-    <WarningDialog
-      open={openDialog}
-      onOpenChange={setOpenDialog}
-      onConfirm={() => {
-        if (pendingData) {
-          navigate(pendingData);
-          setOpenDialog(false);
-        }
-      }}
-    />
+    <>
+      <WarningDialog
+        open={openDialog}
+        onOpenChange={setOpenDialog}
+        onConfirm={() => {
+          if (pendingData) {
+            navigate(pendingData);
+            setOpenDialog(false);
+          }
+        }}
+      />
 
-    <div
-      className="relative min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50 py-8 md:py-14 px-4 md:px-6"
-    >
+      {/* NO FULLSCREEN / NO BG */}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="
+          w-full max-w-xl
+          bg-white
+          rounded-2xl
+          border
+          shadow-lg
+          p-6
+        "
+      >
+        <h2 className="text-2xl font-bold text-[#36B9CB] mb-6 text-center">
+          Travel Details
+        </h2>
 
-      {/* Content */}
-      <div className="relative z-10">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="
-            w-full max-w-4xl mx-auto
-            bg-white rounded-3xl shadow-2xl
-            p-8 md:p-10
-          "
-        >
-          <h2 className="text-3xl font-extrabold text-[#36B9CB] mb-8 text-center">
-            Travel Details
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Date of travel */}
-            <div>
-              <label
-                htmlFor="date_of_travel"
-                className="block text-xs font-semibold tracking-wide text-gray-600 mb-2 uppercase"
-              >
-                Select Date
-              </label>
-              <input
-                id="date_of_travel"
-                type="date"
-                {...register("date_of_travel", { required: "Required" })}
-                className="
-                  block w-full rounded-xl
-                  border border-gray-300
-                  bg-white px-4 py-3
-                  text-gray-800
-                  focus:outline-none
-                  focus:ring-2 focus:ring-[#36B9CB]
-                  focus:border-[#36B9CB]
-                  transition
-                "
-              />
-            </div>
-
-            {/* Pickup time */}
-            <div>
-              <label
-                htmlFor="time_for_pickup"
-                className="block text-xs font-semibold tracking-wide text-gray-600 mb-2 uppercase"
-              >
-                Pickup Time
-              </label>
-              <input
-                id="time_for_pickup"
-                type="time"
-                {...register("time_for_pickup", { required: "Required" })}
-                className="
-                  block w-full rounded-xl
-                  border border-gray-300
-                  bg-white px-4 py-3
-                  text-gray-800
-                  focus:outline-none
-                  focus:ring-2 focus:ring-[#36B9CB]
-                  focus:border-[#36B9CB]
-                  transition
-                "
-              />
-            </div>
-
-            {/* Dropoff time */}
-            <div>
-              <label
-                htmlFor="time_for_dropoff"
-                className="block text-xs font-semibold tracking-wide text-gray-600 mb-2 uppercase"
-              >
-                Dropoff Time
-              </label>
-              <input
-                id="time_for_dropoff"
-                type="time"
-                {...register("time_for_dropoff", { required: "Required" })}
-                className="
-                  block w-full rounded-xl
-                  border border-gray-300
-                  bg-white px-4 py-3
-                  text-gray-800
-                  focus:outline-none
-                  focus:ring-2 focus:ring-[#36B9CB]
-                  focus:border-[#36B9CB]
-                  transition
-                "
-              />
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="text-xs font-semibold text-gray-600 uppercase">
+              Date
+            </label>
+            <input
+              type="date"
+              {...register("date_of_travel", { required: true })}
+              className="w-full rounded-xl border px-3 py-2"
+            />
           </div>
 
-          {/* SUBMIT */}
-          <div className="mt-10 flex justify-center">
-            <button
-              type="submit"
-              disabled={!canSubmit || isSubmitting}
-              className="
-                px-10 py-3 rounded-2xl
-                bg-gradient-to-r from-[#F3B54D] to-[#eaa93f]
-                text-white font-bold
-                shadow-md
-                hover:shadow-lg
-                hover:-translate-y-0.5
-                disabled:opacity-50 disabled:cursor-not-allowed
-                transition-all duration-200
-              "
-            >
-              Continue →
-            </button>
+          <div>
+            <label className="text-xs font-semibold text-gray-600 uppercase">
+              Pickup
+            </label>
+            <input
+              type="time"
+              {...register("time_for_pickup", { required: true })}
+              className="w-full rounded-xl border px-3 py-2"
+            />
           </div>
-        </form>
-      </div>
-    </div>
-  </>
-);
 
+          <div>
+            <label className="text-xs font-semibold text-gray-600 uppercase">
+              Dropoff
+            </label>
+            <input
+              type="time"
+              {...register("time_for_dropoff", { required: true })}
+              className="w-full rounded-xl border px-3 py-2"
+            />
+          </div>
+        </div>
+
+        <div className="mt-8 flex justify-center">
+          <button
+            type="submit"
+            disabled={!canSubmit || isSubmitting}
+            className="
+              px-8 py-3
+              rounded-xl
+              bg-[#F3B54D]
+              text-white
+              font-bold
+              hover:bg-[#eaa93f]
+              disabled:opacity-50
+            "
+          >
+            Continue →
+          </button>
+        </div>
+      </form>
+    </>
+  );
 }
