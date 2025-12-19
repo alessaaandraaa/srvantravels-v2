@@ -113,14 +113,38 @@ export default function Search({
     };
   }, [placesLib, map]);
 
-  return (
-    <div className="absolute z-10 left-6 top-6">
-      <input
-        ref={inputRef}
-        type="text"
-        placeholder={placeholder}
-        className="w-[320px] px-4 py-2 rounded-xl border bg-white shadow-md focus:outline-none"
-      />
-    </div>
-  );
+return (
+    <div
+      className="
+        absolute z-10
+        top-4
+        left-1/2 -translate-x-1/2
+        lg:left-6 lg:translate-x-0
+        bg-white/90 backdrop-blur-md
+        rounded-2xl
+        shadow-xl
+        border border-black/5
+        p-1
+      "
+    >
+    <input
+      ref={inputRef}
+      type="text"
+      placeholder={placeholder}
+      className="
+        w-[320px] sm:w-[360px]
+        px-5 py-3
+        rounded-xl
+        bg-transparent
+        text-gray-800
+        placeholder-gray-400
+        focus:outline-none
+        focus:ring-2 focus:ring-[#36B9CB]
+        focus:ring-offset-0
+        transition
+      "
+    />
+  </div>
+);
+
 }

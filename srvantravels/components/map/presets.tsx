@@ -83,40 +83,89 @@ export default function Presets({
   const keyOf = (p: Place) => `${p.name}__${p.address}`;
 
   return (
-    <div className="w-[320px] bg-white h-full rounded-2xl p-4 overflow-y-auto shadow-md mr-4">
-      <h2 className="text-lg font-semibold mb-3">{title}</h2>
-
-      {items.length === 0 && (
-        <p className="text-gray-500 text-sm">No presets available</p>
-      )}
-
-      <ul className="space-y-2">
-        {items.map((p) => {
-          const added = isAdded?.(p) ?? false;
-          return (
-            <li
-              key={keyOf(p)}
-              className="p-3 border rounded-lg flex items-center justify-between gap-3"
-            >
-              <div className="min-w-0">
-                <p className="font-medium truncate">{p.name}</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => onPick(p)}
-                disabled={added}
-                className={`shrink-0 text-sm px-3 py-1.5 rounded-md border ${
-                  added ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-50"
-                }`}
-                title={added ? "Already added" : "Add to my list"}
-                aria-disabled={added}
-              >
-                {added ? "Added" : "Add"}
-              </button>
-            </li>
-          );
-        })}
-      </ul>
+  <div
+    className="
+      w-full lg:w-[320px]
+      h-auto lg:h-full
+      bg-white
+      rounded-3xl
+      p-5
+      overflow-y-auto
+      shadow-xl
+      border border-black/5
+    "
+  >
+    {/* Header */}
+    <div className="mb-4">
+      <h2 className="text-xl font-extrabold text-[#36B9CB]">
+        {title}
+      </h2>
+      <p className="text-xs text-gray-500">
+        Quick add popular locations
+      </p>
     </div>
-  );
+
+    {items.length === 0 && (
+      <div className="mt-6 text-center text-sm text-gray-500">
+        No presets available
+      </div>
+    )}
+
+    {/* List */}
+    <ul className="space-y-3">
+      {items.map((p) => {
+        const added = isAdded?.(p) ?? false;
+
+        return (
+          <li
+            key={keyOf(p)}
+            className="
+              flex items-center justify-between gap-3
+              p-4
+              rounded-2xl
+              bg-white
+              border border-gray-200
+              hover:shadow-md
+              transition
+            "
+          >
+            {/* Place info */}
+            <div className="min-w-0">
+              <p className="font-semibold text-gray-800 truncate">
+                {p.name}
+              </p>
+              <p className="text-xs text-gray-500 truncate">
+                {p.address}
+              </p>
+            </div>
+
+            {/* Action */}
+            <button
+              type="button"
+              onClick={() => onPick(p)}
+              disabled={added}
+              aria-disabled={added}
+              title={added ? "Already added" : "Add to my list"}
+              className={`
+                shrink-0
+                px-4 py-1.5
+                rounded-xl
+                text-sm font-semibold
+                transition
+                ${
+                  added
+                    ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                    : "bg-[#36B9CB] text-white hover:bg-[#2fa6b6]"
+                }
+              `}
+            >
+              {added ? "Added" : "Add"}
+            </button>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+);
+
 }

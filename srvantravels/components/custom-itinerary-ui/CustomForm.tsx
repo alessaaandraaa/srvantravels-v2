@@ -126,75 +126,128 @@ export default function CustomForm({
   };
 
   return (
-    <>
-      <WarningDialog
-        open={openDialog}
-        onOpenChange={setOpenDialog}
-        onConfirm={() => {
-          if (pendingData) {
-            navigate(pendingData);
-            setOpenDialog(false);
-          }
-        }}
-      />
+  <>
+    <WarningDialog
+      open={openDialog}
+      onOpenChange={setOpenDialog}
+      onConfirm={() => {
+        if (pendingData) {
+          navigate(pendingData);
+          setOpenDialog(false);
+        }
+      }}
+    />
 
-      <form className="w-full max-w-3xl m-10" onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Date of travel */}
-          <div>
-            <label
-              htmlFor="date_of_travel"
-              className="block text-xs font-semibold tracking-wide text-gray-700 mb-2 uppercase"
-            >
-              Select Date
-            </label>
-            <input
-              id="date_of_travel"
-              type="date"
-              {...register("date_of_travel", { required: "Required" })}
-              className="block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
-            />
-          </div>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="
+        w-full max-w-4xl mx-auto
+        bg-white rounded-3xl shadow-xl
+        p-8 md:p-10
+        mt-10
+      "
+    >
+      <h2 className="text-3xl font-extrabold text-[#36B9CB] mb-8 text-center">
+        Travel Details
+      </h2>
 
-          {/* Pickup time */}
-          <div>
-            <label
-              htmlFor="time_for_pickup"
-              className="block text-xs font-semibold tracking-wide text-gray-700 mb-2 uppercase"
-            >
-              Pickup Time
-            </label>
-            <input
-              id="time_for_pickup"
-              type="time"
-              {...register("time_for_pickup", { required: "Required" })}
-              className="block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
-            />
-          </div>
-
-          {/* Dropoff time */}
-          <div>
-            <label
-              htmlFor="time_for_dropoff"
-              className="block text-xs font-semibold tracking-wide text-gray-700 mb-2 uppercase"
-            >
-              Time for Dropoff
-            </label>
-            <input
-              id="time_for_dropoff"
-              type="time"
-              {...register("time_for_dropoff", { required: "Required" })}
-              className="block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
-            />
-          </div>
-          <div>
-            <input
-              type="submit"
-              className="bg-teal-500 rounded-2xl p-3 text-white hover:bg-teal-900"
-            />
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Date of travel */}
+        <div>
+          <label
+            htmlFor="date_of_travel"
+            className="block text-xs font-semibold tracking-wide text-gray-600 mb-2 uppercase"
+          >
+            Select Date
+          </label>
+          <input
+            id="date_of_travel"
+            type="date"
+            {...register("date_of_travel", { required: "Required" })}
+            className="
+              block w-full rounded-xl
+              border border-gray-300
+              bg-white px-4 py-3
+              text-gray-800
+              focus:outline-none
+              focus:ring-2 focus:ring-[#36B9CB]
+              focus:border-[#36B9CB]
+              transition
+            "
+          />
         </div>
-      </form>
-    </>
-  );
+
+        {/* Pickup time */}
+        <div>
+          <label
+            htmlFor="time_for_pickup"
+            className="block text-xs font-semibold tracking-wide text-gray-600 mb-2 uppercase"
+          >
+            Pickup Time
+          </label>
+          <input
+            id="time_for_pickup"
+            type="time"
+            {...register("time_for_pickup", { required: "Required" })}
+            className="
+              block w-full rounded-xl
+              border border-gray-300
+              bg-white px-4 py-3
+              text-gray-800
+              focus:outline-none
+              focus:ring-2 focus:ring-[#36B9CB]
+              focus:border-[#36B9CB]
+              transition
+            "
+          />
+        </div>
+
+        {/* Dropoff time */}
+        <div>
+          <label
+            htmlFor="time_for_dropoff"
+            className="block text-xs font-semibold tracking-wide text-gray-600 mb-2 uppercase"
+          >
+            Dropoff Time
+          </label>
+          <input
+            id="time_for_dropoff"
+            type="time"
+            {...register("time_for_dropoff", { required: "Required" })}
+            className="
+              block w-full rounded-xl
+              border border-gray-300
+              bg-white px-4 py-3
+              text-gray-800
+              focus:outline-none
+              focus:ring-2 focus:ring-[#36B9CB]
+              focus:border-[#36B9CB]
+              transition
+            "
+          />
+        </div>
+      </div>
+
+      {/* SUBMIT */}
+      <div className="mt-10 flex justify-center">
+        <button
+          type="submit"
+          disabled={!canSubmit || isSubmitting}
+          className="
+            px-10 py-3 rounded-2xl
+            bg-[#F3B54D] text-white font-bold
+            shadow-md
+            hover:bg-[#eaa93f]
+            hover:-translate-y-0.5
+            disabled:opacity-50 disabled:cursor-not-allowed
+            transition-all duration-200
+          "
+        >
+          Continue →
+        </button>
+      </div>
+    </form>
+  </>
+);
+
 }

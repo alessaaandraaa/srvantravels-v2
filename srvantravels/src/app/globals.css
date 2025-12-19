@@ -215,3 +215,16 @@
 .animate-slideDown {
   animation: slideDown 0.2s ease-out;
 }
+
+/* Sign out button — matches navbar links */
+.signout-btn {
+  @apply px-4 py-2 rounded-xl
+         font-semibold text-white
+         bg-white/10
+         transition-all duration-200 ease-out;
+}
+
+.signout-btn:hover {
+  @apply bg-white/20
+         translate-y-[-2px];
+}

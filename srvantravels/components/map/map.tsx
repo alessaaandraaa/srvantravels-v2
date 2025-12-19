@@ -344,14 +344,23 @@ export default function MapComponent({
         apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API!}
         libraries={["places"]}
       >
-        <div className="flex w-full h-full">
+          <div
+            className="
+              grid
+              grid-cols-1
+              lg:grid-cols-[320px_1fr_400px]
+              gap-4
+              w-full
+              h-full
+            "
+          >
           <Presets
             onPick={handlePresetPick}
             isAdded={alreadyInList}
             title="Presets"
           />
 
-          <div className="relative w-1/2 box-border p-5">
+          <div className="relative w-full h-[60vh] lg:h-full box-border p-2 lg:p-5">
             <Search onPlacePicked={handlePlacePicked} />
             <RouteButton
               optimize={onOptimize}
@@ -360,7 +369,8 @@ export default function MapComponent({
               disabled={markers.length < 2}
             />
             {summary && (
-              <div className="absolute z-10 right-6 top-24 bg-white rounded-xl shadow-md px-3 py-2 text-sm">
+              <div className="absolute z-10  top-4 right-4
+lg:top-24 lg:right-6 bg-white rounded-xl shadow-md px-3 py-2 text-sm">
                 <div>
                   <span className="font-medium">Distance:</span>{" "}
                   {summary.distanceText}
@@ -390,7 +400,7 @@ export default function MapComponent({
             </GoogleMap>
           </div>
 
-          <div className="flex-1 bg-white rounded-2xl h-full p-4 shadow-md">
+          <div className="flex-1 rounded-2xl h-full">
             <LocationsList
               locations={markers}
               onRemove={removeMarker}

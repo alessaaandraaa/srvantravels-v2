@@ -48,41 +48,42 @@ export default function AboutUs() {
         </div>
 
         <div className="space-y-6">
-          <h3 className="text-3xl font-bold text-black text-center">
-            Contact Us
-          </h3>
+        <h3 className="text-3xl font-bold text-black text-center">
+          Contact Us
+        </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-              <h4 className="font-bold text-black mb-2">Facebook</h4>
-              <p>SR Van Travels</p>
-            </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-black">
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+            <h4 className="font-bold mb-2">Facebook</h4>
+            <p>SR Van Travels</p>
+          </div>
 
-            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-              <h4 className="font-bold text-black mb-2">Email</h4>
-              <p>srvantravels@gmail.com</p>
-            </div>
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+            <h4 className="font-bold mb-2">Email</h4>
+            <p>srvantravels@gmail.com</p>
+          </div>
 
-            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-              <h4 className="font-bold text-black mb-4">Phone Numbers</h4>
-              <div className="grid grid-cols-2 gap-2 text-sm">
-                <p>09452866649</p>
-                <p>09478196739</p>
-                <p>09166240642</p>
-                <p>09166629657</p>
-                <p>0916660527</p>
-                <p>09569430826</p>
-              </div>
-            </div>
-
-            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-              <h4 className="font-bold text-black mb-2">Location</h4>
-              <p>
-                Jugan, Consolacion, Cebu City, Philippines
-              </p>
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+            <h4 className="font-bold mb-4">Phone Numbers</h4>
+            <div className="grid grid-cols-2 gap-2 text-sm">
+              <p>09452866649</p>
+              <p>09478196739</p>
+              <p>09166240642</p>
+              <p>09166629657</p>
+              <p>0916660527</p>
+              <p>09569430826</p>
             </div>
           </div>
+
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+            <h4 className="font-bold mb-2">Location</h4>
+            <p>
+              Jugan, Consolacion, Cebu City, Philippines
+            </p>
+          </div>
         </div>
+      </div>
+
       </div>
     </section>
   );

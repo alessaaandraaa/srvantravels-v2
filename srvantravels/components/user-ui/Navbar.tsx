@@ -47,32 +47,36 @@ export default async function Navbar() {
           </div>
 
 
-          {/* RIGHT: User */}
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-start sm:items-center">
-            {session?.user && (
-              <span className="text-sm font-semibold text-white">
-                {session.user.name}
-              </span>
-            )}
+         {/* RIGHT: User */}
+<div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-start sm:items-center">
+  {session?.user && (
+    <Link
+      href="/profile"
+      className="nav-link-main text-sm"
+    >
+      {session.user.name}
+    </Link>
+  )}
 
-            {session?.user ? (
-              <SignOut />
-            ) : (
-              <Link
-                href="/login"
-                className="
-                  px-5 py-2 rounded-xl
-                  bg-[#F3B54D]
-                  text-white font-semibold
-                  shadow-md
-                  hover:shadow-lg hover:-translate-y-0.5
-                  transition-all duration-200
-                "
-              >
-                Login
-              </Link>
-            )}
-          </div>
+  {session?.user ? (
+    <SignOut className="signout-btn" />
+  ) : (
+    <Link
+      href="/login"
+      className="
+        px-5 py-2 rounded-xl
+        bg-[#F3B54D]
+        text-white font-semibold
+        shadow-md
+        hover:shadow-lg hover:-translate-y-0.5
+        transition-all duration-200
+      "
+    >
+      Login
+    </Link>
+  )}
+</div>
+
         </div>
       </div>
     </nav>
