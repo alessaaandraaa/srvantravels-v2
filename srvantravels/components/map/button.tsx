@@ -15,9 +15,8 @@ export default function RouteButton({
     <div
       className="
         absolute z-10
-        bottom-4
+        bottom-6
         left-1/2 -translate-x-1/2
-        lg:top-24 lg:left-6 lg:bottom-auto lg:translate-x-0
         bg-white/90 backdrop-blur-md
         rounded-2xl shadow-xl
         p-3
