@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Packages from "../ui/Packages";
-import { usePackageStore } from "@store/package-itinerary.store";
+import Packages from "../user-ui/Packages";
+import { usePackageStore } from "@/store/package-itinerary.store";
 import Link from "next/link";
 
 interface Package {
@@ -15,6 +15,16 @@ interface Package {
   is_made_by_manager: number;
   is_available: boolean;
   package_picture: string;
+  package_itinerary_tag: {
+    tag: {
+      color: string;
+      name: string;
+      tag_ID: number;
+    };
+    package_ID: number;
+    tag_ID: number;
+    package_itinerary_tag_ID: number;
+  }[];
 }
 
 export default function PackageBooking({ package_ID }: { package_ID: number }) {
@@ -30,12 +40,13 @@ export default function PackageBooking({ package_ID }: { package_ID: number }) {
   return (
     <main className="min-h-screen bg-[rgba(121,198,209,0.52)] flex justify-center px-6 py-12">
       <div className="w-full max-w-5xl bg-white rounded-3xl shadow-xl p-10 space-y-10">
-
         {/* Package Details */}
         {pack ? (
           <Packages key={pack.package_ID} {...pack} />
         ) : (
-          <p className="text-center text-cyan-700 text-lg">Loading package...</p>
+          <p className="text-center text-cyan-700 text-lg">
+            Loading package...
+          </p>
         )}
 
         {/* Action Buttons */}

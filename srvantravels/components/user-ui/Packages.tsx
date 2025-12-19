@@ -84,7 +84,7 @@ export default function Packages(props: PackageWithTags) {
         <div className="hidden md:block w-[40%] relative">
           <Image
             src={`/${props.package_picture}`}
-            alt={props.package_name}
+            alt={props.package_name ? props.package_name : "Unknown Package"}
             fill
             className="object-cover object-center"
           />

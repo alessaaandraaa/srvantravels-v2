@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Packages from "../ui/Packages";
-import { usePackageStore } from "@store/package-itinerary.store";
+import { usePackageStore } from "@/store/package-itinerary.store";
 import Link from "next/link";
 
 interface Package {
@@ -30,12 +30,13 @@ export default function PackageBooking({ package_ID }: { package_ID: number }) {
   return (
     <main className="min-h-screen bg-[rgba(121,198,209,0.52)] flex justify-center px-6 py-12">
       <div className="w-full max-w-5xl bg-white rounded-3xl shadow-xl p-10 space-y-10">
-
         {/* Package Details */}
         {pack ? (
           <Packages key={pack.package_ID} {...pack} />
         ) : (
-          <p className="text-center text-cyan-700 text-lg">Loading package...</p>
+          <p className="text-center text-cyan-700 text-lg">
+            Loading package...
+          </p>
         )}
 
         {/* Action Buttons */}

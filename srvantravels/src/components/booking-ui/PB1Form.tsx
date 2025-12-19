@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import {
   useCustomerStore,
   usePackageStore,
-} from "@store/package-itinerary.store";
+} from "@/store/package-itinerary.store";
 import Link from "next/link";
 
 type customerForm = {

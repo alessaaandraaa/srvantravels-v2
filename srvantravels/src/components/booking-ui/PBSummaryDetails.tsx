@@ -3,7 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { useCustomerStore } from "@store/package-itinerary.store";
+import { useCustomerStore } from "@/store/package-itinerary.store";
 import Link from "next/link";
 
 import PBDetailsSummary from "./PBDetailsSummary";

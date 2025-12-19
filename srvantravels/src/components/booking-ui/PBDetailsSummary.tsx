@@ -5,7 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import {
   usePackageStore,
   useCustomerStore,
-} from "@store/package-itinerary.store";
+} from "@/store/package-itinerary.store";
 
 export default function PBDetailsSummary() {
   const params = useParams();
