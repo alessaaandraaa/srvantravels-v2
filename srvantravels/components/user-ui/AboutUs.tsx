@@ -15,11 +15,12 @@ export default function AboutUs() {
         backgroundImage: "url('/bg-images/bg9.jpg')",
       }}
     >
-      {/* OVERLAY FOR READABILITY */}
-      <div className="absolute inset-0 bg-[rgba(121,198,209,0.52)]" />
+      {/* OVERLAY (lighter so bg is visible) */}
+      <div className="absolute inset-0 bg-black/30" />
 
       {/* CONTENT */}
       <div className="relative z-10 max-w-6xl mx-auto bg-white rounded-3xl shadow-xl p-12 space-y-10">
+        
         <div className="flex flex-col items-center text-center space-y-4">
           <div className="w-36 h-36 md:w-40 md:h-40 flex items-center justify-center">
             <Image
@@ -98,6 +99,7 @@ export default function AboutUs() {
             </div>
           </div>
         </div>
+
       </div>
     </section>
   );

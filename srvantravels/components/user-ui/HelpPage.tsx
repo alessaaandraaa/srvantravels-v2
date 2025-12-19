@@ -3,21 +3,23 @@ export default function HelpPage() {
     <section
       className="
         relative
+        min-h-screen
         bg-cover
         bg-center
         bg-no-repeat
-        py-16
+        py-24
         px-6
       "
       style={{
         backgroundImage: "url('/bg-images/bg3.jpg')",
       }}
     >
-      {/* OPTIONAL OVERLAY FOR READABILITY */}
-      <div className="absolute inset-0 bg-[rgba(121,198,209,0.52)]" />
+      {/* LIGHT OVERLAY (does NOT kill bg) */}
+      <div className="absolute inset-0 bg-black/30" />
 
       {/* CONTENT */}
       <div className="relative z-10 max-w-6xl mx-auto bg-white rounded-3xl shadow-xl p-12 space-y-12">
+        {/* HEADER */}
         <div className="text-center space-y-4">
           <h1 className="text-5xl md:text-6xl font-extrabold text-black">
             HELP CENTER
@@ -27,6 +29,7 @@ export default function HelpPage() {
           </p>
         </div>
 
+        {/* FAQ */}
         <div className="space-y-6">
           <h2 className="text-3xl font-bold text-black">
             Frequently Asked Questions (FAQs)
@@ -42,13 +45,12 @@ export default function HelpPage() {
                 <li>Visit the Home Page and click on the “Book Now” button.</li>
                 <li>Choose a travel type: custom or regular packages.</li>
                 <li>
-                  Fill out the Booking form, complete with the travel date,
-                  number of passengers, and other relevant information.
+                  Fill out the Booking form with your travel date, passengers,
+                  and other details.
                 </li>
-                <li>Proceed to the Payment Page, then confirm your booking.</li>
+                <li>Proceed to payment and confirm your booking.</li>
                 <li>
-                  You’ll receive a confirmation number via email or text once
-                  your payment is processed.
+                  A confirmation number will be sent via email or text.
                 </li>
               </ul>
             </div>
@@ -58,14 +60,9 @@ export default function HelpPage() {
                 2. Can I customize my itinerary?
               </h3>
               <p className="text-gray-700 leading-relaxed">
-                Yes! In the Home page, there is a designated button meant to
-                direct you to the custom itinerary page, where you can freely
-                design and coordinate your stops, destinations, and schedules.
-                Making a custom itinerary comes with a downpayment of 500 PESOS,
-                and the final payment will be calculated based on gasoline
-                consumption, driver’s fee, and maintenance fee for the van.
-                Lastly, our team will reach out to you to confirm the plan’s
-                feasibility and availability.
+                Yes! You can design your own itinerary via the Custom Itinerary
+                page. A ₱500 down payment is required, and final pricing depends
+                on distance, fuel, and service fees.
               </p>
             </div>
 
@@ -76,12 +73,11 @@ export default function HelpPage() {
               <ul className="list-disc pl-5 space-y-2 text-gray-700">
                 <li><b>GCash</b></li>
                 <li>
-                  <b>Physical Payments:</b> requires an online down payment;
-                  remaining balance is payable in person
+                  <b>Physical Payments:</b> online down payment required
                 </li>
               </ul>
               <p className="italic text-sm text-gray-600 mt-2">
-                Note: Credit card and direct bank transfers are not yet available.
+                Credit cards and bank transfers are not yet supported.
               </p>
             </div>
 
@@ -90,15 +86,14 @@ export default function HelpPage() {
                 4. How do I know if my booking was successful?
               </h3>
               <p className="text-gray-700 leading-relaxed">
-                Once you complete the payment, a confirmation screen will appear
-                and a Booking Reference Number will be sent to your email and
-                phone number. If you don’t receive confirmation within 24 hours,
-                please contact us.
+                After payment, you will see a confirmation screen and receive
+                your booking reference via email and SMS.
               </p>
             </div>
           </div>
         </div>
 
+        {/* TIPS */}
         <div className="space-y-6">
           <h2 className="text-3xl font-bold text-black">
             Tips for a Smooth Booking
@@ -107,30 +102,17 @@ export default function HelpPage() {
 
           <div className="bg-white rounded-2xl shadow-md p-6">
             <ul className="list-disc pl-5 space-y-2 text-gray-700">
-              <li>Book at least 3 to 5 days before your intended travel date.</li>
-              <li>
-                Review your selected itinerary and trip details before
-                confirming.
-              </li>
-              <li>
-                Use a valid and active email and mobile number to ensure you
-                receive updates.
-              </li>
-              <li>
-                If traveling in a group, coordinate with members beforehand to
-                avoid schedule conflicts.
-              </li>
-              <li>
-                Use accurate names and contact numbers to avoid booking delays
-                or confusion.
-              </li>
+              <li>Book at least 3–5 days before travel.</li>
+              <li>Double-check itinerary details.</li>
+              <li>Use an active email and phone number.</li>
+              <li>Coordinate with group members ahead of time.</li>
             </ul>
           </div>
         </div>
 
+        {/* FOOTER */}
         <p className="text-center text-2xl md:text-3xl font-bold text-black">
-          Let us help you travel better. Thank you for choosing SR Van Travels —
-          your reliable itinerary companion.
+          Let us help you travel better. Thank you for choosing SR Van Travels.
         </p>
       </div>
     </section>
