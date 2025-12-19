@@ -1,14 +1,13 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useCustomerDetailsStore } from "@/store/custom-itinerary.store";
 import Link from "next/link";
-import LocationsSelection from "./LocationsSelection";
+
 type customerForm = {
   pax: number;
   date_of_travel: string;
-  // pickup_address: string,
   luggage: number;
   file_image: FileList;
   time_for_pickup: string;
@@ -16,6 +15,7 @@ type customerForm = {
 };
 
 type id = { user_id: number };
+
 const pad = (n: number) => String(n).padStart(2, "0");
 const asDate = (
   v: string | number | Date | null | undefined
@@ -25,7 +25,6 @@ const asDate = (
   const d = new Date(v);
   return isNaN(d.getTime()) ? undefined : d;
 };
-
 const toDateStr = (v?: string | number | Date | null | undefined) => {
   const d = asDate(v);
   return d
@@ -35,12 +34,10 @@ const toDateStr = (v?: string | number | Date | null | undefined) => {
 
 export default function CustomFormP2({ user_id }: id) {
   const router = useRouter();
-
   const setCustomerDetails = useCustomerDetailsStore(
     (state) => state.setCustomerDetails
   );
   const details = useCustomerDetailsStore((s) => s.customerDetails);
-  const params = useParams();
 
   const toBase64 = (file: File): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -59,15 +56,13 @@ export default function CustomFormP2({ user_id }: id) {
   });
 
   const onSubmit = async (FormData: customerForm) => {
-    const file = FormData.file_image[0];
-
+    const file = FormData.file_image?.[0];
     let base64Image: string | null = null;
 
     if (file) {
       base64Image = await toBase64(file);
     }
 
-    // Save all form data to Zustand
     setCustomerDetails({
       customer_id: Number(user_id),
       type: "CUSTOM",
@@ -82,103 +77,109 @@ export default function CustomFormP2({ user_id }: id) {
   };
 
   return (
-    <>
-      <div>
+    <div
+      className="
+        min-h-screen
+        bg-cover bg-center bg-no-repeat
+        px-6 py-10
+      "
+      style={{ backgroundImage: "url('/bg-images/bg6.jpg')" }}
+    >
+      <div className="max-w-3xl mx-auto">
         <form
-          className="w-full max-w-lg m-10"
           onSubmit={handleSubmit(onSubmit)}
+          className="
+            bg-white rounded-3xl shadow-xl
+            p-8 md:p-10
+            space-y-8
+          "
         >
-          <div className="flex flex-wrap -mx-3 mb-6">
-            <div className="w-full px-3">
-              <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="pax"
-              >
+          <h2 className="text-3xl font-extrabold text-[#36B9CB] text-center">
+            Customer Details
+          </h2>
+
+          {/* GRID */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Passengers */}
+            <div>
+              <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase">
                 Number of Passengers
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="pax"
                 type="number"
                 {...register("pax")}
+                className="w-full rounded-xl border px-4 py-3"
               />
             </div>
-          </div>
-          <div className="flex flex-wrap -mx-3 mb-2">
-            <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-              <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="date_of_travel"
-              >
+
+            <div>
+              <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase">
                 Pickup Date
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="pickup_date"
                 type="date"
                 {...register("date_of_travel")}
+                className="w-full rounded-xl border px-4 py-3"
               />
             </div>
-            <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-              <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="time_for_pickup"
-              >
+
+            <div>
+              <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase">
                 Pickup Time
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="time_for_pickup"
                 type="time"
                 {...register("time_for_pickup")}
+                className="w-full rounded-xl border px-4 py-3"
               />
             </div>
-            <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0 mt-2">
-              <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="luggage"
-              >
+
+            <div>
+              <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase">
                 No. of Luggage (optional)
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="luggage"
                 type="number"
                 {...register("luggage")}
+                className="w-full rounded-xl border px-4 py-3"
               />
             </div>
-            <div className="w-full mt-5">
-              <label
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                htmlFor="file_image"
-              >
-                Upload image
+
+            <div className="md:col-span-2">
+              <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase">
+                Upload ID Image
               </label>
               <input
-                className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                id="file_image"
                 type="file"
                 accept=".png, .jpg, .jpeg"
                 {...register("file_image")}
+                className="w-full rounded-xl border px-4 py-2 text-sm"
               />
             </div>
           </div>
-          <div className="flex m-10 gap-4">
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-between pt-6">
             <Link
-              className="bg-red-700 text-amber-50 p-4 hover:bg-red-800"
               href="/itinerary"
+              className="px-6 py-3 rounded-2xl bg-gray-200 text-gray-700 font-semibold text-center"
             >
-              Back to Location Selection
+              ← Back to Location Selection
             </Link>
+
             <button
               type="submit"
-              className="bg-amber-500 text-amber-50 p-4 hover:bg-amber-800"
+              className="
+                px-8 py-3 rounded-2xl
+                bg-[#F3B54D] text-white font-bold
+                hover:bg-[#eaa93f]
+                transition
+              "
             >
-              Proceed to Summary
+              Proceed to Summary →
             </button>
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 }
