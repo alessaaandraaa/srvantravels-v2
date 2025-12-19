@@ -12,10 +12,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import OrderSelect from "./UserOrderSelect";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
 type id = { user_id: number | null };
+
 type RebookFormValues = {
   message: string;
   rebook_date: string;
@@ -24,6 +25,7 @@ type RebookFormValues = {
 
 export default function UserRebook({ user_id }: id) {
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -45,12 +47,10 @@ export default function UserRebook({ user_id }: id) {
       content: formData.message,
       type: "REBOOKING_REQUEST",
     };
+
     const response = await fetch("/api/message", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
 
@@ -63,54 +63,102 @@ export default function UserRebook({ user_id }: id) {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Send a Rebooking Request</CardTitle>
-        <CardDescription>
-          Send a rebooking request for your booking. Please note that we will
-          review your request before confirming it.
+    <Card className="shadow-md border border-gray-200">
+      <CardHeader className="space-y-2">
+        <CardTitle className="text-xl font-bold text-[#36B9CB]">
+          Rebooking Request
+        </CardTitle>
+
+        <CardDescription className="text-sm text-gray-600">
+          Request a new date for your existing booking. Our team will review and
+          confirm availability before approval.
         </CardDescription>
       </CardHeader>
+
       <form onSubmit={handleSubmit(onSubmit)}>
-        <CardContent className="space-y-2">
-          <OrderSelect
-            user_id={user_id}
-            registration={register("order_id", {
-              required: "Please select an order",
-            })}
-          />
+        <CardContent className="space-y-6">
+          {/* ORDER SELECT */}
+          <div className="space-y-2">
+            <Label className="text-sm font-semibold text-gray-700">
+              Select Booking
+            </Label>
 
-          {errors.order_id && (
-            <p className="text-red-500 text-sm">{errors.order_id.message}</p>
-          )}
+            <OrderSelect
+              user_id={user_id}
+              registration={register("order_id", {
+                required: "Please select an order",
+              })}
+            />
 
-          <div className="p-3 gap-2">
-            <label htmlFor="rebook_date" className="font-medium mr-2">
-              Rebooking Date:
-            </label>
+            {errors.order_id && (
+              <p className="text-red-500 text-xs">
+                {errors.order_id.message}
+              </p>
+            )}
+          </div>
+
+          {/* REBOOK DATE */}
+          <div className="space-y-2">
+            <Label
+              htmlFor="rebook_date"
+              className="text-sm font-semibold text-gray-700"
+            >
+              Preferred Rebooking Date
+            </Label>
+
             <Input
-              type="date"
               id="rebook_date"
+              type="date"
               {...register("rebook_date", {
                 required: "Rebooking date is required",
               })}
-              className="border border-gray-200 p-3 rounded-2xl"
             />
+
+            {errors.rebook_date && (
+              <p className="text-red-500 text-xs">
+                {errors.rebook_date.message}
+              </p>
+            )}
           </div>
-          <div className="space-y-1">
-            <Label htmlFor="message" className="pb-3">
-              Reason
+
+          {/* REASON */}
+          <div className="space-y-2">
+            <Label
+              htmlFor="message"
+              className="text-sm font-semibold text-gray-700"
+            >
+              Reason for Rebooking
             </Label>
+
             <Input
               id="message"
-              placeholder="Send your reason here."
-              {...register("message", { required: "Reason is required" })}
+              placeholder="Briefly explain why you want to rebook..."
+              {...register("message", {
+                required: "Reason is required",
+              })}
             />
+
+            {errors.message && (
+              <p className="text-red-500 text-xs">
+                {errors.message.message}
+              </p>
+            )}
           </div>
         </CardContent>
-        <CardFooter>
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Sending..." : "Submit"}
+
+        <CardFooter className="flex justify-end">
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="
+              bg-[#F3B54D]
+              text-white
+              font-semibold
+              hover:bg-[#eaa93f]
+              transition
+            "
+          >
+            {isSubmitting ? "Sending..." : "Submit Request"}
           </Button>
         </CardFooter>
       </form>

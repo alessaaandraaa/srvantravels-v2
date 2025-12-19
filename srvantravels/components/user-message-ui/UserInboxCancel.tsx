@@ -12,10 +12,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import OrderSelect from "./UserOrderSelect";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
 type id = { user_id: number | null };
+
 type CancelFormValues = {
   message: string;
   order_id: string;
@@ -23,6 +24,7 @@ type CancelFormValues = {
 
 export default function UserCancel({ user_id }: id) {
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -42,12 +44,12 @@ export default function UserCancel({ user_id }: id) {
       content: formData.message,
       type: "CANCELLATION_REQUEST",
     };
+
     const response = await fetch("/api/message", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-
       body: JSON.stringify(body),
     });
 
@@ -60,46 +62,76 @@ export default function UserCancel({ user_id }: id) {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Send a Cancellation Request</CardTitle>
-        <CardDescription>
-          Send a cancellation request for your booking. Please note that we will
-          review your cancellation before confirming it.
+    <Card className="shadow-md border border-gray-200">
+      <CardHeader className="space-y-2">
+        <CardTitle className="text-xl font-bold text-[#36B9CB]">
+          Cancellation Request
+        </CardTitle>
+
+        <CardDescription className="text-sm text-gray-600">
+          Request to cancel a booking. Our team will review your request and get
+          back to you as soon as possible.
         </CardDescription>
       </CardHeader>
+
       <form onSubmit={handleSubmit(onSubmit)}>
-        <CardContent className="space-y-2">
-          <OrderSelect
-            user_id={user_id}
-            registration={register("order_id", {
-              required: "Please select an order",
-            })}
-          />
+        <CardContent className="space-y-6">
+          {/* ORDER SELECT */}
+          <div className="space-y-2">
+            <Label className="text-sm font-semibold text-gray-700">
+              Select Booking
+            </Label>
 
-          {errors.order_id && (
-            <p className="text-red-500 text-sm">{errors.order_id.message}</p>
-          )}
+            <OrderSelect
+              user_id={user_id}
+              registration={register("order_id", {
+                required: "Please select an order",
+              })}
+            />
 
-          <div className="space-y-1">
-            <Label htmlFor="message" className="pb-3">
-              Reason
+            {errors.order_id && (
+              <p className="text-red-500 text-xs">
+                {errors.order_id.message}
+              </p>
+            )}
+          </div>
+
+          {/* REASON */}
+          <div className="space-y-2">
+            <Label
+              htmlFor="message"
+              className="text-sm font-semibold text-gray-700"
+            >
+              Reason for Cancellation
             </Label>
 
             <Input
               id="message"
-              placeholder="Send your reason here."
+              placeholder="Please explain why you want to cancel this booking..."
               {...register("message", { required: "Reason is required" })}
             />
 
             {errors.message && (
-              <p className="text-red-500 text-sm">{errors.message.message}</p>
+              <p className="text-red-500 text-xs">
+                {errors.message.message}
+              </p>
             )}
           </div>
         </CardContent>
-        <CardFooter>
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Sending..." : "Submit"}
+
+        <CardFooter className="flex justify-end">
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="
+              bg-[#F3B54D]
+              text-white
+              font-semibold
+              hover:bg-[#eaa93f]
+              transition
+            "
+          >
+            {isSubmitting ? "Sending..." : "Submit Request"}
           </Button>
         </CardFooter>
       </form>

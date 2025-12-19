@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -22,7 +22,6 @@ type SupportFormValues = {
 type id = { user_id: number | null };
 
 export default function UserSupport({ user_id }: id) {
-  console.log("USER ID ILOY SI CLIFF: ", user_id);
   const router = useRouter();
 
   const {
@@ -42,54 +41,79 @@ export default function UserSupport({ user_id }: id) {
       content: formData.message,
       type: "GENERAL_INQUIRY",
     };
+
     const response = await fetch("/api/message", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
 
     if (response.ok) {
-      toast.success("Successfully sent request!");
+      toast.success("Your message has been sent!");
     } else {
       const errorData = await response.json().catch(() => null);
       console.error("SERVER ERROR:", response.status, errorData);
+      toast.error("Something went wrong. Please try again.");
     }
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Support</CardTitle>
-        <CardDescription>Ask us any of your concerns.</CardDescription>
-      </CardHeader>
+    <>
+      <Card className="shadow-md border border-gray-200">
+        <CardHeader className="space-y-2">
+          <CardTitle className="text-xl font-bold text-[#36B9CB]">
+            Contact Support
+          </CardTitle>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <CardContent className="space-y-4">
-          <div className="space-y-1">
-            <Label htmlFor="message">Inquiry</Label>
+          <CardDescription className="text-sm text-gray-600">
+            Have a question or concern? Send us a message and we’ll get back to
+            you as soon as possible.
+          </CardDescription>
+        </CardHeader>
 
-            <Input
-              id="message"
-              placeholder="Send your question here."
-              {...register("message", { required: "Message is required" })}
-            />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label
+                htmlFor="message"
+                className="text-sm font-semibold text-gray-700"
+              >
+                Your Message
+              </Label>
 
-            {errors.message && (
-              <p className="text-red-500 text-sm">{errors.message.message}</p>
-            )}
-          </div>
-        </CardContent>
+              <Input
+                id="message"
+                placeholder="Type your concern or question here..."
+                {...register("message", { required: "Message is required" })}
+              />
 
-        <CardFooter>
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Sending..." : "Submit"}
-          </Button>
-        </CardFooter>
-      </form>
-      <Toaster />
-    </Card>
+              {errors.message && (
+                <p className="text-red-500 text-xs">
+                  {errors.message.message}
+                </p>
+              )}
+            </div>
+          </CardContent>
+
+          <CardFooter className="flex justify-end">
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="
+                bg-[#36B9CB]
+                text-white
+                font-semibold
+                hover:bg-[#2ea8b9]
+                transition
+              "
+            >
+              {isSubmitting ? "Sending..." : "Send Message"}
+            </Button>
+          </CardFooter>
+        </form>
+      </Card>
+
+      <Toaster position="bottom-right" />
+    </>
   );
 }
