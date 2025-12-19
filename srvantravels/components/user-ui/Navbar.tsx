@@ -8,7 +8,7 @@ export default async function Navbar() {
 
   return (
     <nav className="w-full sticky top-0 z-50">
-      <div className="bg-[#36B9CB] border-b border-white/20">
+      <div className="bg-[#36B9CB] border-b border-white/20 backdrop-blur-md">
         <div
           className="
             max-w-7xl mx-auto
@@ -18,7 +18,7 @@ export default async function Navbar() {
             gap-5 md:gap-0
           "
         >
-          {/* LEFT: Navigation */}
+          {/* LEFT: NAV LINKS */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-6">
             <Link href="/home" className="nav-link-main">
               Home
@@ -32,6 +32,10 @@ export default async function Navbar() {
               Book Itinerary
             </Link>
 
+            <Link href="/message" className="nav-link-main">
+              Inbox
+            </Link>
+
             <Link href="/help" className="nav-link-main">
               Help
             </Link>
@@ -41,7 +45,7 @@ export default async function Navbar() {
             </Link>
           </div>
 
-          {/* RIGHT: User */}
+          {/* RIGHT: USER ACTIONS */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-start sm:items-center">
             {session?.user && (
               <Link
