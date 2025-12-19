@@ -62,33 +62,17 @@ export default function PackageList() {
 
   return (
     <div
-      className="
-        relative
-        min-h-screen
-        bg-cover
-        bg-center
-        bg-no-repeat
-      "
-      style={{
-        backgroundImage: "url('/bg-images/bg7.jpg')",
-      }}
+      className="relative min-h-screen bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/bg-images/bg7.jpg')" }}
     >
-      {/* DARK GRADIENT OVERLAY */}
+      {/* DARK OVERLAY */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/20" />
 
       {/* CONTENT */}
       <div className="relative z-10 px-6 py-14">
         {/* HEADER */}
         <h2
-          className="
-            text-5xl
-            md:text-7xl
-            font-extrabold
-            text-center
-            text-white
-            mb-10
-            tracking-tight
-          "
+          className="text-5xl md:text-7xl font-extrabold text-center text-white mb-10"
           style={{
             textShadow: `
               -2px -2px 0 #000,
@@ -102,15 +86,15 @@ export default function PackageList() {
         </h2>
 
         {/* ===============================
-            TOP 3 PACKAGES SECTION
+            TOP 3 PACKAGES
         =============================== */}
         {packages.length > 0 && (
           <div className="max-w-6xl mx-auto mb-14">
-            <h3 className="text-3xl md:text-4xl font-extrabold text-white text-center mb-6">
+            <h3 className="text-3xl md:text-4xl font-extrabold text-white text-center mb-8">
               🌟 TOP 3 PACKAGES!
             </h3>
 
-            <div className="flex gap-6 overflow-x-auto pb-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {topPackages.map((pack, index) => (
                 <Link
                   key={pack.package_ID}
@@ -119,12 +103,11 @@ export default function PackageList() {
                 >
                   <div
                     className="
-                      min-w-[280px]
                       bg-white/90
                       rounded-2xl
                       shadow-lg
-                      p-5
-                      flex-shrink-0
+                      p-4
+                      h-full
                       hover:-translate-y-1
                       hover:shadow-2xl
                       transition-all duration-300
@@ -132,15 +115,16 @@ export default function PackageList() {
                       cursor-pointer
                     "
                   >
-                    {/* RANK */}
+                    {/* RANK BADGE */}
                     <span
                       className="
-                        absolute -top-3 -right-3
+                        absolute -top-2 -right-2
                         bg-[#F3B54D]
                         text-white
-                        w-8 h-8
+                        w-7 h-7
                         flex items-center justify-center
                         rounded-full
+                        text-sm
                         font-bold
                         shadow-md
                       "
@@ -148,21 +132,21 @@ export default function PackageList() {
                       {index + 1}
                     </span>
 
-                    <h4 className="text-lg font-bold text-gray-900 mb-2">
+                    <h4 className="text-base font-bold text-gray-900 mb-2">
                       {pack.package_name}
                     </h4>
 
-                    <p className="text-sm text-gray-600 mb-3 line-clamp-3">
+                    <p className="text-sm text-gray-600 mb-3 line-clamp-2">
                       {pack.package_description}
                     </p>
 
-                    <div className="flex flex-wrap gap-2 mb-2">
+                    <div className="flex flex-wrap gap-1.5 mb-3">
                       {pack.package_itinerary_tag.map((t: any) => (
                         <span
                           key={t.tag.name}
                           className="
-                            text-xs
-                            px-2 py-1
+                            text-[11px]
+                            px-2 py-0.5
                             rounded-full
                             bg-[#36B9CB]/20
                             text-[#36B9CB]
@@ -175,7 +159,7 @@ export default function PackageList() {
                     </div>
 
                     <p className="text-xs font-semibold text-gray-500">
-                      {pack.package_itinerary_tag.length} tags included
+                      {pack.package_itinerary_tag.length} tags
                     </p>
                   </div>
                 </Link>
@@ -196,8 +180,7 @@ export default function PackageList() {
             }}
             className="
               flex-1
-              px-4
-              py-3
+              px-4 py-3
               rounded-xl
               bg-white
               text-gray-900
@@ -215,8 +198,7 @@ export default function PackageList() {
               setCurrentPage(1);
             }}
             className="
-              px-4
-              py-3
+              px-4 py-3
               rounded-xl
               bg-white
               text-gray-900
@@ -234,7 +216,7 @@ export default function PackageList() {
           </select>
         </div>
 
-        {/* CARD LIST */}
+        {/* MAIN PACKAGE LIST */}
         <ul className="flex flex-col items-center gap-2 pb-10">
           {paginatedPackages.map((pack) => (
             <li key={pack.package_ID} className="w-full max-w-6xl">
@@ -248,13 +230,7 @@ export default function PackageList() {
           <button
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((p) => p - 1)}
-            className="
-              px-4
-              py-2
-              rounded-lg
-              bg-[#36B9CB]
-              disabled:opacity-40
-            "
+            className="px-4 py-2 rounded-lg bg-[#36B9CB] disabled:opacity-40"
           >
             Previous
           </button>
@@ -266,13 +242,7 @@ export default function PackageList() {
           <button
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage((p) => p + 1)}
-            className="
-              px-4
-              py-2
-              rounded-lg
-              bg-[#36B9CB]
-              disabled:opacity-40
-            "
+            className="px-4 py-2 rounded-lg bg-[#36B9CB] disabled:opacity-40"
           >
             Next
           </button>
