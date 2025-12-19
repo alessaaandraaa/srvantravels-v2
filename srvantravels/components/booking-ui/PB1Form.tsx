@@ -62,179 +62,158 @@ export default function PB1Form({ user_id }: id) {
     });
 
   return (
-    <section
+    <form
+      onSubmit={handleSubmit(onSubmit)}
       className="
-        relative
-        min-h-screen
-        bg-cover
-        bg-center
-        bg-no-repeat
-        py-16
-        px-6
+        bg-white
+        rounded-3xl
+        shadow-xl
+        p-8 md:p-10
+        space-y-8
       "
-      style={{
-        backgroundImage: "url('/bg-images/bg3.jpg')",
-      }}
     >
-      {/* OVERLAY */}
-      <div className="absolute inset-0 bg-black/40" />
+      <h1 className="text-3xl md:text-4xl font-extrabold text-[#36B9CB] text-center">
+        PACKAGE BOOKING DETAILS
+      </h1>
 
-      {/* CONTENT */}
-      <div className="relative z-10 max-w-3xl mx-auto">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
+      <hr className="border-gray-300" />
+
+      {/* PASSENGERS */}
+      <div>
+        <label
+          htmlFor="pax"
+          className="block text-xs font-semibold tracking-wide text-gray-600 mb-2 uppercase"
+        >
+          Number of Passengers
+        </label>
+        <input
+          id="pax"
+          type="number"
+          {...register("pax")}
           className="
+            block w-full
+            rounded-xl
+            border border-gray-300
             bg-white
-            rounded-3xl
-            shadow-xl
-            p-8 md:p-10
-            space-y-8
+            px-4 py-3
+            text-gray-800
+            focus:outline-none
+            focus:ring-2 focus:ring-[#36B9CB]
+          "
+        />
+      </div>
+
+      {/* DATE + LUGGAGE */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label
+            htmlFor="pickup_date"
+            className="block text-xs font-semibold tracking-wide text-gray-600 mb-2 uppercase"
+          >
+            Pickup Date
+          </label>
+          <input
+            id="pickup_date"
+            type="date"
+            {...register("pickup_date")}
+            className="
+              block w-full
+              rounded-xl
+              border border-gray-300
+              bg-white
+              px-4 py-3
+              text-gray-800
+              focus:outline-none
+              focus:ring-2 focus:ring-[#36B9CB]
+            "
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="luggage"
+            className="block text-xs font-semibold tracking-wide text-gray-600 mb-2 uppercase"
+          >
+            Number of Luggage (optional)
+          </label>
+          <input
+            id="luggage"
+            type="number"
+            {...register("luggage")}
+            className="
+              block w-full
+              rounded-xl
+              border border-gray-300
+              bg-white
+              px-4 py-3
+              text-gray-800
+              focus:outline-none
+              focus:ring-2 focus:ring-[#36B9CB]
+            "
+          />
+        </div>
+      </div>
+
+      {/* FILE UPLOAD */}
+      <div>
+        <label
+          htmlFor="file_image"
+          className="block text-xs font-semibold tracking-wide text-gray-600 mb-2 uppercase"
+        >
+          Upload Valid ID
+        </label>
+        <input
+          id="file_image"
+          type="file"
+          accept=".png, .jpg, .jpeg"
+          {...register("file_image")}
+          className="
+            block w-full
+            text-sm
+            text-gray-700
+            border border-gray-300
+            rounded-xl
+            cursor-pointer
+            bg-gray-50
+            focus:outline-none
+            focus:ring-2 focus:ring-[#36B9CB]
+          "
+        />
+      </div>
+
+      {/* ACTIONS */}
+      <div className="flex flex-col sm:flex-row justify-center gap-4 pt-6">
+        <Link
+          href="/packages"
+          className="
+            px-6 py-3
+            rounded-2xl
+            bg-red-600
+            text-white
+            font-semibold
+            text-center
+            hover:bg-red-700
+            transition
           "
         >
-          <h1 className="text-3xl md:text-4xl font-extrabold text-[#36B9CB] text-center">
-            PACKAGE BOOKING DETAILS
-          </h1>
+          Back to Packages
+        </Link>
 
-          <hr className="border-gray-300" />
-
-          {/* PASSENGERS */}
-          <div>
-            <label
-              htmlFor="pax"
-              className="block text-xs font-semibold tracking-wide text-gray-600 mb-2 uppercase"
-            >
-              Number of Passengers
-            </label>
-            <input
-              id="pax"
-              type="number"
-              {...register("pax")}
-              className="
-                block w-full
-                rounded-xl
-                border border-gray-300
-                bg-white
-                px-4 py-3
-                text-gray-800
-                focus:outline-none
-                focus:ring-2 focus:ring-[#36B9CB]
-              "
-            />
-          </div>
-
-          {/* DATE + LUGGAGE */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label
-                htmlFor="pickup_date"
-                className="block text-xs font-semibold tracking-wide text-gray-600 mb-2 uppercase"
-              >
-                Pickup Date
-              </label>
-              <input
-                id="pickup_date"
-                type="date"
-                {...register("pickup_date")}
-                className="
-                  block w-full
-                  rounded-xl
-                  border border-gray-300
-                  bg-white
-                  px-4 py-3
-                  text-gray-800
-                  focus:outline-none
-                  focus:ring-2 focus:ring-[#36B9CB]
-                "
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="luggage"
-                className="block text-xs font-semibold tracking-wide text-gray-600 mb-2 uppercase"
-              >
-                Number of Luggage (optional)
-              </label>
-              <input
-                id="luggage"
-                type="number"
-                {...register("luggage")}
-                className="
-                  block w-full
-                  rounded-xl
-                  border border-gray-300
-                  bg-white
-                  px-4 py-3
-                  text-gray-800
-                  focus:outline-none
-                  focus:ring-2 focus:ring-[#36B9CB]
-                "
-              />
-            </div>
-          </div>
-
-          {/* FILE UPLOAD */}
-          <div>
-            <label
-              htmlFor="file_image"
-              className="block text-xs font-semibold tracking-wide text-gray-600 mb-2 uppercase"
-            >
-              Upload Valid ID
-            </label>
-            <input
-              id="file_image"
-              type="file"
-              accept=".png, .jpg, .jpeg"
-              {...register("file_image")}
-              className="
-                block w-full
-                text-sm
-                text-gray-700
-                border border-gray-300
-                rounded-xl
-                cursor-pointer
-                bg-gray-50
-                focus:outline-none
-                focus:ring-2 focus:ring-[#36B9CB]
-              "
-            />
-          </div>
-
-          {/* ACTIONS */}
-          <div className="flex flex-col sm:flex-row justify-center gap-4 pt-6">
-            <Link
-              href="/packages"
-              className="
-                px-6 py-3
-                rounded-2xl
-                bg-red-600
-                text-white
-                font-semibold
-                text-center
-                hover:bg-red-700
-                transition
-              "
-            >
-              Back to Packages
-            </Link>
-
-            <button
-              type="submit"
-              className="
-                px-6 py-3
-                rounded-2xl
-                bg-[#F3B54D]
-                text-white
-                font-bold
-                hover:bg-[#eaa93f]
-                transition
-              "
-            >
-              Proceed to Summary →
-            </button>
-          </div>
-        </form>
+        <button
+          type="submit"
+          className="
+            px-6 py-3
+            rounded-2xl
+            bg-[#F3B54D]
+            text-white
+            font-bold
+            hover:bg-[#eaa93f]
+            transition
+          "
+        >
+          Proceed to Summary →
+        </button>
       </div>
-    </section>
+    </form>
   );
 }
