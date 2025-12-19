@@ -139,13 +139,8 @@ export default function CustomForm({
     />
 
     <div
-      className="relative min-h-screen bg-cover bg-center bg-no-repeat py-8 md:py-14 px-4 md:px-6"
-      style={{
-        backgroundImage: "url('/bg-images/bg8.jpg')",
-      }}
+      className="relative min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50 py-8 md:py-14 px-4 md:px-6"
     >
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/40" />
 
       {/* Content */}
       <div className="relative z-10">
