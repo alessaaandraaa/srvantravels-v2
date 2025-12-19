@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Packages from "./Packages";
 import { PackageWithTags } from "@/types/package.types";
-import Image from "next/image";
 
 export default function PackageList() {
   const [packages, setPackages] = useState<PackageWithTags[]>([]);
@@ -20,9 +19,7 @@ export default function PackageList() {
       .then((json) => setPackages(json.packages));
   }, []);
 
-  /* ===============================
-     TOP 3 PACKAGES (MOST TAGS)
-  =============================== */
+  /* TOP 3 PACKAGES (MOST TAGS) */
   const topPackages = [...packages]
     .sort(
       (a, b) =>
@@ -66,7 +63,7 @@ export default function PackageList() {
       className="relative min-h-screen bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: "url('/bg-images/bg7.jpg')" }}
     >
-      {/* DARK OVERLAY */}
+      {/* OVERLAY */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/20" />
 
       {/* CONTENT */}
@@ -86,26 +83,11 @@ export default function PackageList() {
           WELCOME TO SR VAN TRAVELS!
         </h2>
 
-        {/* HOME DIVIDER */}
-        <div className="flex justify-center mb-14">
-          <div
-            className="
-              h-1
-              w-32
-              bg-gradient-to-r
-              from-[#36B9CB]
-              via-[#F3B54D]
-              to-[#36B9CB]
-              rounded-full
-              shadow-md
-            "
-          />
-        </div>
-
+        {/* TOP 3 */}
         {packages.length > 0 && (
           <div className="max-w-6xl mx-auto mb-14">
-          <h3 className="text-3xl md:text-4xl font-extrabold text-white text-center mb-12">
-            TOP 3 PACKAGES
+            <h3 className="text-3xl md:text-4xl font-extrabold text-white text-center mb-12">
+              TOP 3 PACKAGES
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -115,82 +97,72 @@ export default function PackageList() {
                   href={`/packages/${pack.package_ID}`}
                   className="block"
                 >
-                <div
-                  className="
-                    bg-white/90
-                    rounded-2xl
-                    shadow-lg
-                    overflow-hidden
-                    h-full
-                    flex flex-col
-                    hover:-translate-y-1
-                    hover:shadow-2xl
-                    transition-all duration-300
-                    relative
-                    cursor-pointer
-                  "
-                >
-                  {/* RANK BADGE */}
-                  <span
+                  <div
                     className="
-                      absolute top-2 right-2
-                      bg-[#F3B54D]
-                      text-white
-                      w-7 h-7
-                      flex items-center justify-center
-                      rounded-full
-                      text-sm
-                      font-bold
-                      shadow-md
-                      z-10
+                      bg-white/90
+                      rounded-2xl
+                      shadow-lg
+                      overflow-hidden
+                      h-full
+                      flex flex-col
+                      hover:-translate-y-1
+                      hover:shadow-2xl
+                      transition-all duration-300
+                      relative
+                      cursor-pointer
                     "
                   >
-                    {index + 1}
-                  </span>
+                    {/* RANK BADGE */}
+                    <span
+                      className="
+                        absolute top-2 right-2
+                        bg-[#F3B54D]
+                        text-white
+                        w-7 h-7
+                        flex items-center justify-center
+                        rounded-full
+                        text-sm
+                        font-bold
+                        shadow-md
+                        z-10
+                      "
+                    >
+                      {index + 1}
+                    </span>
 
-                  {/* IMAGE */}
-                  <div className="relative h-32 w-full flex-shrink-0">
-                    <Image
-                      src={`/${pack.package_picture}`}
-                      alt={pack.package_name}
-                      fill
-                      className="object-cover"
-                    />
+                    {/* CONTENT */}
+                    <div className="p-4 flex flex-col flex-1">
+                      <h4 className="text-base font-bold text-gray-900 mb-1 line-clamp-2">
+                        {pack.package_name}
+                      </h4>
+
+                      <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                        {pack.package_description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-1.5 mb-3">
+                        {pack.package_itinerary_tag.map((t: any) => (
+                          <span
+                            key={t.tag.name}
+                            className="
+                              text-[11px]
+                              px-2 py-0.5
+                              rounded-full
+                              bg-[#36B9CB]/20
+                              text-[#36B9CB]
+                              font-semibold
+                            "
+                          >
+                            {t.tag.name}
+                          </span>
+                        ))}
+                      </div>
+
+                      <p className="text-xs font-semibold text-gray-500 mt-auto">
+                        {pack.package_itinerary_tag.length} tags
+                      </p>
+                    </div>
                   </div>
-                  <div className="p-4 flex flex-col flex-1">
-                  <h4 className="text-base font-bold text-gray-900 mb-1 line-clamp-2">
-                    {pack.package_name}
-                  </h4>
-
-                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">
-                    {pack.package_description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-1.5 mb-3">
-                    {pack.package_itinerary_tag.map((t: any) => (
-                      <span
-                        key={t.tag.name}
-                        className="
-                          text-[11px]
-                          px-2 py-0.5
-                          rounded-full
-                          bg-[#36B9CB]/20
-                          text-[#36B9CB]
-                          font-semibold
-                        "
-                      >
-                        {t.tag.name}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* PUSHES TAG COUNT TO BOTTOM */}
-                  <p className="text-xs font-semibold text-gray-500 mt-auto">
-                    {pack.package_itinerary_tag.length} tags
-                  </p>
-                </div>
-
-
                 </Link>
               ))}
             </div>
@@ -245,7 +217,7 @@ export default function PackageList() {
           </select>
         </div>
 
-        {/* MAIN PACKAGE LIST */}
+        {/* MAIN LIST */}
         <ul className="flex flex-col items-center gap-2 pb-10">
           {paginatedPackages.map((pack) => (
             <li key={pack.package_ID} className="w-full max-w-6xl">
