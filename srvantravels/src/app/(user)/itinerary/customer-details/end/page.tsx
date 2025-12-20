@@ -31,8 +31,6 @@ export default async function End({
         backgroundImage: "url('/bg-images/bg3.jpg')",
       }}
     >
-      {/* OVERLAY */}
-      <div className="absolute inset-0 bg-black/40" />
 
       {/* CONTENT */}
       <div className="relative z-10 max-w-6xl mx-auto">
