@@ -36,7 +36,7 @@ export default function CustomSummaryFull() {
         payment_status: "NOT_PAID",
       },
       customer: {
-        customer_ID: customerDetails.customer_id,
+        customer_id: customerDetails.customer_id,
         number_of_PAX: Number(customerDetails.number_of_PAX),
         date_of_travel: customerDetails.date_of_travel,
         number_of_luggage: Number(customerDetails.number_of_luggage),
