@@ -16,17 +16,11 @@ type Props = {
   onClear?: () => void;
 };
 
-export default function LocationsList({
-  locations,
-  onRemove,
-  onClear,
-}: Props) {
+export default function LocationsList({ locations, onRemove, onClear }: Props) {
   return (
     <div className="h-full bg-white rounded-3xl shadow-xl border border-black/10 flex flex-col overflow-hidden">
       <div className="p-4 border-b border-black/10 flex justify-between items-center">
-        <h2 className="text-lg font-extrabold text-gray-900">
-          Markers
-        </h2>
+        <h2 className="text-lg font-extrabold text-gray-900">Markers</h2>
 
         {!!locations.length && onClear && (
           <button
@@ -50,12 +44,8 @@ export default function LocationsList({
               className="p-3 rounded-2xl border border-black/10 flex items-start justify-between gap-3 bg-white"
             >
               <div className="min-w-0">
-                <p className="font-semibold text-gray-900 truncate">
-                  {l.name}
-                </p>
-                <p className="text-xs text-gray-700 break-words">
-                  {l.address}
-                </p>
+                <p className="font-semibold text-gray-900 truncate">{l.name}</p>
+                <p className="text-xs text-gray-700 break-words">{l.address}</p>
               </div>
 
               {onRemove && (

@@ -73,77 +73,101 @@ export default function MapComponent({
   }, []);
 
   /* ---------- add with Cebu gate ---------- */
-    function addIfAllowed(
-      marker: {
-        lat: number;
-        lng: number;
-        name?: string;  
-        address: string;
-        isCustom: boolean;
-      },
-      comps: GComp[] | undefined
-    ) {
-      // ✅ Allow dropped pins (no address components)
-      if (comps && !isInCebuPH(comps)) return false;
+  function addIfAllowed(
+    marker: {
+      lat: number;
+      lng: number;
+      name?: string;
+      address: string;
+      isCustom: boolean;
+    },
+    comps: GComp[] | undefined
+  ) {
+    if (comps && !isInCebuPH(comps)) return false;
 
-      setLocation({ id: uid(), ...marker });
-      setSavedOrderIds(null);
-      return true;
-    }
-
-
-  /* ---------- map click ---------- */
-const handleMapClick = async (e: MapMouseEvent) => {
-  const { latLng, placeId } = e.detail;
-  if (!latLng) return;
-
-  const lat = latLng.lat;
-  const lng = latLng.lng;
-
-  // CLICKED A PLACE (POI)
-  if (placeId && typeof window !== "undefined" && window.google) {
-    e.stop();
-
-    const { Place } = (await google.maps.importLibrary(
-      "places"
-    )) as google.maps.PlacesLibrary;
-
-    const place = new Place({ id: placeId });
-    await place.fetchFields({
-      fields: [
-        "displayName",
-        "formattedAddress",
-        "location",
-        "addressComponents",
-      ],
-    });
-
-    addIfAllowed(
-      {
-        lat: place.location?.lat() ?? lat,
-        lng: place.location?.lng() ?? lng,
-        name: place.displayName ?? "Unnamed Place",
-        address: place.formattedAddress ?? "Unknown address",
-        isCustom: true,
-      },
-      place.addressComponents ?? []
-    );
-
-    return;
+    setLocation({ id: uid(), ...marker });
+    setSavedOrderIds(null);
+    return true;
   }
 
-  // CLICKED EMPTY MAP → DROP PIN
-  addIfAllowed(
-    {
-      lat,
-      lng,
-      address: "Dropped Pin",
-      isCustom: true,
-    },
-    undefined
-  );
-};
+  /* ---------- map click ---------- */
+  const handleMapClick = async (e: MapMouseEvent) => {
+    const { latLng, placeId } = e.detail;
+    if (!latLng) return;
 
+    const lat = latLng.lat;
+    const lng = latLng.lng;
+
+    // 1. CLICKED A PLACE (POI) - Uses Places Library
+    if (placeId && typeof window !== "undefined" && window.google) {
+      e.stop();
+
+      const { Place } = (await google.maps.importLibrary(
+        "places"
+      )) as google.maps.PlacesLibrary;
+
+      const place = new Place({ id: placeId });
+      await place.fetchFields({
+        fields: [
+          "displayName",
+          "formattedAddress",
+          "location",
+          "addressComponents",
+        ],
+      });
+
+      addIfAllowed(
+        {
+          lat: place.location?.lat() ?? lat,
+          lng: place.location?.lng() ?? lng,
+          name: place.displayName ?? "Unnamed Place",
+          address: place.formattedAddress ?? "Unknown address",
+          isCustom: true,
+        },
+        place.addressComponents ?? []
+      );
+
+      return;
+    }
+
+    // 2. CLICKED RANDOM SPOT - Uses Geocoder (Reverse Geocoding)
+    if (typeof window !== "undefined" && window.google) {
+      const geocoder = new google.maps.Geocoder();
+      try {
+        const response = await geocoder.geocode({ location: { lat, lng } });
+
+        // If we found a valid address
+        if (response.results && response.results[0]) {
+          const result = response.results[0];
+
+          addIfAllowed(
+            {
+              lat,
+              lng,
+              name: "Custom Location",
+              address: result.formatted_address, // Real address from Google
+              isCustom: true,
+            },
+            result.address_components // Correctly checks Cebu gate
+          );
+          return;
+        }
+      } catch (error) {
+        console.error("Geocoding failed, falling back to simple pin:", error);
+      }
+    }
+
+    // 3. FALLBACK - Only happens if API fails or no address found
+    addIfAllowed(
+      {
+        lat,
+        lng,
+        address: "Dropped Pin",
+        isCustom: true,
+      },
+      undefined
+    );
+  };
 
   const handlePlacePicked = (p: {
     lat: number;
@@ -200,71 +224,71 @@ const handleMapClick = async (e: MapMouseEvent) => {
   };
 
   function route(optimize: boolean, markersOverride?: MarkerData[]) {
-  if (!window.google) return;
+    if (!window.google) return;
 
-  const source = markersOverride ?? markers;
-  const stops = computeStops(source, startId, optimize);
-  if (!stops) return;
+    const source = markersOverride ?? markers;
+    const stops = computeStops(source, startId, optimize);
+    if (!stops) return;
 
-  const req: google.maps.DirectionsRequest = {
-    origin: stops.origin,
-    destination: stops.destination,
-    waypoints: stops.waypoints,
-    optimizeWaypoints: stops.optimizeWaypoints,
-    travelMode: google.maps.TravelMode.DRIVING,
-    drivingOptions: {
-      departureTime: new Date(),
-      trafficModel: google.maps.TrafficModel.BEST_GUESS,
-    },
-  };
-
-  new google.maps.DirectionsService().route(req, (res, status) => {
-    if (status === "OK" && res) {
-      setDirections(res);
-
-      const currentSummary = summarizeDirections(res);
-      setSummary(currentSummary);
-
-      if (currentSummary) {
-        onTime(currentSummary.durationTime);
-        onNumStops(markers.length);
-      }
-
-      let finalList: MarkerData[] | null = null;
-
-      if (optimize) {
-        if (!savedOrderIds) setSavedOrderIds(source.map((m) => m.id));
-        const order = res.routes[0].waypoint_order ?? [];
-        finalList = [
-          stops.origin,
-          ...order.map((i) => stops.inBetween[i]),
-          stops.destination,
-        ];
-        setStartId(stops.origin.id);
-      } else {
-        finalList = [...stops.ordered];
-      }
-
-      if (finalList) {
-        clear();
-        finalList.forEach((m) => setLocation(m));
-      }
-
-      onSetRoute(true);
-    }
-  });
-}
-
-    const onOptimize = () => route(true);
-
-    const onMyOrder = () => {
-      if (savedOrderIds) {
-        const restored = rebuildByIds(savedOrderIds, markers);
-        route(false, restored);
-        return;
-      }
-      route(false);
+    const req: google.maps.DirectionsRequest = {
+      origin: stops.origin,
+      destination: stops.destination,
+      waypoints: stops.waypoints,
+      optimizeWaypoints: stops.optimizeWaypoints,
+      travelMode: google.maps.TravelMode.DRIVING,
+      drivingOptions: {
+        departureTime: new Date(),
+        trafficModel: google.maps.TrafficModel.BEST_GUESS,
+      },
     };
+
+    new google.maps.DirectionsService().route(req, (res, status) => {
+      if (status === "OK" && res) {
+        setDirections(res);
+
+        const currentSummary = summarizeDirections(res);
+        setSummary(currentSummary);
+
+        if (currentSummary) {
+          onTime(currentSummary.durationTime);
+          onNumStops(markers.length);
+        }
+
+        let finalList: MarkerData[] | null = null;
+
+        if (optimize) {
+          if (!savedOrderIds) setSavedOrderIds(source.map((m) => m.id));
+          const order = res.routes[0].waypoint_order ?? [];
+          finalList = [
+            stops.origin,
+            ...order.map((i) => stops.inBetween[i]),
+            stops.destination,
+          ];
+          setStartId(stops.origin.id);
+        } else {
+          finalList = [...stops.ordered];
+        }
+
+        if (finalList) {
+          clear();
+          finalList.forEach((m) => setLocation(m));
+        }
+
+        onSetRoute(true);
+      }
+    });
+  }
+
+  const onOptimize = () => route(true);
+
+  const onMyOrder = () => {
+    if (savedOrderIds) {
+      const restored = rebuildByIds(savedOrderIds, markers);
+      route(false, restored);
+      return;
+    }
+    route(false);
+  };
 
   return (
     <div className="w-full mt-6 sm:mt-8 lg:mt-12 overflow-x-hidden">
@@ -285,13 +309,9 @@ const handleMapClick = async (e: MapMouseEvent) => {
           "
         >
           {/* PRESETS */}
-        <div className="max-h-[320px] sm:max-h-[420px] lg:max-h-[600px]">
-          <Presets
-            onPick={handlePresetPick}
-            isAdded={alreadyInList}
-          />
-        </div>
-
+          <div className="max-h-[320px] sm:max-h-[420px] lg:max-h-[600px]">
+            <Presets onPick={handlePresetPick} isAdded={alreadyInList} />
+          </div>
 
           {/* MAP */}
           <div className="relative w-full h-full">
@@ -330,7 +350,6 @@ const handleMapClick = async (e: MapMouseEvent) => {
               onClear={clearAllMarkers}
             />
           </div>
-
         </div>
       </APIProvider>
     </div>
