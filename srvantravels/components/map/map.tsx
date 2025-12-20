@@ -85,88 +85,9 @@ export default function MapComponent({
   ) {
     if (comps && !isInCebuPH(comps)) return false;
 
-<<<<<<< HEAD
     setLocation({ id: uid(), ...marker });
     setSavedOrderIds(null);
     return true;
-=======
-      setLocation({ id: uid(), ...marker });
-      setSavedOrderIds(null);
-      return true;
-    }
-
-    async function reverseGeocode(lat: number, lng: number) {
-    const geocoder = new google.maps.Geocoder();
-
-    const res = await geocoder.geocode({
-      location: { lat, lng },
-    });
-
-    if (!res.results[0]) {
-      return {
-        name: "Pinned Location",
-        address: "Unknown address",
-        components: undefined,
-      };
-    }
-
-    const first = res.results[0];
-
-    return {
-      name:
-        first.address_components?.find(c =>
-          c.types.includes("establishment") ||
-          c.types.includes("point_of_interest")
-        )?.long_name ??
-        first.formatted_address.split(",")[0],
-
-      address: first.formatted_address,
-      components: first.address_components,
-    };
-  }
-
-  /* ---------- map click ---------- */
-const handleMapClick = async (e: MapMouseEvent) => {
-  const { latLng, placeId } = e.detail;
-  if (!latLng) return;
-
-  const lat = latLng.lat;
-  const lng = latLng.lng;
-
-  // CLICKED A PLACE (POI)
-  if (placeId && typeof window !== "undefined" && window.google) {
-    e.stop();
-
-    const { Place } = (await google.maps.importLibrary(
-      "places"
-    )) as google.maps.PlacesLibrary;
-
-    const place = new Place({ id: placeId });
-    await place.fetchFields({
-      fields: [
-        "displayName",
-        "formattedAddress",
-        "location",
-        "addressComponents",
-      ],
-    });
-
-    const geo = await reverseGeocode(lat, lng);
-
-    addIfAllowed(
-      {
-        lat,
-        lng,
-        name: geo.name,
-        address: geo.address,
-        isCustom: true,
-      },
-      geo.components
-    );
-
-
-    return;
->>>>>>> 5b0467fa91f90ea34eed307beaaea69c35565dd6
   }
 
   /* ---------- map click ---------- */
