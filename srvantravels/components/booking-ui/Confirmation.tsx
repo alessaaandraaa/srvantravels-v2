@@ -3,17 +3,9 @@ import { CheckCircle } from "lucide-react";
 
 export default function Confirmation({ orderId }: { orderId: number }) {
   return (
-    <div
-      className="min-h-screen flex items-center justify-center px-6 relative bg-cover bg-center"
-      style={{
-        backgroundImage: "url('/bg-images/bg10.jpg')",
-      }}
-    >
-      {/* DARK OVERLAY */}
-      <div className="absolute inset-0 bg-black/50" />
-
+    <div className="min-h-screen flex items-center justify-center px-6 bg-gray-100">
       {/* CARD */}
-      <div className="relative z-10 w-full max-w-md bg-white rounded-3xl shadow-2xl p-10 text-center space-y-6">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-10 text-center space-y-6">
         {/* ICON */}
         <div className="flex justify-center">
           <CheckCircle className="text-[#36B9CB]" size={64} />
