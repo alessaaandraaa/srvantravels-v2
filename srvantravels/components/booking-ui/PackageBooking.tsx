@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Packages from "../user-ui/Packages";
 import { usePackageStore } from "@/store/package-itinerary.store";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation"; // ✅ FIXED
 
 interface Package {
   package_ID: number;
@@ -85,25 +85,25 @@ export default function PackageBooking({ package_ID }: { package_ID: number }) {
             </Link>
 
             <Link
-  href="#"
-  onClick={(e) => {
-    if (pack) {
-      setBookedPackage(pack);
-      router.push(`/packages/${package_ID}/booking/page1`);
-    }
-  }}
-  className="
-    flex-1 text-center py-4 md:py-5 rounded-2xl 
-    bg-gradient-to-r from-[#F3B54D] to-[#eaa93f]
-    text-white font-bold text-lg
-    shadow-lg
-    hover:shadow-xl hover:-translate-y-1
-    active:translate-y-0
-    transition-all duration-200
-  "
->
-  Book this Package →
-</Link>
+              href="#"
+              onClick={(e) => {
+                if (pack) {
+                  setBookedPackage(pack);
+                  router.push(`/packages/${package_ID}/booking/page1`);
+                }
+              }}
+              className="
+                flex-1 text-center py-4 md:py-5 rounded-2xl 
+                bg-gradient-to-r from-[#F3B54D] to-[#eaa93f]
+                text-white font-bold text-lg
+                shadow-lg
+                hover:shadow-xl hover:-translate-y-1
+                active:translate-y-0
+                transition-all duration-200
+              "
+            >
+              Book this Package →
+            </Link>
           </div>
         </div>
       </div>
