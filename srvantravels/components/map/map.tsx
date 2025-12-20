@@ -178,8 +178,72 @@ export default function MapComponent({
     resetRouteUI();
   };
 
-  const onOptimize = () => {};
-  const onMyOrder = () => {};
+  function route(optimize: boolean, markersOverride?: MarkerData[]) {
+  if (!window.google) return;
+
+  const source = markersOverride ?? markers;
+  const stops = computeStops(source, startId, optimize);
+  if (!stops) return;
+
+  const req: google.maps.DirectionsRequest = {
+    origin: stops.origin,
+    destination: stops.destination,
+    waypoints: stops.waypoints,
+    optimizeWaypoints: stops.optimizeWaypoints,
+    travelMode: google.maps.TravelMode.DRIVING,
+    drivingOptions: {
+      departureTime: new Date(),
+      trafficModel: google.maps.TrafficModel.BEST_GUESS,
+    },
+  };
+
+  new google.maps.DirectionsService().route(req, (res, status) => {
+    if (status === "OK" && res) {
+      setDirections(res);
+
+      const currentSummary = summarizeDirections(res);
+      setSummary(currentSummary);
+
+      if (currentSummary) {
+        onTime(currentSummary.durationTime);
+        onNumStops(markers.length);
+      }
+
+      let finalList: MarkerData[] | null = null;
+
+      if (optimize) {
+        if (!savedOrderIds) setSavedOrderIds(source.map((m) => m.id));
+        const order = res.routes[0].waypoint_order ?? [];
+        finalList = [
+          stops.origin,
+          ...order.map((i) => stops.inBetween[i]),
+          stops.destination,
+        ];
+        setStartId(stops.origin.id);
+      } else {
+        finalList = [...stops.ordered];
+      }
+
+      if (finalList) {
+        clear();
+        finalList.forEach((m) => setLocation(m));
+      }
+
+      onSetRoute(true);
+    }
+  });
+}
+
+    const onOptimize = () => route(true);
+
+    const onMyOrder = () => {
+      if (savedOrderIds) {
+        const restored = rebuildByIds(savedOrderIds, markers);
+        route(false, restored);
+        return;
+      }
+      route(false);
+    };
 
   return (
     <div className="w-full mt-6 sm:mt-8 lg:mt-12 overflow-x-hidden">
