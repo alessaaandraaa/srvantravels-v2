@@ -103,25 +103,30 @@ export default function CustomForm({
     navigate(data);
   };
 
-  return (
-    <>
-      <WarningDialog
-        open={openDialog}
-        onOpenChange={setOpenDialog}
-        onConfirm={() => {
-          if (pendingData) {
-            navigate(pendingData);
-            setOpenDialog(false);
-          }
-        }}
-      />
+ // components/custom-itinerary-ui/CustomForm.tsx
+// (only visual/layout part changed, logic intact)
 
+return (
+  <>
+    <WarningDialog
+      open={openDialog}
+      onOpenChange={setOpenDialog}
+      onConfirm={() => {
+        if (pendingData) {
+          navigate(pendingData);
+          setOpenDialog(false);
+        }
+      }}
+    />
+
+    <div className="w-full flex justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="
           w-full
           max-w-3xl
           bg-white
+          text-gray-900
           rounded-3xl
           border
           shadow-xl
@@ -132,43 +137,41 @@ export default function CustomForm({
           Travel Details
         </h2>
 
-        {/* FORM FIELDS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase">
+            <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase">
               Date of Travel
             </label>
             <input
               type="date"
               {...register("date_of_travel", { required: true })}
-              className="w-full rounded-xl border px-4 py-3"
+              className="w-full rounded-xl border px-4 py-3 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase">
+            <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase">
               Pickup Time
             </label>
             <input
               type="time"
               {...register("time_for_pickup", { required: true })}
-              className="w-full rounded-xl border px-4 py-3"
+              className="w-full rounded-xl border px-4 py-3 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase">
+            <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase">
               Dropoff Time
             </label>
             <input
               type="time"
               {...register("time_for_dropoff", { required: true })}
-              className="w-full rounded-xl border px-4 py-3"
+              className="w-full rounded-xl border px-4 py-3 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
             />
           </div>
         </div>
 
-        {/* CONTINUE BUTTON — AFTER FORM */}
         <div className="mt-12 flex justify-end">
           <button
             type="submit"
@@ -179,10 +182,8 @@ export default function CustomForm({
               bg-[#F3B54D]
               text-white
               font-bold
-              text-base
               hover:bg-[#eaa93f]
               disabled:opacity-50
-              disabled:cursor-not-allowed
               transition
             "
           >
@@ -190,6 +191,9 @@ export default function CustomForm({
           </button>
         </div>
       </form>
-    </>
-  );
+    </div>
+  </>
+);
+
+
 }

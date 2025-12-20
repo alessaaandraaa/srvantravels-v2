@@ -2,8 +2,23 @@ import CustomFormMap from "../../../../components/custom-itinerary-ui/CustomForm
 
 export default function Itinerary() {
   return (
-    <section className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50 px-6 py-10">
-      <CustomFormMap />
+    <section
+      className="
+        relative
+        min-h-screen
+        bg-cover
+        bg-center
+        bg-no-repeat
+      "
+      style={{ backgroundImage: "url('/bg-images/bg3.jpg')" }}
+    >
+      {/* DARK OVERLAY FOR READABILITY */}
+      <div className="absolute inset-0 bg-black/40" />
+
+      {/* CONTENT */}
+      <div className="relative z-10 px-6 py-12">
+        <CustomFormMap />
+      </div>
     </section>
   );
 }
