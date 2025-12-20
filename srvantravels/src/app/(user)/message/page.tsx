@@ -40,7 +40,8 @@ export default async function MessagePage() {
             Your Inbox
           </h1>
           <p className="text-gray-200 text-sm md:text-base max-w-2xl mx-auto">
-            Manage your inquiries, cancellations, and rebooking requests all in one place.
+            Manage your inquiries, cancellations, and rebooking requests all in
+            one place.
           </p>
         </div>
 
@@ -49,16 +50,11 @@ export default async function MessagePage() {
           className="
             grid
             grid-cols-1
-            lg:grid-cols-3
+            lg:grid-cols-2
             gap-6 md:gap-8
             items-start
           "
         >
-          {/* LEFT PANEL */}
-          <div className="lg:col-span-1">
-            <UserInboxLeftPanel />
-          </div>
-
           {/* RIGHT PANEL */}
           <div className="lg:col-span-2">
             <UserPanelServer />
