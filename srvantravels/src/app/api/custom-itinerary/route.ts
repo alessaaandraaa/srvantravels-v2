@@ -26,11 +26,18 @@ export async function POST(req: Request) {
     const newPayment = await paymentService.addPayment(body.payment);
 
     // insert to itinerary
-    try {
-      const newItinerary = await itineraryService.addItinerary({
-        price: body.itinerary.price,
-        type: body.itinerary.type,
-      });
+try {
+  console.log(
+    "Itinerary data:",
+    body.itinerary.price,
+    body.itinerary.type
+  );
+
+  const newItinerary = await itineraryService.addItinerary({
+    price: body.itinerary.price,
+    type: body.itinerary.type,
+  });
+
 
       /* ---------- FIX 1: OPTIONAL ID IMAGE ---------- */
       let relativePath: string | null = null;
