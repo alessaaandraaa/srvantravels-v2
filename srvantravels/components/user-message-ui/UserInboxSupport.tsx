@@ -88,6 +88,7 @@ export default function UserSupport({ user_id }: id) {
                 className="
                   bg-white
                   border-slate-300
+                  text-black
                   focus:border-[#36B9CB]
                   focus:ring-[#36B9CB]
                 "
