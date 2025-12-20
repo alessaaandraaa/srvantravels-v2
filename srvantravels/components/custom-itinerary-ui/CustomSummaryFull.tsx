@@ -7,6 +7,7 @@ import {
   useLocationsStore,
 } from "@/store/custom-itinerary.store";
 import CustomSummary from "./CustomSummary";
+import { ArrowLeft } from "lucide-react";
 
 export default function CustomSummaryFull() {
   const router = useRouter();
@@ -67,29 +68,43 @@ export default function CustomSummaryFull() {
 
   return (
     <section
-      className="relative min-h-screen bg-cover bg-center bg-no-repeat px-6 py-20"
+      className="relative min-h-screen bg-cover bg-center bg-no-repeat px-4 py-10"
       style={{ backgroundImage: "url('/bg-images/bg3.jpg')" }}
     >
-      {/* Simple dark overlay ONLY */}
-      <div className="absolute inset-0 bg-black/50" />
+      {/* Top bar */}
+      <div className="max-w-7xl mx-auto mb-6">
+        <button
+          onClick={() => router.back()}
+          className="
+            inline-flex items-center gap-2
+            text-sm font-semibold
+            text-gray-700
+            hover:text-black
+            transition
+          "
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back
+        </button>
+      </div>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto pb-28">
+      {/* Main content */}
+      <div className="relative z-10 max-w-7xl mx-auto pb-20">
         <CustomSummary />
       </div>
 
-      {/* Fixed action bar (no blur, no transparency) */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t shadow-md">
-        <div className="max-w-7xl mx-auto flex justify-end px-6 py-4">
+      {/* Fixed bottom action bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t">
+        <div className="max-w-7xl mx-auto flex justify-end px-4 py-3">
           <button
             onClick={bookItinerary}
             className="
-              px-10 py-4
-              rounded-2xl
+              px-8 py-3
+              rounded-xl
               bg-[#36B9CB]
               text-white
-              font-extrabold
-              text-lg
+              font-semibold
+              text-base
               hover:bg-[#2fa6b6]
               transition
             "
