@@ -90,39 +90,57 @@ export default function MapComponent({
   }
 
   /* ---------- map click ---------- */
-  const handleMapClick = async (e: MapMouseEvent) => {
-    const { latLng, placeId } = e.detail;
-    if (!latLng) return;
-    const lat = latLng.lat;
-    const lng = latLng.lng;
+const handleMapClick = async (e: MapMouseEvent) => {
+  const { latLng, placeId } = e.detail;
+  if (!latLng) return;
 
-    if (placeId && typeof window !== "undefined" && window.google) {
-      e.stop();
-      const { Place } = (await google.maps.importLibrary(
-        "places"
-      )) as google.maps.PlacesLibrary;
-      const place = new Place({ id: placeId });
-      await place.fetchFields({
-        fields: [
-          "displayName",
-          "formattedAddress",
-          "location",
-          "addressComponents",
-        ],
-      });
+  const lat = latLng.lat;
+  const lng = latLng.lng;
 
-      addIfAllowed(
-        {
-          lat: place.location?.lat() ?? lat,
-          lng: place.location?.lng() ?? lng,
-          name: place.displayName ?? "Unnamed Place",
-          address: place.formattedAddress ?? "Unknown address",
-          isCustom: true,
-        },
-        place.addressComponents ?? []
-      );
-    }
-  };
+  // CLICKED A PLACE (POI)
+  if (placeId && typeof window !== "undefined" && window.google) {
+    e.stop();
+
+    const { Place } = (await google.maps.importLibrary(
+      "places"
+    )) as google.maps.PlacesLibrary;
+
+    const place = new Place({ id: placeId });
+    await place.fetchFields({
+      fields: [
+        "displayName",
+        "formattedAddress",
+        "location",
+        "addressComponents",
+      ],
+    });
+
+    addIfAllowed(
+      {
+        lat: place.location?.lat() ?? lat,
+        lng: place.location?.lng() ?? lng,
+        name: place.displayName ?? "Unnamed Place",
+        address: place.formattedAddress ?? "Unknown address",
+        isCustom: true,
+      },
+      place.addressComponents ?? []
+    );
+
+    return;
+  }
+
+  // CLICKED EMPTY MAP → DROP PIN
+  addIfAllowed(
+    {
+      lat,
+      lng,
+      address: "Dropped Pin",
+      isCustom: true,
+    },
+    undefined
+  );
+};
+
 
   const handlePlacePicked = (p: {
     lat: number;
