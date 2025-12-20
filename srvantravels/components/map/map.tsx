@@ -351,7 +351,7 @@ export default function MapComponent({
           lg:grid-cols-[300px_1fr_300px]
           gap-4 sm:gap-4 lg:gap-6
           w-full
-          h-auto
+          h-[300px] sm:h-[420px] lg:h-[600px]
           items-stretch
         "
       >
