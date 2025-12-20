@@ -103,97 +103,98 @@ export default function CustomForm({
     navigate(data);
   };
 
- // components/custom-itinerary-ui/CustomForm.tsx
-// (only visual/layout part changed, logic intact)
+  return (
+    <>
+      <WarningDialog
+        open={openDialog}
+        onOpenChange={setOpenDialog}
+        onConfirm={() => {
+          if (pendingData) {
+            navigate(pendingData);
+            setOpenDialog(false);
+          }
+        }}
+      />
 
-return (
-  <>
-    <WarningDialog
-      open={openDialog}
-      onOpenChange={setOpenDialog}
-      onConfirm={() => {
-        if (pendingData) {
-          navigate(pendingData);
-          setOpenDialog(false);
-        }
-      }}
-    />
+      <div className="w-full flex justify-center">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="
+            w-full
+            max-w-4xl
+            bg-white
+            text-gray-900
+            rounded-3xl
+            border
+            shadow-xl
+            px-6 py-5 sm:px-8 sm:py-6 lg:px-10 lg:py-6
+          "
+        >
+          <h2 className="text-3xl font-extrabold text-[#36B9CB] mb-6 text-center">
+            Travel Details
+          </h2>
 
-    <div className="w-full flex justify-center">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="
-          w-full
-          max-w-4xl
-          bg-white
-          text-gray-900
-          rounded-3xl
-          border
-          shadow-xl
-          px-6 py-5 sm:px-8 sm:py-6 lg:px-10 lg:py-6
-        "
-      >
-        <h2 className="text-3xl font-extrabold text-[#36B9CB] mb-6 text-center">
-          Travel Details
-        </h2>
+          {/* INPUTS + BUTTON ROW */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
+            {/* DATE */}
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase">
+                Date of Travel
+              </label>
+              <input
+                type="date"
+                {...register("date_of_travel", { required: true })}
+                className="w-full rounded-xl border px-3 py-2 sm:px-5 sm:py-4 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
+              />
+            </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase">
-              Date of Travel
-            </label>
-            <input
-              type="date"
-              {...register("date_of_travel", { required: true })}
-              className="w-full rounded-xl border px-3 py-2 sm:px-5 sm:py-4 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
-            />
+            {/* PICKUP */}
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase">
+                Pickup Time
+              </label>
+              <input
+                type="time"
+                {...register("time_for_pickup", { required: true })}
+                className="w-full rounded-xl border px-3 py-2 sm:px-5 sm:py-4 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
+              />
+            </div>
+
+            {/* DROPOFF */}
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase">
+                Dropoff Time
+              </label>
+              <input
+                type="time"
+                {...register("time_for_dropoff", { required: true })}
+                className="w-full rounded-xl border px-3 py-2 sm:px-5 sm:py-4 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
+              />
+            </div>
+
+            {/* CONTINUE BUTTON */}
+            <div className="flex md:justify-end">
+              <button
+                type="submit"
+                disabled={!canSubmit || isSubmitting}
+                className="
+                  w-full md:w-auto
+                  px-10 sm:px-14 py-3 sm:py-4
+                  rounded-2xl
+                  bg-[#F3B54D]
+                  text-white
+                  font-bold
+                  hover:bg-[#eaa93f]
+                  disabled:opacity-50
+                  transition
+                "
+              >
+                Continue →
+              </button>
+            </div>
           </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase">
-              Pickup Time
-            </label>
-            <input
-              type="time"
-              {...register("time_for_pickup", { required: true })}
-              className="w-full rounded-xl border px-3 py-2 sm:px-5 sm:py-4 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase">
-              Dropoff Time
-            </label>
-            <input
-              type="time"
-              {...register("time_for_dropoff", { required: true })}
-              className="w-full rounded-xl border px-3 py-2 sm:px-5 sm:py-4 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
-            />
-          </div>
-        </div>
-
-        <div className="mt-4 sm:mt-6 flex justify-end">
-          <button
-            type="submit"
-            disabled={!canSubmit || isSubmitting}
-            className="
-              px-10 sm:px-14 py-3 sm:py-4
-              rounded-2xl
-              bg-[#F3B54D]
-              text-white
-              font-bold
-              hover:bg-[#eaa93f]
-              disabled:opacity-50
-              transition
-            "
-          >
-            Continue →
-          </button>
-        </div>
-      </form>
-    </div>
-  </>
-);
-
-
+        </form>
+      </div>
+    </>
+  );
 }
