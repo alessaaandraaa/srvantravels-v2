@@ -3,17 +3,27 @@ import { useState, useEffect } from "react";
 import { OrdersListType } from "@/types/order.types";
 import Order from "./Order";
 
-export default function OrdersList(customer_id: { customer_id: number }) {
+interface OrdersListProps {
+  customer_id: number;
+  page: number;
+  pageSize: number;
+}
+
+export default function OrdersList({ 
+  customer_id, 
+  page, 
+  pageSize 
+}: OrdersListProps) {
   const [orders, setOrders] = useState<OrdersListType>([]);
   const [loading, setLoading] = useState(true);
-  const customerId = customer_id.customer_id;
 
   useEffect(() => {
-    fetch(`/api/orders?customerId=${customerId}`)
+    setLoading(true);
+    fetch(`/api/orders?customerId=${customer_id}&page=${page}&pageSize=${pageSize}`)
       .then((response) => response.json())
       .then((json) => setOrders(json.orders))
       .finally(() => setLoading(false));
-  }, [customerId]);
+  }, [customer_id, page, pageSize]);
 
   if (loading) {
     return (

@@ -73,21 +73,24 @@ export default function MapComponent({
   }, []);
 
   /* ---------- add with Cebu gate ---------- */
-  function addIfAllowed(
-    marker: {
-      lat: number;
-      lng: number;
-      name?: string;
-      address: string;
-      isCustom: boolean;
-    },
-    comps: GComp[] | undefined
-  ) {
-    if (!isInCebuPH(comps)) return false;
-    setLocation({ id: uid(), ...marker });
-    setSavedOrderIds(null);
-    return true;
-  }
+    function addIfAllowed(
+      marker: {
+        lat: number;
+        lng: number;
+        name?: string;  
+        address: string;
+        isCustom: boolean;
+      },
+      comps: GComp[] | undefined
+    ) {
+      // ✅ Allow dropped pins (no address components)
+      if (comps && !isInCebuPH(comps)) return false;
+
+      setLocation({ id: uid(), ...marker });
+      setSavedOrderIds(null);
+      return true;
+    }
+
 
   /* ---------- map click ---------- */
 const handleMapClick = async (e: MapMouseEvent) => {
