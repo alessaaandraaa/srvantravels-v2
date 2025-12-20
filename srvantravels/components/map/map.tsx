@@ -200,12 +200,13 @@ export default function MapComponent({
           "
         >
           {/* PRESETS */}
-          <div className="h-full">
-            <Presets
-              onPick={handlePresetPick}
-              isAdded={alreadyInList}
-            />
-          </div>
+        <div className="max-h-[320px] sm:max-h-[420px] lg:max-h-[600px]">
+          <Presets
+            onPick={handlePresetPick}
+            isAdded={alreadyInList}
+          />
+        </div>
+
 
           {/* MAP */}
           <div className="relative w-full h-full">
@@ -237,13 +238,14 @@ export default function MapComponent({
           </div>
 
           {/* MARKERS */}
-          <div className="h-full">
+          <div className="max-h-[320px] sm:max-h-[420px] lg:max-h-[600px]">
             <LocationsList
               locations={markers}
               onRemove={removeMarker}
               onClear={clearAllMarkers}
             />
           </div>
+
         </div>
       </APIProvider>
     </div>
