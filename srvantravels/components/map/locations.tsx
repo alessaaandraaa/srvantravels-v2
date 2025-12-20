@@ -30,7 +30,7 @@ export default function LocationsList({
   return (
         <div
           className="
-            w-full lg:w-[380px]
+            w-full lg:w-[440px]
             h-full
             bg-white
             text-black
