@@ -134,7 +134,7 @@ export default function CustomForm({
             Travel Details
           </h2>
 
-          {/* INPUTS + BUTTON ROW */}
+          {/* INPUTS + BUTTON */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
             {/* DATE */}
             <div>
@@ -179,6 +179,8 @@ export default function CustomForm({
                 disabled={!canSubmit || isSubmitting}
                 className="
                   w-full md:w-auto
+                  inline-flex items-center justify-center gap-2
+                  whitespace-nowrap
                   px-10 sm:px-14 py-3 sm:py-4
                   rounded-2xl
                   bg-[#F3B54D]
