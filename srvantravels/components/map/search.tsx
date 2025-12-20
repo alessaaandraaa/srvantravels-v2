@@ -120,9 +120,10 @@ return (
         top-4
         left-1/2 -translate-x-1/2
         lg:left-6 lg:translate-x-0
-        bg-white rounded-2xl
+        bg-white/95 backdrop-blur-md
+        rounded-2xl
         shadow-xl
-        border border-blue-100
+        border border-[#36B9CB]/20
         p-1
       "
     >
