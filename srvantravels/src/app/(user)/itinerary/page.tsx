@@ -6,18 +6,20 @@ export default function Itinerary() {
       className="
         relative
         min-h-screen
-        bg-cover
         bg-center
         bg-no-repeat
-        bg-fixed
+        flex
       "
-      style={{ backgroundImage: "url('/bg-images/bg3.jpg')" }}
+      style={{
+        backgroundImage: "url('/bg-images/bg6.jpg')",
+        backgroundSize: "cover",
+      }}
     >
-      {/* DARK OVERLAY FOR READABILITY */}
+      {/* DARK OVERLAY */}
       <div className="absolute inset-0 bg-black/40" />
 
       {/* CONTENT */}
-      <div className="relative z-10 px-6 py-12">
+      <div className="relative z-10 w-full px-6 py-12">
         <CustomFormMap />
       </div>
     </section>
