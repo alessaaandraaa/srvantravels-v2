@@ -3,7 +3,7 @@ import { CheckCircle } from "lucide-react";
 
 export default function Confirmation({ orderId }: { orderId: number }) {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#36B9CB]/10 to-[#F3B54D]/20 px-6">
+    <div className="min-h-screen flex items-center justify-center px-6">
       <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-10 text-center space-y-6">
         {/* ICON */}
         <div className="flex justify-center">
