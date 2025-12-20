@@ -70,32 +70,34 @@ export default function CustomSummaryFull() {
       className="relative min-h-screen bg-cover bg-center bg-no-repeat px-6 py-20"
       style={{ backgroundImage: "url('/bg-images/bg3.jpg')" }}
     >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/50" />
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
 
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto">
+      {/* Main content */}
+      <div className="relative z-10 max-w-7xl mx-auto pb-32">
         <CustomSummary />
       </div>
 
-      {/* Action Bar */}
-      <div className="relative z-20 bg-white border-t shadow-lg mt-20">
-        <div className="max-w-7xl mx-auto flex justify-end px-6 py-6">
-          <button
-            onClick={bookItinerary}
-            className="
-              px-10 py-4
-              rounded-2xl
-              bg-[#36B9CB]
-              text-white
-              font-extrabold
-              text-lg
-              hover:bg-[#2fa6b6]
-              transition
-            "
-          >
-            Book Itinerary →
-          </button>
+      {/* Floating action bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-30">
+        <div className="bg-white/90 backdrop-blur-md border-t shadow-lg">
+          <div className="max-w-7xl mx-auto flex justify-end px-6 py-4">
+            <button
+              onClick={bookItinerary}
+              className="
+                px-10 py-4
+                rounded-2xl
+                bg-[#36B9CB]
+                text-white
+                font-extrabold
+                text-lg
+                hover:bg-[#2fa6b6]
+                transition
+              "
+            >
+              Book Itinerary →
+            </button>
+          </div>
         </div>
       </div>
     </section>
