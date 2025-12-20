@@ -21,9 +21,9 @@ export default async function Home() {
       className="
         relative
         min-h-screen
-        bg-cover
         bg-center
         bg-no-repeat
+        bg-fixed
         flex
         items-center
         justify-center
@@ -31,8 +31,10 @@ export default async function Home() {
       "
       style={{
         backgroundImage: "url('/bg-images/bg7.jpg')",
+        backgroundSize: "100% 100%",
       }}
     >
+
       {/* OVERLAY */}
       <div className="absolute inset-0 bg-black/40" />
 

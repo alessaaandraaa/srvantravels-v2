@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Packages from "../user-ui/Packages";
 import { usePackageStore } from "@/store/package-itinerary.store";
 import Link from "next/link";
-import { useRouter } from "next/navigation"; // ✅ FIXED
+import { useRouter } from "next/navigation";
 
 interface Package {
   package_ID: number;
@@ -87,6 +87,7 @@ export default function PackageBooking({ package_ID }: { package_ID: number }) {
             <Link
               href="#"
               onClick={(e) => {
+                e.preventDefault(); // ✅ REQUIRED FIX
                 if (pack) {
                   setBookedPackage(pack);
                   router.push(`/packages/${package_ID}/booking/page1`);
