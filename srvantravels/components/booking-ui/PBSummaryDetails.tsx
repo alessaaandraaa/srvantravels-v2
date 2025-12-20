@@ -19,6 +19,7 @@ export default function PBSummaryDetails() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const { register, handleSubmit } = useForm<payment>();
+
   useEffect(() => {
     setHydrated(true);
   }, []);
@@ -33,7 +34,7 @@ export default function PBSummaryDetails() {
   }, [hydrated, customerDetails, params.id, router]);
 
   if (!customerDetails || customerDetails?.itinerary_id !== Number(params.id)) {
-    return <p>Redirecting...</p>;
+    return <p className="text-center mt-10">Redirecting...</p>;
   }
 
   const onSubmit = async (FormData: payment) => {
@@ -41,7 +42,7 @@ export default function PBSummaryDetails() {
     const body = {
       payment: {
         payment_method,
-        down_payment: 100, //TEMPORARY
+        down_payment: 100, // TEMP
         payment_status: "NOT_PAID",
       },
       customer: {
@@ -56,9 +57,7 @@ export default function PBSummaryDetails() {
 
     const response = await fetch("/api/booking-package", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
 
@@ -75,17 +74,113 @@ export default function PBSummaryDetails() {
   };
 
   return (
-    <>
-      <PBDetailsSummary />
-      <PBPackageDisplay />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="payment_method">Payment Method:</label>
-        <select id="payment_method" {...register("payment_method")}>
-          <option value="GCASH">GCash</option>
-          <option value="CASH">Pay on Pickup</option>
-        </select>
-        <input type="submit" value="Complete Booking" />
-      </form>
-    </>
+    <section
+      className="
+        relative
+        min-h-screen
+        bg-cover
+        bg-center
+        bg-no-repeat
+        px-6
+        py-20
+      "
+      style={{ backgroundImage: "url('/bg-images/bg3.jpg')" }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/40" />
+
+      {/* Content */}
+      <div
+        className="
+          relative z-10
+          max-w-6xl
+          mx-auto
+          space-y-10
+        "
+      >
+        {/* SUMMARY GRID */}
+        <div
+          className="
+            grid
+            grid-cols-1
+            lg:grid-cols-2
+            gap-8
+            items-stretch
+          "
+        >
+          <PBPackageDisplay />
+          <PBDetailsSummary />
+        </div>
+
+        {/* PAYMENT FORM */}
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="
+            bg-white
+            rounded-3xl
+            shadow-xl
+            p-8
+            max-w-xl
+            mx-auto
+            space-y-6
+          "
+        >
+          <h3 className="text-2xl font-extrabold text-[#36B9CB] text-center">
+            Payment Method
+          </h3>
+
+          <div className="space-y-2">
+            <label
+              htmlFor="payment_method"
+              className="block text-sm font-semibold text-gray-700"
+            >
+              Select Payment Option
+            </label>
+
+            <select
+              id="payment_method"
+              {...register("payment_method")}
+              className="
+                w-full
+                px-4
+                py-3
+                rounded-xl
+                border
+                border-gray-300
+                bg-white
+                focus:outline-none
+                focus:ring-2
+                focus:ring-[#36B9CB]
+              "
+            >
+              <option value="GCASH">GCash</option>
+              <option value="CASH">Pay on Pickup</option>
+            </select>
+          </div>
+
+          {errorMessage && (
+            <p className="text-sm text-red-600 text-center">
+              {errorMessage}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="
+              w-full
+              py-3
+              rounded-xl
+              bg-[#36B9CB]
+              text-white
+              font-semibold
+              hover:bg-[#2fa6b6]
+              transition
+            "
+          >
+            Complete Booking
+          </button>
+        </form>
+      </div>
+    </section>
   );
 }
