@@ -20,76 +20,81 @@ const locationsService = new LocationsService();
 
 export async function POST(req: Request) {
   const body = await req.json();
+
   try {
     // insert to payment
     const newPayment = await paymentService.addPayment(body.payment);
 
-    //insert to itinerary
+    // insert to itinerary
     try {
       const newItinerary = await itineraryService.addItinerary({
         price: body.itinerary.price,
         type: body.itinerary.type,
       });
 
-      //insert to customer
-      const base64Data = body.customer.ID_PictureB64.replace(
-        /^data:image\/\w+;base64,/,
-        ""
-      );
+      /* ---------- FIX 1: OPTIONAL ID IMAGE ---------- */
+      let relativePath: string | null = null;
 
-      const buffer = Buffer.from(base64Data, "base64");
+      if (body.customer.ID_PictureB64) {
+        const base64Data = body.customer.ID_PictureB64.replace(
+          /^data:image\/\w+;base64,/,
+          ""
+        );
 
-      const uploadsDir = path.join(process.cwd(), "public/id-uploads");
-      if (!fs.existsSync(uploadsDir))
-        fs.mkdirSync(uploadsDir, { recursive: true });
+        const buffer = Buffer.from(base64Data, "base64");
 
-      const filename = `id_${body.customer.customer_ID}_${Date.now()}.jpg`;
-      const filePath = path.join(uploadsDir, filename);
-      fs.writeFileSync(filePath, buffer);
+        const uploadsDir = path.join(process.cwd(), "public/id-uploads");
+        if (!fs.existsSync(uploadsDir))
+          fs.mkdirSync(uploadsDir, { recursive: true });
 
-      const relativePath = `/id-uploads/${filename}`;
+        const filename = `id_${body.customer.customer_id}_${Date.now()}.jpg`;
+        const filePath = path.join(uploadsDir, filename);
+        fs.writeFileSync(filePath, buffer);
+
+        relativePath = `/id-uploads/${filename}`;
+      }
 
       try {
         const newCustomer = await customerService.addCustomer({
-          customer_ID: body.customer.customer_ID,
+          customer_ID: body.customer.customer_id, // FIX 2
           payment_ID: newPayment.payment_ID,
           number_of_PAX: body.customer.number_of_PAX,
           date_of_travel: new Date(body.customer.date_of_travel),
           number_of_luggage: body.customer.number_of_luggage,
-          ID_Picture: relativePath,
+          ID_Picture: relativePath ?? "",
         });
 
         // insert to custom itinerary
         try {
-          const newCustomItinerary =
-            await customItineraryService.addCustomItinerary({
-              custom_ID: newItinerary.itinerary_ID,
-              is_made_by_customer: newCustomer.customer_ID,
-            });
+          await customItineraryService.addCustomItinerary({
+            custom_ID: newItinerary.itinerary_ID,
+            is_made_by_customer: newCustomer.customer_ID,
+          });
 
           const travelDate = new Date(body.customer.date_of_travel);
 
-          const withTime = (base: Date, hm: string) => {
+          const withTime = (base: Date, hm?: string) => {
+            if (!hm) return null;
             const [h, m, s] = hm.split(":").map((n) => Number(n));
-            const d = new Date(base); // clone! Dates are mutable
+            const d = new Date(base);
             d.setHours(h || 0, m || 0, s || 0, 0);
             return d;
           };
 
-          // assuming body.customer.time_for_pickup / time_for_dropoff are "HH:mm"
           const pickup = withTime(
             travelDate,
-            String(body.customer.time_for_pickup)
+            body.customer.time_for_pickup
           );
-          const dropoff = withTime(
-            travelDate,
-            String(body.customer.time_for_dropoff)
-          );
+
+          /* ---------- FIX 3: OPTIONAL DROPOFF ---------- */
+          const dropoff = body.customer.time_for_dropoff
+            ? withTime(travelDate, body.customer.time_for_dropoff)
+            : null;
 
           // insert to order details
           try {
             const newOrder = await orderDetailsService.addCustomOrderDetails({
-              customer_ID: body.customer.customer_ID,
+              customer_ID: body.customer.customer_id, // FIX 2
               payment_ID: newPayment.payment_ID,
               itinerary_ID: newItinerary.itinerary_ID,
               number_of_PAX: body.customer.number_of_PAX,
@@ -97,9 +102,10 @@ export async function POST(req: Request) {
               time_for_pickup: pickup,
               time_for_dropoff: dropoff,
             });
+
             // insert into locations
             const locations = body.locations;
-            const locIDarr = [];
+            const locIDarr: number[] = [];
 
             for (const l of locations) {
               if (l.isCustom) {
@@ -138,7 +144,7 @@ export async function POST(req: Request) {
             let stop_order = 1;
             for (const l of locIDarr) {
               try {
-                const newStop = itineraryStopsService.addItineraryStop({
+                await itineraryStopsService.addItineraryStop({
                   custom_ID: newItinerary.itinerary_ID,
                   location_ID: l,
                   stop_order,
