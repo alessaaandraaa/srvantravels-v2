@@ -67,52 +67,30 @@ export default function CustomSummaryFull() {
   }
 
   return (
-    <section
-      className="relative min-h-screen bg-cover bg-center bg-no-repeat px-4 py-10"
-      style={{ backgroundImage: "url('/bg-images/bg3.jpg')" }}
-    >
-      {/* Top bar */}
-      <div className="max-w-7xl mx-auto mb-6">
-        <button
-          onClick={() => router.back()}
-          className="
-            inline-flex items-center gap-2
-            text-sm font-semibold
-            text-gray-700
-            hover:text-black
-            transition
-          "
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back
-        </button>
-      </div>
+    <div className="max-w-7xl mx-auto space-y-6 pb-20">
+      {/* Back */}
+      <button
+        onClick={() => router.back()}
+        className="inline-flex items-center gap-2 text-sm font-semibold text-gray-200 hover:text-white"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Back
+      </button>
 
-      {/* Main content */}
-      <div className="relative z-10 max-w-7xl mx-auto pb-20">
-        <CustomSummary />
-      </div>
+      {/* Content */}
+      <CustomSummary />
 
-      {/* Fixed bottom action bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t">
+      {/* Bottom bar */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t z-30">
         <div className="max-w-7xl mx-auto flex justify-end px-4 py-3">
           <button
             onClick={bookItinerary}
-            className="
-              px-8 py-3
-              rounded-xl
-              bg-[#36B9CB]
-              text-white
-              font-semibold
-              text-base
-              hover:bg-[#2fa6b6]
-              transition
-            "
+            className="px-8 py-3 rounded-xl bg-[#36B9CB] text-white font-semibold hover:bg-[#2fa6b6]"
           >
             Book Itinerary →
           </button>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
