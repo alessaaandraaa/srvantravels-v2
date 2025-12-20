@@ -3,8 +3,17 @@ import { CheckCircle } from "lucide-react";
 
 export default function Confirmation({ orderId }: { orderId: number }) {
   return (
-    <div className="min-h-screen flex items-center justify-center px-6">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-10 text-center space-y-6">
+    <div
+      className="min-h-screen flex items-center justify-center px-6 relative bg-cover bg-center"
+      style={{
+        backgroundImage: "url('/bg-images/bg10.jpg')",
+      }}
+    >
+      {/* DARK OVERLAY */}
+      <div className="absolute inset-0 bg-black/50" />
+
+      {/* CARD */}
+      <div className="relative z-10 w-full max-w-md bg-white rounded-3xl shadow-2xl p-10 text-center space-y-6">
         {/* ICON */}
         <div className="flex justify-center">
           <CheckCircle className="text-[#36B9CB]" size={64} />
@@ -17,7 +26,8 @@ export default function Confirmation({ orderId }: { orderId: number }) {
 
         {/* MESSAGE */}
         <p className="text-gray-600">
-          Thank you for booking with <span className="font-semibold">SR Van Travels</span>.
+          Thank you for booking with{" "}
+          <span className="font-semibold">SR Van Travels</span>.
         </p>
         <p className="text-gray-600">
           Your details have been submitted successfully.
