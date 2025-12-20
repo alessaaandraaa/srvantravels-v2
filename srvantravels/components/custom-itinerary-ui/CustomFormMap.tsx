@@ -12,7 +12,7 @@ export default function CustomFormMap() {
   const [numStops, setNumStops] = useState(0);
 
   return (
-    <div className="max-w-7xl mx-auto flex flex-col gap-5">
+    <div className="max-w-7xl mx-auto flex flex-col gap-6">
       {/* TOP — FORM */}
       <CustomForm
         isRouted={isRouted}

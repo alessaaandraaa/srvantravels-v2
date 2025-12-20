@@ -124,13 +124,13 @@ return (
         onSubmit={handleSubmit(onSubmit)}
         className="
           w-full
-          max-w-3xl
+          max-w-4xl
           bg-white
           text-gray-900
           rounded-3xl
           border
           shadow-xl
-          px-8 py-6
+          px-10 py-6
         "
       >
         <h2 className="text-3xl font-extrabold text-[#36B9CB] mb-6 text-center">
@@ -145,7 +145,7 @@ return (
             <input
               type="date"
               {...register("date_of_travel", { required: true })}
-              className="w-full rounded-xl border px-4 py-3 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
+              className="w-full rounded-xl border px-5 py-4 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
             />
           </div>
 
@@ -156,7 +156,7 @@ return (
             <input
               type="time"
               {...register("time_for_pickup", { required: true })}
-              className="w-full rounded-xl border px-4 py-3 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
+              className="w-full rounded-xl border px-5 py-4 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
             />
           </div>
 
@@ -167,17 +167,17 @@ return (
             <input
               type="time"
               {...register("time_for_dropoff", { required: true })}
-              className="w-full rounded-xl border px-4 py-3 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
+              className="w-full rounded-xl border px-5 py-4 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
             />
           </div>
         </div>
 
-        <div className="mt-8 flex justify-end">
+        <div className="mt-6 flex justify-end">
           <button
             type="submit"
             disabled={!canSubmit || isSubmitting}
             className="
-              px-12 py-3
+              px-14 py-4
               rounded-2xl
               bg-[#F3B54D]
               text-white

@@ -39,7 +39,7 @@ export default function Presets({
   return (
         <div
           className="
-            w-full lg:w-[360px]
+            w-full lg:w-[300px]
             h-full
             bg-white
             text-black

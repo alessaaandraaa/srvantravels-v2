@@ -348,10 +348,10 @@ export default function MapComponent({
         className="
           grid
           grid-cols-1
-          lg:grid-cols-[360px_1fr_360px]
-          gap-4
+          lg:grid-cols-[300px_1fr_300px]
+          gap-6
           w-full
-          h-[360px] lg:h-[520px]
+          h-[420px] lg:h-[600px]
           items-stretch
         "
       >
@@ -362,7 +362,7 @@ export default function MapComponent({
         />
 
         {/* MAP (HEIGHT SOURCE) */}
-        <div className="relative w-full h-[360px] lg:h-[460px] box-border p-2 lg:p-4">
+        <div className="relative w-full h-[420px] lg:h-[600px] box-border p-3 lg:p-6">
           <Search onPlacePicked={handlePlacePicked} />
 
           <RouteButton
