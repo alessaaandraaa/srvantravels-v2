@@ -54,6 +54,10 @@ export default function PBSummaryDetails() {
         ID_PictureB64: customerDetails.ID_picture,
         itinerary_ID: customerDetails.itinerary_id,
       },
+      itinerary: {
+        price: 1000,
+        type: "PACKAGE",
+      },
     };
 
     const response = await fetch("/api/booking-package", {
