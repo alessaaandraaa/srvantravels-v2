@@ -159,7 +159,7 @@ export default function AdminMap({
 
   return (
     <div>
-      <div className="flex h-screen box-border bg-gray-600 p-5">
+        <div className="w-full h-full p-5">
         <APIProvider
           apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API!}
           libraries={["places"]}

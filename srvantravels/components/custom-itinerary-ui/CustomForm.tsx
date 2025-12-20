@@ -116,69 +116,74 @@ export default function CustomForm({
         }}
       />
 
-      {/* NO FULLSCREEN / NO BG */}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="
-          w-full max-w-xl
+          w-full
+          max-w-3xl
           bg-white
-          rounded-2xl
+          rounded-3xl
           border
-          shadow-lg
-          p-6
+          shadow-xl
+          p-8
         "
       >
-        <h2 className="text-2xl font-bold text-[#36B9CB] mb-6 text-center">
+        <h2 className="text-3xl font-extrabold text-[#36B9CB] mb-8 text-center">
           Travel Details
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* FORM FIELDS */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <label className="text-xs font-semibold text-gray-600 uppercase">
-              Date
+            <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase">
+              Date of Travel
             </label>
             <input
               type="date"
               {...register("date_of_travel", { required: true })}
-              className="w-full rounded-xl border px-3 py-2"
+              className="w-full rounded-xl border px-4 py-3"
             />
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-gray-600 uppercase">
-              Pickup
+            <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase">
+              Pickup Time
             </label>
             <input
               type="time"
               {...register("time_for_pickup", { required: true })}
-              className="w-full rounded-xl border px-3 py-2"
+              className="w-full rounded-xl border px-4 py-3"
             />
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-gray-600 uppercase">
-              Dropoff
+            <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase">
+              Dropoff Time
             </label>
             <input
               type="time"
               {...register("time_for_dropoff", { required: true })}
-              className="w-full rounded-xl border px-3 py-2"
+              className="w-full rounded-xl border px-4 py-3"
             />
           </div>
         </div>
 
-        <div className="mt-8 flex justify-center">
+        {/* CONTINUE BUTTON — AFTER FORM */}
+        <div className="mt-12 flex justify-end">
           <button
             type="submit"
             disabled={!canSubmit || isSubmitting}
             className="
-              px-8 py-3
-              rounded-xl
+              px-12 py-3
+              rounded-2xl
               bg-[#F3B54D]
               text-white
               font-bold
+              text-base
               hover:bg-[#eaa93f]
               disabled:opacity-50
+              disabled:cursor-not-allowed
+              transition
             "
           >
             Continue →
