@@ -39,18 +39,19 @@ export default function Presets({
   return (
         <div
           className="
-            w-full lg:w-[360px]
-            h-full
-            bg-white
-            text-black
-            rounded-3xl
-            shadow-xl
-            border border-black/5
-            flex flex-col
-            overflow-hidden
-          "
+              w-full lg:w-[360px]
+              h-full
+              bg-white
+              text-black
+              rounded-3xl
+              shadow-xl
+              border border-black
+              flex flex-col
+              overflow-hidden
+              lg:-mx-3
+            "
         >
-      <div className="p-5 border-b">
+        <div className="p-4 border-b">
         <h2 className="text-xl font-extrabold text-black">
           Presets
         </h2>
@@ -59,14 +60,14 @@ export default function Presets({
         </p>
       </div>
 
-      <div className="flex-1 overflow-y-auto overflow-x-hidden p-5">
-        <ul className="space-y-3">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden p-4">
+        <ul className="space-y-2">
           {items.map((p) => {
             const added = isAdded?.(p) ?? false;
             return (
               <li
                 key={`${p.name}-${p.address}`}
-                className="p-4 rounded-2xl border flex items-center justify-between sm:flex-col sm:items-start sm:gap-2"
+                className="p-3 rounded-2xl border flex items-center justify-between sm:flex-col sm:items-start sm:gap-2"
               >
                 <div className="min-w-0">
                   <p className="font-semibold truncate">{p.name}</p>
@@ -77,7 +78,7 @@ export default function Presets({
                 <button
                   onClick={() => onPick(p)}
                   disabled={added}
-                  className={`px-3 py-1.5 rounded-xl text-sm flex-shrink-0 ml-3 ${
+                  className={`px-3 py-1.5 rounded-xl text-sm flex-shrink-0 ml-2 ${
                     added
                       ? "bg-gray-200 text-gray-500"
                       : "bg-[#36B9CB] text-white"

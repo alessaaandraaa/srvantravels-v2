@@ -30,18 +30,19 @@ export default function LocationsList({
   return (
         <div
           className="
-            w-full lg:w-[360px]
-            h-full
-            bg-white
-            text-black
-            rounded-3xl
-            shadow-xl
-            border border-black/5
-            flex flex-col
-            overflow-hidden
-          "
+              w-full lg:w-[360px]
+              h-full
+              bg-white
+              text-black
+              rounded-3xl
+              shadow-xl
+              border border-black
+              flex flex-col
+              overflow-hidden
+              lg:-mx-3
+            "
         >
-      <div className="p-5 border-b">
+        <div className="p-4 border-b">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-extrabold text-black">
             Markers
@@ -57,17 +58,17 @@ export default function LocationsList({
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto overflow-x-hidden p-5">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden p-4">
           {locations.length === 0 ? (
           <p className="text-sm text-black">
             Select at least two locations.
           </p>
         ) : (
-          <ul className="space-y-3">
+          <ul className="space-y-2">
             {locations.map((l) => (
               <li
                 key={l.id}
-                className="p-4 rounded-2xl border flex items-center justify-between gap-3 sm:flex-col sm:items-start sm:gap-2"
+                className="p-3 rounded-2xl border flex items-center justify-between gap-3 sm:flex-col sm:items-start sm:gap-2"
               >
                 <div className="min-w-0">
                   <p className="font-semibold truncate">{l.name}</p>
@@ -78,7 +79,7 @@ export default function LocationsList({
                 {onRemove && (
                   <button
                     onClick={() => onRemove(l.id)}
-                    className="text-sm text-red-600 flex-shrink-0 ml-3"
+                    className="text-sm text-red-600 flex-shrink-0 ml-2"
                   >
                     Remove
                   </button>
