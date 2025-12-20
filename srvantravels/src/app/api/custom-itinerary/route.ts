@@ -1,6 +1,3 @@
-import fs from "fs";
-import path from "path";
-
 import { NextResponse } from "next/server";
 import CustomerService from "@/services/customer-service";
 import OrderDetailsService from "@/services/orderdetails-service";
@@ -9,6 +6,7 @@ import CustomItineraryService from "@/services/custom-itinerary-service";
 import ItineraryService from "@/services/itinerary-service";
 import ItineraryStopsService from "@/services/itinerary-stops-service";
 import LocationsService from "@/services/locations-service";
+import { put } from "@vercel/blob";
 
 const customerService = new CustomerService();
 const orderDetailsService = new OrderDetailsService();
@@ -22,24 +20,23 @@ export async function POST(req: Request) {
   const body = await req.json();
 
   try {
-    // insert to payment
+    /* ---------- PAYMENT ---------- */
     const newPayment = await paymentService.addPayment(body.payment);
 
-    // insert to itinerary
-try {
-  console.log(
-    "Itinerary data:",
-    body.itinerary.price,
-    body.itinerary.type
-  );
+    /* ---------- ITINERARY ---------- */
+    try {
+      console.log(
+        "Itinerary data:",
+        body.itinerary.price,
+        body.itinerary.type
+      );
 
-  const newItinerary = await itineraryService.addItinerary({
-    price: body.itinerary.price,
-    type: body.itinerary.type,
-  });
+      const newItinerary = await itineraryService.addItinerary({
+        price: body.itinerary.price,
+        type: body.itinerary.type,
+      });
 
-
-      /* ---------- FIX 1: OPTIONAL ID IMAGE ---------- */
+      /* ---------- ID IMAGE (VERCEL BLOB) ---------- */
       let relativePath: string | null = null;
 
       if (body.customer.ID_PictureB64) {
@@ -49,21 +46,28 @@ try {
         );
 
         const buffer = Buffer.from(base64Data, "base64");
-
-        const uploadsDir = path.join(process.cwd(), "public/id-uploads");
-        if (!fs.existsSync(uploadsDir))
-          fs.mkdirSync(uploadsDir, { recursive: true });
-
         const filename = `id_${body.customer.customer_id}_${Date.now()}.jpg`;
-        const filePath = path.join(uploadsDir, filename);
-        fs.writeFileSync(filePath, buffer);
 
-        relativePath = `/id-uploads/${filename}`;
+        try {
+          const blob = await put(`id-uploads/${filename}`, buffer, {
+            access: "public",
+            contentType: "image/jpeg",
+          });
+
+          relativePath = blob.url;
+        } catch (error) {
+          console.error("Upload failed:", error);
+          return NextResponse.json(
+            { error: "Image upload failed" },
+            { status: 500 }
+          );
+        }
       }
 
+      /* ---------- CUSTOMER ---------- */
       try {
         const newCustomer = await customerService.addCustomer({
-          customer_ID: body.customer.customer_id, // FIX 2
+          customer_ID: body.customer.customer_id,
           payment_ID: newPayment.payment_ID,
           number_of_PAX: body.customer.number_of_PAX,
           date_of_travel: new Date(body.customer.date_of_travel),
@@ -71,7 +75,7 @@ try {
           ID_Picture: relativePath ?? "",
         });
 
-        // insert to custom itinerary
+        /* ---------- CUSTOM ITINERARY ---------- */
         try {
           await customItineraryService.addCustomItinerary({
             custom_ID: newItinerary.itinerary_ID,
@@ -82,7 +86,7 @@ try {
 
           const withTime = (base: Date, hm?: string) => {
             if (!hm) return null;
-            const [h, m, s] = hm.split(":").map((n) => Number(n));
+            const [h, m, s] = hm.split(":").map(Number);
             const d = new Date(base);
             d.setHours(h || 0, m || 0, s || 0, 0);
             return d;
@@ -93,52 +97,52 @@ try {
             body.customer.time_for_pickup
           );
 
-          /* ---------- FIX 3: OPTIONAL DROPOFF ---------- */
           const dropoff = body.customer.time_for_dropoff
             ? withTime(travelDate, body.customer.time_for_dropoff)
             : null;
 
-          // insert to order details
+          /* ---------- ORDER DETAILS ---------- */
           try {
-            const newOrder = await orderDetailsService.addCustomOrderDetails({
-              customer_ID: body.customer.customer_id, // FIX 2
-              payment_ID: newPayment.payment_ID,
-              itinerary_ID: newItinerary.itinerary_ID,
-              number_of_PAX: body.customer.number_of_PAX,
-              date_of_travel: travelDate,
-              time_for_pickup: pickup,
-              time_for_dropoff: dropoff,
-            });
+            const newOrder =
+              await orderDetailsService.addCustomOrderDetails({
+                customer_ID: body.customer.customer_id,
+                payment_ID: newPayment.payment_ID,
+                itinerary_ID: newItinerary.itinerary_ID,
+                number_of_PAX: body.customer.number_of_PAX,
+                date_of_travel: travelDate,
+                time_for_pickup: pickup,
+                time_for_dropoff: dropoff,
+              });
 
-            // insert into locations
+            /* ---------- LOCATIONS ---------- */
             const locations = body.locations;
             const locIDarr: number[] = [];
 
             for (const l of locations) {
               if (l.isCustom) {
                 try {
-                  const newLocation = await locationsService.addLocation({
-                    location_name: l.name,
-                    location_address: l.address,
-                    lng: l.lng,
-                    lat: l.lat,
-                    is_custom_made: true,
-                  });
+                  const newLocation =
+                    await locationsService.addLocation({
+                      location_name: l.name,
+                      location_address: l.address,
+                      lng: l.lng,
+                      lat: l.lat,
+                      is_custom_made: true,
+                    });
 
                   locIDarr.push(newLocation.location_ID);
                 } catch (error) {
-                  console.error("Error inserting custom location: ", error);
+                  console.error("Error inserting custom location:", error);
                   return NextResponse.json(
                     { error: `${error}` },
                     { status: 500 }
                   );
                 }
               } else {
-                const newLocation = await locationsService.getLocation(l.name);
-                if (newLocation) {
-                  locIDarr.push(newLocation[0].location_ID);
+                const preset = await locationsService.getLocation(l.name);
+                if (preset) {
+                  locIDarr.push(preset[0].location_ID);
                 } else {
-                  console.error("Could not find preset location.");
                   return NextResponse.json(
                     { error: "Could not find preset location." },
                     { status: 500 }
@@ -147,18 +151,18 @@ try {
               }
             }
 
-            // insert to itinerary stops
+            /* ---------- ITINERARY STOPS ---------- */
             let stop_order = 1;
-            for (const l of locIDarr) {
+            for (const locID of locIDarr) {
               try {
                 await itineraryStopsService.addItineraryStop({
                   custom_ID: newItinerary.itinerary_ID,
-                  location_ID: l,
+                  location_ID: locID,
                   stop_order,
                 });
                 stop_order++;
               } catch (error) {
-                console.error("Error inserting itinerary stop: ", error);
+                console.error("Error inserting itinerary stop:", error);
                 return NextResponse.json(
                   { error: `${error}` },
                   { status: 500 }
@@ -171,23 +175,23 @@ try {
               { status: 200 }
             );
           } catch (error) {
-            console.error("Error inserting order details: ", error);
+            console.error("Error inserting order details:", error);
             return NextResponse.json({ error: `${error}` }, { status: 500 });
           }
         } catch (error) {
-          console.error("Error inserting custom itinerary: ", error);
+          console.error("Error inserting custom itinerary:", error);
           return NextResponse.json({ error: `${error}` }, { status: 500 });
         }
       } catch (error) {
-        console.error("Error inserting customer: ", error);
+        console.error("Error inserting customer:", error);
         return NextResponse.json({ error: `${error}` }, { status: 500 });
       }
     } catch (error) {
-      console.error("Error inserting itinerary: ", error);
+      console.error("Error inserting itinerary:", error);
       return NextResponse.json({ error: `${error}` }, { status: 500 });
     }
   } catch (error) {
-    console.error("Error inserting payment: ", error);
+    console.error("Error inserting payment:", error);
     return NextResponse.json({ error: `${error}` }, { status: 500 });
   }
 }
