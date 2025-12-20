@@ -7,7 +7,6 @@ import {
   useLocationsStore,
 } from "@/store/custom-itinerary.store";
 import CustomSummary from "./CustomSummary";
-import { ArrowLeft } from "lucide-react";
 
 export default function CustomSummaryFull() {
   const router = useRouter();
@@ -67,25 +66,38 @@ export default function CustomSummaryFull() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6 pb-20">
-      {/* Back */}
-      <button
-        onClick={() => router.back()}
-        className="inline-flex items-center gap-2 text-sm font-semibold text-gray-200 hover:text-white"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back
-      </button>
-
-      {/* Content */}
+    <div className="max-w-7xl mx-auto pb-20">
+      {/* Main content */}
       <CustomSummary />
 
-      {/* Bottom bar */}
+      {/* Bottom action bar */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t z-30">
-        <div className="max-w-7xl mx-auto flex justify-end px-4 py-3">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
+          {/* Back */}
+          <button
+            onClick={() => router.back()}
+            className="
+              text-sm font-semibold
+              text-gray-600
+              hover:text-black
+              transition
+            "
+          >
+            ← Back
+          </button>
+
+          {/* Book */}
           <button
             onClick={bookItinerary}
-            className="px-8 py-3 rounded-xl bg-[#36B9CB] text-white font-semibold hover:bg-[#2fa6b6]"
+            className="
+              px-8 py-3
+              rounded-xl
+              bg-[#36B9CB]
+              text-white
+              font-semibold
+              hover:bg-[#2fa6b6]
+              transition
+            "
           >
             Book Itinerary →
           </button>
