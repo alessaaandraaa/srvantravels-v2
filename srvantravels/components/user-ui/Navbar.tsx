@@ -2,10 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
 import SignOut from "./SignOut";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
 
 export default function Navbar({ session }: { session: any }) {
   const [open, setOpen] = useState(false);
@@ -14,12 +12,12 @@ export default function Navbar({ session }: { session: any }) {
     <nav className="w-full sticky top-0 z-50">
       <div className="bg-[#36B9CB] border-b border-white/20 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          {/* LOGO / BRAND */}
+          {/* BRAND */}
           <Link href="/home" className="text-white font-extrabold text-lg">
             SRVAN Travels
           </Link>
 
-          {/* MOBILE MENU BUTTON */}
+          {/* MOBILE TOGGLE */}
           <button
             onClick={() => setOpen(!open)}
             className="md:hidden text-white"
@@ -38,31 +36,38 @@ export default function Navbar({ session }: { session: any }) {
               <Link href="/about" className="nav-link-main">About Us</Link>
             </div>
 
-            <div className="flex items-center gap-4">
-              {session?.user && (
+            {/* USER ACTIONS */}
+            {session?.user && (
+              <div className="flex items-center gap-3">
                 <Link
                   href="/profile"
-                  className="px-4 py-2 rounded-xl bg-white/20 text-white text-sm font-semibold hover:bg-white/30 transition"
+                  className="
+                    flex items-center gap-2
+                    px-4 py-2 rounded-xl
+                    bg-white/20 text-white text-sm font-semibold
+                    hover:bg-white/30 transition
+                  "
                 >
+                  <User size={16} />
                   {session.user.name}
                 </Link>
-              )}
 
-              {session?.user ? (
                 <SignOut className="signout-btn" />
-              ) : (
-                <Link
-                  href="/login"
-                  className="px-5 py-2 rounded-xl bg-[#F3B54D] text-white font-semibold shadow-md hover:shadow-lg transition"
-                >
-                  Login
-                </Link>
-              )}
-            </div>
+              </div>
+            )}
+
+            {!session?.user && (
+              <Link
+                href="/login"
+                className="px-5 py-2 rounded-xl bg-[#F3B54D] text-white font-semibold"
+              >
+                Login
+              </Link>
+            )}
           </div>
         </div>
 
-        {/* MOBILE DROPDOWN */}
+        {/* MOBILE MENU */}
         {open && (
           <div className="md:hidden px-6 pb-6 space-y-4">
             <Link href="/home" className="nav-link-main block">Home</Link>
@@ -72,27 +77,32 @@ export default function Navbar({ session }: { session: any }) {
             <Link href="/help" className="nav-link-main block">Help</Link>
             <Link href="/about" className="nav-link-main block">About Us</Link>
 
-            <div className="pt-4 border-t border-white/20 flex flex-col gap-3">
-              {session?.user && (
+            {session?.user && (
+              <>
                 <Link
                   href="/profile"
-                  className="px-4 py-2 rounded-xl bg-white/20 text-white text-sm font-semibold text-center"
+                  className="
+                    flex items-center gap-2
+                    px-4 py-2 rounded-xl
+                    bg-white/20 text-white text-sm font-semibold
+                  "
                 >
-                  {session.user.name}
+                  <User size={16} />
+                  Profile
                 </Link>
-              )}
 
-              {session?.user ? (
                 <SignOut className="signout-btn w-full" />
-              ) : (
-                <Link
-                  href="/login"
-                  className="px-5 py-2 rounded-xl bg-[#F3B54D] text-white font-semibold text-center"
-                >
-                  Login
-                </Link>
-              )}
-            </div>
+              </>
+            )}
+
+            {!session?.user && (
+              <Link
+                href="/login"
+                className="px-5 py-2 rounded-xl bg-[#F3B54D] text-white font-semibold block text-center"
+              >
+                Login
+              </Link>
+            )}
           </div>
         )}
       </div>
