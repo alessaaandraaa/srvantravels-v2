@@ -42,7 +42,7 @@ const AdminCustomLeftPanel = ({
                   {booking.itinerary?.type === "PACKAGE"
                     ? booking.itinerary.package_itinerary?.package_name
                     : "Custom Itinerary"}{" "}
-                  | {booking.customer.person.name}
+                  | {booking.customer?.person?.name ?? ""}
                 </label>
               </div>
             </Card>
