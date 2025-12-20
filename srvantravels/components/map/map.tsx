@@ -339,7 +339,7 @@ export default function MapComponent({
   };
 
   return (
-    <div className="flex h-screen box-border bg-gray-600 p-5">
+      <div className="w-full mt-12">
       <APIProvider
         apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API!}
         libraries={["places"]}
@@ -360,7 +360,7 @@ export default function MapComponent({
             title="Presets"
           />
 
-          <div className="relative w-full h-[60vh] lg:h-full box-border p-2 lg:p-5">
+          <div className="relative w-full h-[60vh] lg:h-[75vh] box-border p-2 lg:p-5">
             <Search onPlacePicked={handlePlacePicked} />
             <RouteButton
               optimize={onOptimize}
