@@ -101,7 +101,6 @@ export default function MapComponent({
       console.warn("Blocked: outside Cebu, Philippines");
       return false;
     }
-    // add to store
     setLocation({ id: uid(), ...marker });
     setSavedOrderIds(null);
     return true;
@@ -114,7 +113,6 @@ export default function MapComponent({
     const lat = latLng.lat;
     const lng = latLng.lng;
 
-    // Prefer native POI (Place API)
     if (placeId && typeof window !== "undefined" && window.google) {
       e.stop();
       const { Place } = (await google.maps.importLibrary(
@@ -249,7 +247,6 @@ export default function MapComponent({
     next.forEach((m) => setLocation(m));
     setStartId((curr) => (curr === id ? null : curr));
     setSavedOrderIds(null);
-
     resetRouteUI();
   };
 
@@ -257,7 +254,6 @@ export default function MapComponent({
     clear();
     setStartId(null);
     setSavedOrderIds(null);
-
     resetRouteUI();
   };
 
@@ -274,7 +270,6 @@ export default function MapComponent({
     if (!window.google) return;
 
     const source = markersOverride ?? markers;
-    // Use your imported utility helper
     const stops = computeStops(source, startId, optimize);
     if (!stops) return;
 
@@ -295,7 +290,6 @@ export default function MapComponent({
         setDirections(res);
 
         const currentSummary = summarizeDirections(res);
-
         setSummary(currentSummary);
 
         if (currentSummary) {
@@ -319,8 +313,6 @@ export default function MapComponent({
         }
 
         if (finalList) commitList(finalList);
-
-        // 4. Finally, mark as routed
         onSetRoute(true);
       } else {
         console.warn("Directions failed:", status);
@@ -339,81 +331,74 @@ export default function MapComponent({
   };
 
   return (
-  <div className="w-full mt-6 sm:mt-8 lg:mt-12">
-    <APIProvider
-      apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API!}
-      libraries={["places"]}
-    >
-      <div
-        className="
-          grid
-          grid-cols-1
-          lg:grid-cols-[360px_1fr_360px]
-          gap-4 sm:gap-4 lg:gap-6
-          w-full
-          h-[300px] sm:h-[420px] lg:h-[600px]
-          items-stretch
-        "
+    <div className="w-full mt-6 sm:mt-8 lg:mt-12 overflow-x-hidden">
+      <APIProvider
+        apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API!}
+        libraries={["places"]}
       >
-        {/* PRESETS */}
-        <Presets
-          onPick={handlePresetPick}
-          isAdded={alreadyInList}
-        />
+        <div
+          className="
+            grid
+            grid-cols-1
+            lg:grid-cols-[320px_minmax(0,1fr)_320px]
+            gap-4 lg:gap-6
+            w-full
+            h-[300px] sm:h-[420px] lg:h-[600px]
+            items-stretch
+          "
+        >
+          <Presets onPick={handlePresetPick} isAdded={alreadyInList} />
 
-        {/* MAP (HEIGHT SOURCE) */}
-        <div className="relative w-full h-[300px] sm:h-[420px] lg:h-[600px] box-border p-3 sm:p-4 lg:p-6">
-          <Search onPlacePicked={handlePlacePicked} />
+          <div className="relative w-full h-full">
+            <Search onPlacePicked={handlePlacePicked} />
 
-          <RouteButton
-            optimize={onOptimize}
-            routeInOrder={onMyOrder}
-            clear={clearRoute}
-            disabled={markers.length < 2}
+            <RouteButton
+              optimize={onOptimize}
+              routeInOrder={onMyOrder}
+              clear={clearRoute}
+              disabled={markers.length < 2}
+            />
+
+            {summary && (
+              <div className="absolute z-10 top-4 right-4 bg-white rounded-xl shadow-md px-3 py-2 text-sm text-gray-900">
+                <div>
+                  <span className="font-medium">Distance:</span>{" "}
+                  {summary.distanceText}
+                </div>
+                <div>
+                  <span className="font-medium">ETA:</span>{" "}
+                  {summary.durationText}
+                </div>
+              </div>
+            )}
+
+            <GoogleMap
+              mapId="dcf669e4cab82947951b672b"
+              defaultCenter={center}
+              defaultZoom={17}
+              className="w-full h-full rounded-2xl overflow-hidden"
+              mapTypeControl={false}
+              onClick={handleMapClick}
+            >
+              <Directions directions={directions} />
+              {markers.map((m) => (
+                <AdvancedMarker
+                  key={m.id}
+                  position={{ lat: m.lat, lng: m.lng }}
+                />
+              ))}
+            </GoogleMap>
+          </div>
+
+          <LocationsList
+            locations={markers}
+            onRemove={removeMarker}
+            onClear={clearAllMarkers}
+            startId={startId}
+            onSetStart={setStartId}
           />
-
-          {summary && (
-            <div className="absolute z-10 top-4 right-4 bg-white rounded-xl shadow-md px-3 py-2 text-sm text-gray-900">
-              <div>
-                <span className="font-medium">Distance:</span>{" "}
-                {summary.distanceText}
-              </div>
-              <div>
-                <span className="font-medium">ETA:</span>{" "}
-                {summary.durationText}
-              </div>
-            </div>
-          )}
-
-          <GoogleMap
-            mapId="dcf669e4cab82947951b672b"
-            defaultCenter={center}
-            defaultZoom={17}
-            className="w-full h-full rounded-2xl overflow-hidden"
-            mapTypeControl={false}
-            onClick={handleMapClick}
-          >
-            <Directions directions={directions} />
-            {markers.map((m) => (
-              <AdvancedMarker
-                key={m.id}
-                position={{ lat: m.lat, lng: m.lng }}
-              />
-            ))}
-          </GoogleMap>
         </div>
-
-        {/* LOCATIONS */}
-        <LocationsList
-          locations={markers}
-          onRemove={removeMarker}
-          onClear={clearAllMarkers}
-          startId={startId}
-          onSetStart={setStartId}
-        />
-      </div>
-    </APIProvider>
-  </div>
-);
-
+      </APIProvider>
+    </div>
+  );
 }
