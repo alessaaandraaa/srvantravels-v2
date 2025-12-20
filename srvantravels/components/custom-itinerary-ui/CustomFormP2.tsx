@@ -80,10 +80,8 @@ export default function CustomFormP2({ user_id }: id) {
     <div
       className="
         min-h-screen
-        bg-cover bg-center bg-no-repeat
         px-6 py-10
       "
-      style={{ backgroundImage: "url('/bg-images/bg6.jpg')" }}
     >
       <div className="max-w-3xl mx-auto">
         <form
@@ -92,9 +90,11 @@ export default function CustomFormP2({ user_id }: id) {
             bg-white rounded-3xl shadow-xl
             p-8 md:p-10
             space-y-8
+            border border-black
+            text-black
           "
         >
-          <h2 className="text-3xl font-extrabold text-[#36B9CB] text-center">
+          <h2 className="text-3xl font-extrabold text-black text-center">
             Customer Details
           </h2>
 
@@ -102,58 +102,58 @@ export default function CustomFormP2({ user_id }: id) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Passengers */}
             <div>
-              <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase">
+              <label className="block text-xs font-semibold text-black mb-2 uppercase">
                 Number of Passengers
               </label>
               <input
                 type="number"
                 {...register("pax")}
-                className="w-full rounded-xl border px-4 py-3"
+                  className="w-full rounded-xl border px-4 py-3 text-black"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase">
+              <label className="block text-xs font-semibold text-black mb-2 uppercase">
                 Pickup Date
               </label>
               <input
                 type="date"
                 {...register("date_of_travel")}
-                className="w-full rounded-xl border px-4 py-3"
+                className="w-full rounded-xl border px-4 py-3 text-black"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase">
+              <label className="block text-xs font-semibold text-black mb-2 uppercase">
                 Pickup Time
               </label>
               <input
                 type="time"
                 {...register("time_for_pickup")}
-                className="w-full rounded-xl border px-4 py-3"
+                className="w-full rounded-xl border px-4 py-3 text-black"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase">
+              <label className="block text-xs font-semibold text-black mb-2 uppercase">
                 No. of Luggage (optional)
               </label>
               <input
                 type="number"
                 {...register("luggage")}
-                className="w-full rounded-xl border px-4 py-3"
+                className="w-full rounded-xl border px-4 py-3 text-black"
               />
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase">
+              <label className="block text-xs font-semibold text-black mb-2 uppercase">
                 Upload ID Image
               </label>
               <input
                 type="file"
                 accept=".png, .jpg, .jpeg"
                 {...register("file_image")}
-                className="w-full rounded-xl border px-4 py-2 text-sm"
+                className="w-full rounded-xl border px-4 py-2 text-sm text-black"
               />
             </div>
           </div>

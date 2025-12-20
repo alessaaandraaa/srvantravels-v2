@@ -339,7 +339,7 @@ export default function MapComponent({
   };
 
   return (
-  <div className="w-full mt-12">
+  <div className="w-full mt-6 sm:mt-8 lg:mt-12">
     <APIProvider
       apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API!}
       libraries={["places"]}
@@ -349,9 +349,9 @@ export default function MapComponent({
           grid
           grid-cols-1
           lg:grid-cols-[300px_1fr_300px]
-          gap-6
+          gap-4 sm:gap-4 lg:gap-6
           w-full
-          h-[420px] lg:h-[600px]
+          h-auto
           items-stretch
         "
       >
@@ -362,7 +362,7 @@ export default function MapComponent({
         />
 
         {/* MAP (HEIGHT SOURCE) */}
-        <div className="relative w-full h-[420px] lg:h-[600px] box-border p-3 lg:p-6">
+        <div className="relative w-full h-[300px] sm:h-[420px] lg:h-[600px] box-border p-3 sm:p-4 lg:p-6">
           <Search onPlacePicked={handlePlacePicked} />
 
           <RouteButton

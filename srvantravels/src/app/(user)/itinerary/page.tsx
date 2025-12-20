@@ -9,6 +9,7 @@ export default function Itinerary() {
         bg-cover
         bg-center
         bg-no-repeat
+        bg-fixed
       "
       style={{ backgroundImage: "url('/bg-images/bg3.jpg')" }}
     >

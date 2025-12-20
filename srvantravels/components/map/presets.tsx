@@ -66,7 +66,7 @@ export default function Presets({
             return (
               <li
                 key={`${p.name}-${p.address}`}
-                className="p-4 rounded-2xl border flex justify-between"
+                className="p-4 rounded-2xl border flex justify-between sm:flex-col sm:items-start sm:gap-2"
               >
                 <div className="min-w-0">
                   <p className="font-semibold truncate">{p.name}</p>

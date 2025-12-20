@@ -130,7 +130,7 @@ return (
           rounded-3xl
           border
           shadow-xl
-          px-10 py-6
+          px-6 py-5 sm:px-8 sm:py-6 lg:px-10 lg:py-6
         "
       >
         <h2 className="text-3xl font-extrabold text-[#36B9CB] mb-6 text-center">
@@ -145,7 +145,7 @@ return (
             <input
               type="date"
               {...register("date_of_travel", { required: true })}
-              className="w-full rounded-xl border px-5 py-4 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
+              className="w-full rounded-xl border px-3 py-2 sm:px-5 sm:py-4 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
             />
           </div>
 
@@ -156,7 +156,7 @@ return (
             <input
               type="time"
               {...register("time_for_pickup", { required: true })}
-              className="w-full rounded-xl border px-5 py-4 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
+              className="w-full rounded-xl border px-3 py-2 sm:px-5 sm:py-4 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
             />
           </div>
 
@@ -167,17 +167,17 @@ return (
             <input
               type="time"
               {...register("time_for_dropoff", { required: true })}
-              className="w-full rounded-xl border px-5 py-4 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
+              className="w-full rounded-xl border px-3 py-2 sm:px-5 sm:py-4 text-gray-900 focus:ring-2 focus:ring-[#36B9CB]"
             />
           </div>
         </div>
 
-        <div className="mt-6 flex justify-end">
+        <div className="mt-4 sm:mt-6 flex justify-end">
           <button
             type="submit"
             disabled={!canSubmit || isSubmitting}
             className="
-              px-14 py-4
+              px-10 sm:px-14 py-3 sm:py-4
               rounded-2xl
               bg-[#F3B54D]
               text-white

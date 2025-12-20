@@ -67,7 +67,7 @@ export default function LocationsList({
             {locations.map((l) => (
               <li
                 key={l.id}
-                className="p-4 rounded-2xl border flex justify-between gap-3"
+                className="p-4 rounded-2xl border flex justify-between gap-3 sm:flex-col sm:items-start sm:gap-2"
               >
                 <div className="min-w-0">
                   <p className="font-semibold truncate">{l.name}</p>
