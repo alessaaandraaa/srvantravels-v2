@@ -2,42 +2,22 @@
 
 import LocationsSelection from "@/components/custom-itinerary-ui/LocationsSelection";
 import { useCustomerDetailsStore } from "@/store/custom-itinerary.store";
-import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
 
 export default function CustomSummary() {
-  const router = useRouter();
   const customerDetails = useCustomerDetailsStore(
     (state) => state.customerDetails
   );
-  const [hydrated, setHydrated] = useState(false);
 
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
-
-  useEffect(() => {
-    if (hydrated && !customerDetails) {
-      router.push("/itinerary");
-    }
-  }, [hydrated, customerDetails, router]);
-
-  if (!hydrated) {
-    return <p className="text-center mt-10">Loading...</p>;
-  }
-
-  if (!customerDetails) {
-    return <p className="text-center mt-10">Redirecting...</p>;
-  }
+  if (!customerDetails) return null;
 
   return (
-    <div className="max-w-7xl mx-auto space-y-10">
+    <div className="space-y-12">
       {/* TITLE */}
       <div className="text-center">
         <h1 className="text-4xl md:text-5xl font-extrabold text-[#36B9CB]">
           Review Your Custom Booking
         </h1>
-        <p className="text-gray-600 mt-2">
+        <p className="text-gray-200 mt-2">
           Please review your details before confirming your itinerary
         </p>
       </div>
@@ -50,40 +30,35 @@ export default function CustomSummary() {
             Booking Details
           </h2>
 
-          <hr className="border-gray-200" />
+          <hr />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-800">
             <p>
-              <b>Pickup Date:</b>{" "}
-              {String(customerDetails.date_of_travel)}
+              <b>Pickup Date:</b> {String(customerDetails.date_of_travel)}
             </p>
             <p>
-              <b>Pickup Time:</b>{" "}
-              {String(customerDetails.time_for_pickup)}
+              <b>Pickup Time:</b> {String(customerDetails.time_for_pickup)}
             </p>
             <p>
-              <b>Dropoff Time:</b>{" "}
-              {String(customerDetails.time_for_dropoff)}
+              <b>Dropoff Time:</b> {String(customerDetails.time_for_dropoff)}
             </p>
             <p>
-              <b>Party Members:</b>{" "}
-              {customerDetails.number_of_PAX}
+              <b>Party Members:</b> {customerDetails.number_of_PAX}
             </p>
             <p>
-              <b>Luggage:</b>{" "}
-              {customerDetails.number_of_luggage}
+              <b>Luggage:</b> {customerDetails.number_of_luggage}
             </p>
           </div>
 
           {customerDetails.ID_picture && (
-            <div className="pt-4">
+            <div>
               <p className="font-semibold mb-2 text-gray-700">
                 Uploaded ID
               </p>
               <img
                 src={customerDetails.ID_picture}
                 alt="Uploaded ID"
-                className="w-48 rounded-xl shadow-md border"
+                className="w-48 rounded-xl shadow border"
               />
             </div>
           )}

@@ -24,7 +24,7 @@ export default function CustomSummaryFull() {
     }
   }, [hydrated, customerDetails, router]);
 
-  if (!customerDetails) {
+  if (!hydrated || !customerDetails) {
     return <p className="text-center mt-10">Redirecting...</p>;
   }
 
@@ -59,42 +59,32 @@ export default function CustomSummaryFull() {
 
     const data = await response.json();
     if (response.ok) {
-      router.push(`/itinerary/customer-details/end?order_id=${data.order_ID}`);
+      router.push(
+        `/itinerary/customer-details/end?order_id=${data.order_ID}`
+      );
     }
   }
 
   return (
     <section
-      className="
-        relative
-        min-h-screen
-        bg-cover
-        bg-center
-        bg-no-repeat
-        py-20
-        px-6
-      "
+      className="relative min-h-screen bg-cover bg-center bg-no-repeat px-6 py-20"
       style={{ backgroundImage: "url('/bg-images/bg3.jpg')" }}
     >
-      {/* OVERLAY */}
+      {/* Overlay */}
       <div className="absolute inset-0 bg-black/50" />
 
-      {/* CONTENT */}
-      <div className="relative z-10">
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl mx-auto">
         <CustomSummary />
       </div>
 
-      {/* ACTION BAR */}
-      <div className="relative z-20 bg-white border-t shadow-lg py-6 px-6 mt-20">
-        <div className="max-w-7xl mx-auto flex justify-end">
+      {/* Action Bar */}
+      <div className="relative z-20 bg-white border-t shadow-lg mt-20">
+        <div className="max-w-7xl mx-auto flex justify-end px-6 py-6">
           <button
             onClick={bookItinerary}
             className="
-              inline-flex
-              items-center
-              gap-2
-              px-10
-              py-4
+              px-10 py-4
               rounded-2xl
               bg-[#36B9CB]
               text-white
