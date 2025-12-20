@@ -10,19 +10,19 @@ export default function CustomFormMap() {
   const [numStops, setNumStops] = useState(0);
 
   return (
-    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-      {/* LEFT — FORM */}
+    <div className="max-w-7xl mx-auto flex flex-col gap-16">
+      {/* TOP — FORM */}
       <CustomForm
         isRouted={isRouted}
         time={time}
         numStops={numStops}
       />
 
-      {/* RIGHT — MAP */}
+      {/* BOTTOM — MAP SECTION */}
       <MapComponent
-        onSetRoute={(routed) => setIsRouted(routed)}
-        onTime={(time) => setTime(time)}
-        onNumStops={(stops) => setNumStops(stops)}
+        onSetRoute={setIsRouted}
+        onTime={setTime}
+        onNumStops={setNumStops}
       />
     </div>
   );

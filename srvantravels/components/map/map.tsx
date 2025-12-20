@@ -351,7 +351,6 @@ export default function MapComponent({
               lg:grid-cols-[320px_1fr_400px]
               gap-4
               w-full
-              h-full
             "
           >
           <Presets
