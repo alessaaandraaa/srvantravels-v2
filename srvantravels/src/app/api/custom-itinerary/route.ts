@@ -67,7 +67,7 @@ export async function POST(req: Request) {
       /* ---------- CUSTOMER ---------- */
       try {
         const newCustomer = await customerService.addCustomer({
-          customer_ID: body.customer.customer_id,
+          customer_ID: Number(body.customer.customer_id),
           payment_ID: newPayment.payment_ID,
           number_of_PAX: body.customer.number_of_PAX,
           date_of_travel: new Date(body.customer.date_of_travel),
