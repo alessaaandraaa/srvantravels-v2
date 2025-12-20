@@ -37,13 +37,14 @@ export default function UserProfile({
 
   return (
     <div
-      className="relative min-h-screen bg-center bg-no-repeat"
+      className="
+        relative min-h-screen
+        bg-cover bg-center bg-no-repeat
+      "
       style={{
         backgroundImage: "url('/bg-images/bg10.jpg')",
-        backgroundSize: "100vw 100vh",
       }}
     >
-
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black/50" />
 
