@@ -348,7 +348,7 @@ export default function MapComponent({
         className="
           grid
           grid-cols-1
-          lg:grid-cols-[440px_1fr_440px]
+          lg:grid-cols-[360px_1fr_360px]
           gap-4 sm:gap-4 lg:gap-6
           w-full
           h-[300px] sm:h-[420px] lg:h-[600px]

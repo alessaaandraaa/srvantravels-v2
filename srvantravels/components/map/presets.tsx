@@ -39,7 +39,7 @@ export default function Presets({
   return (
         <div
           className="
-            w-full lg:w-[440px]
+            w-full lg:w-[360px]
             h-full
             bg-white
             text-black
@@ -59,25 +59,25 @@ export default function Presets({
         </p>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-5">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden p-5">
         <ul className="space-y-3">
           {items.map((p) => {
             const added = isAdded?.(p) ?? false;
             return (
               <li
                 key={`${p.name}-${p.address}`}
-                className="p-4 rounded-2xl border flex justify-between sm:flex-col sm:items-start sm:gap-2"
+                className="p-4 rounded-2xl border flex items-center justify-between sm:flex-col sm:items-start sm:gap-2"
               >
                 <div className="min-w-0">
                   <p className="font-semibold truncate">{p.name}</p>
-                  <p className="text-xs text-black truncate">
+                  <p className="text-xs text-black break-words whitespace-normal">
                     {p.address}
                   </p>
                 </div>
                 <button
                   onClick={() => onPick(p)}
                   disabled={added}
-                  className={`px-3 py-1.5 rounded-xl text-sm ${
+                  className={`px-3 py-1.5 rounded-xl text-sm flex-shrink-0 ml-3 ${
                     added
                       ? "bg-gray-200 text-gray-500"
                       : "bg-[#36B9CB] text-white"

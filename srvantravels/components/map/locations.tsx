@@ -30,7 +30,7 @@ export default function LocationsList({
   return (
         <div
           className="
-            w-full lg:w-[440px]
+            w-full lg:w-[360px]
             h-full
             bg-white
             text-black
@@ -57,7 +57,7 @@ export default function LocationsList({
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-5">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden p-5">
           {locations.length === 0 ? (
           <p className="text-sm text-black">
             Select at least two locations.
@@ -67,18 +67,18 @@ export default function LocationsList({
             {locations.map((l) => (
               <li
                 key={l.id}
-                className="p-4 rounded-2xl border flex justify-between gap-3 sm:flex-col sm:items-start sm:gap-2"
+                className="p-4 rounded-2xl border flex items-center justify-between gap-3 sm:flex-col sm:items-start sm:gap-2"
               >
                 <div className="min-w-0">
                   <p className="font-semibold truncate">{l.name}</p>
-                  <p className="text-xs text-black truncate">
+                  <p className="text-xs text-black break-words whitespace-normal">
                     {l.address}
                   </p>
                 </div>
                 {onRemove && (
                   <button
                     onClick={() => onRemove(l.id)}
-                    className="text-sm text-red-600"
+                    className="text-sm text-red-600 flex-shrink-0 ml-3"
                   >
                     Remove
                   </button>
