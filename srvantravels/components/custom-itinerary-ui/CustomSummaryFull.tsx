@@ -28,14 +28,14 @@ export default function CustomSummaryFull() {
   }, [hydrated, customerDetails, router]);
 
   if (!customerDetails) {
-    return <p>Redirecting...</p>;
+    return <p className="text-center mt-10">Redirecting...</p>;
   }
 
   async function bookItinerary() {
     const body = {
       payment: {
         payment_method: "PENDING",
-        down_payment: 100, //TEMPORARY
+        down_payment: 100, // TEMPORARY
         payment_status: "NOT_PAID",
       },
       customer: {
@@ -48,7 +48,7 @@ export default function CustomSummaryFull() {
         ID_PictureB64: customerDetails?.ID_picture,
       },
       itinerary: {
-        price: 500, //TEMPORARY
+        price: 500, // TEMPORARY
         type: "CUSTOM",
       },
       locations,
@@ -71,14 +71,44 @@ export default function CustomSummaryFull() {
   }
 
   return (
-    <div>
+    <section className="relative">
+      {/* ===== SUMMARY PAGE ===== */}
       <CustomSummary />
-      <button
-        onClick={bookItinerary}
-        className="rounded-2xl p-2 bg-teal-400 text-white hover:bg-teal-800"
+
+      {/* ===== ACTION BAR ===== */}
+      <div
+        className="
+          relative
+          z-20
+          bg-white
+          border-t
+          shadow-lg
+          py-6
+          px-6
+        "
       >
-        BOOK ITINERARY
-      </button>
-    </div>
+        <div className="max-w-6xl mx-auto flex justify-end">
+          <button
+            onClick={bookItinerary}
+            className="
+              inline-flex
+              items-center
+              gap-2
+              px-10
+              py-4
+              rounded-2xl
+              bg-[#36B9CB]
+              text-white
+              font-extrabold
+              text-lg
+              hover:bg-[#2fa6b6]
+              transition
+            "
+          >
+            Book Itinerary →
+          </button>
+        </div>
+      </div>
+    </section>
   );
 }

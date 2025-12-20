@@ -17,8 +17,27 @@ export default async function End({
   }
 
   return (
-    <div>
-      <Confirmation orderId={Number(order_id)} />
-    </div>
+    <section
+      className="
+        relative
+        min-h-screen
+        bg-cover
+        bg-center
+        bg-no-repeat
+        py-20
+        px-6
+      "
+      style={{
+        backgroundImage: "url('/bg-images/bg3.jpg')",
+      }}
+    >
+      {/* OVERLAY */}
+      <div className="absolute inset-0 bg-black/40" />
+
+      {/* CONTENT */}
+      <div className="relative z-10 max-w-6xl mx-auto">
+        <Confirmation orderId={Number(order_id)} />
+      </div>
+    </section>
   );
 }
