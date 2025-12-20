@@ -91,6 +91,35 @@ export default function MapComponent({
       return true;
     }
 
+    async function reverseGeocode(lat: number, lng: number) {
+    const geocoder = new google.maps.Geocoder();
+
+    const res = await geocoder.geocode({
+      location: { lat, lng },
+    });
+
+    if (!res.results[0]) {
+      return {
+        name: "Pinned Location",
+        address: "Unknown address",
+        components: undefined,
+      };
+    }
+
+    const first = res.results[0];
+
+    return {
+      name:
+        first.address_components?.find(c =>
+          c.types.includes("establishment") ||
+          c.types.includes("point_of_interest")
+        )?.long_name ??
+        first.formatted_address.split(",")[0],
+
+      address: first.formatted_address,
+      components: first.address_components,
+    };
+  }
 
   /* ---------- map click ---------- */
 const handleMapClick = async (e: MapMouseEvent) => {
@@ -118,16 +147,19 @@ const handleMapClick = async (e: MapMouseEvent) => {
       ],
     });
 
+    const geo = await reverseGeocode(lat, lng);
+
     addIfAllowed(
       {
-        lat: place.location?.lat() ?? lat,
-        lng: place.location?.lng() ?? lng,
-        name: place.displayName ?? "Unnamed Place",
-        address: place.formattedAddress ?? "Unknown address",
+        lat,
+        lng,
+        name: geo.name,
+        address: geo.address,
         isCustom: true,
       },
-      place.addressComponents ?? []
+      geo.components
     );
+
 
     return;
   }
