@@ -14,21 +14,19 @@ export default function PBDetailsSummary() {
     setHydrated(true);
   }, []);
 
-  useEffect(() => {
-    if (
-      hydrated &&
-      (!customerDetails || customerDetails?.itinerary_id !== Number(params.id))
-    ) {
-      router.push("/packages");
-    }
-  }, [hydrated, customerDetails, params.id, router]);
-
+  // ✅ FIX: conditional rendering OUTSIDE useEffect
   if (!hydrated) {
     return <p className="text-center mt-6 text-white">Loading...</p>;
   }
 
-  if (!customerDetails || customerDetails?.itinerary_id !== Number(params.id)) {
-    return <p className="text-center mt-6 text-white">Redirecting...</p>;
+  if (
+    !customerDetails ||
+    customerDetails.itinerary_id !== Number(params.id)
+  ) {
+    router.push("/packages"); // optional redirect
+    return (
+      <p className="text-center mt-6 text-white">Redirecting...</p>
+    );
   }
 
   return (
@@ -48,7 +46,9 @@ export default function PBDetailsSummary() {
 
       <div className="space-y-4 text-gray-800 text-sm md:text-base">
         <p className="flex justify-between gap-2">
-          <span className="font-semibold text-gray-600">Pickup Date</span>
+          <span className="font-semibold text-gray-600">
+            Pickup Date
+          </span>
           <span>{String(customerDetails.date_of_travel)}</span>
         </p>
 
@@ -60,7 +60,9 @@ export default function PBDetailsSummary() {
         </p>
 
         <p className="flex justify-between gap-2">
-          <span className="font-semibold text-gray-600">Luggage</span>
+          <span className="font-semibold text-gray-600">
+            Luggage
+          </span>
           <span>{customerDetails.number_of_luggage}</span>
         </p>
       </div>
