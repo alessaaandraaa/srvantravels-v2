@@ -44,8 +44,6 @@ interface MapComponentProps {
   onNumStops: (stops: number) => void;
 }
 
-/* ---------------- component ---------------- */
-
 export default function MapComponent({
   onSetRoute,
   onTime,
@@ -74,7 +72,114 @@ export default function MapComponent({
     resetRouteUI();
   }, []);
 
-  /* ---------- LOGIC BELOW IS UNCHANGED ---------- */
+  /* ---------- add with Cebu gate ---------- */
+  function addIfAllowed(
+    marker: {
+      lat: number;
+      lng: number;
+      name?: string;
+      address: string;
+      isCustom: boolean;
+    },
+    comps: GComp[] | undefined
+  ) {
+    if (!isInCebuPH(comps)) return false;
+    setLocation({ id: uid(), ...marker });
+    setSavedOrderIds(null);
+    return true;
+  }
+
+  /* ---------- map click ---------- */
+  const handleMapClick = async (e: MapMouseEvent) => {
+    const { latLng, placeId } = e.detail;
+    if (!latLng) return;
+    const lat = latLng.lat;
+    const lng = latLng.lng;
+
+    if (placeId && typeof window !== "undefined" && window.google) {
+      e.stop();
+      const { Place } = (await google.maps.importLibrary(
+        "places"
+      )) as google.maps.PlacesLibrary;
+      const place = new Place({ id: placeId });
+      await place.fetchFields({
+        fields: [
+          "displayName",
+          "formattedAddress",
+          "location",
+          "addressComponents",
+        ],
+      });
+
+      addIfAllowed(
+        {
+          lat: place.location?.lat() ?? lat,
+          lng: place.location?.lng() ?? lng,
+          name: place.displayName ?? "Unnamed Place",
+          address: place.formattedAddress ?? "Unknown address",
+          isCustom: true,
+        },
+        place.addressComponents ?? []
+      );
+    }
+  };
+
+  const handlePlacePicked = (p: {
+    lat: number;
+    lng: number;
+    name?: string;
+    address: string;
+    addressComponents?: GComp[];
+  }) => {
+    addIfAllowed(
+      {
+        lat: p.lat,
+        lng: p.lng,
+        name: p.name,
+        address: p.address,
+        isCustom: true,
+      },
+      p.addressComponents ?? []
+    );
+  };
+
+  const alreadyInList = (p: Place) => {
+    const r = (n: number) => Math.round(n * 1e6);
+    const keySet = new Set(markers.map((m) => `${r(m.lat)},${r(m.lng)}`));
+    return keySet.has(`${r(p.lat)},${r(p.lng)}`);
+  };
+
+  function handlePresetPick(p: Place) {
+    if (alreadyInList(p)) return;
+    setLocation({
+      id: uid(),
+      lat: p.lat,
+      lng: p.lng,
+      name: p.name,
+      address: p.address,
+      isCustom: false,
+    });
+    setSavedOrderIds(null);
+  }
+
+  const removeMarker = (id: string) => {
+    const next = markers.filter((m) => m.id !== id);
+    clear();
+    next.forEach((m) => setLocation(m));
+    resetRouteUI();
+  };
+
+  const clearAllMarkers = () => {
+    clear();
+    resetRouteUI();
+  };
+
+  const clearRoute = () => {
+    resetRouteUI();
+  };
+
+  const onOptimize = () => {};
+  const onMyOrder = () => {};
 
   return (
     <div className="w-full mt-6 sm:mt-8 lg:mt-12 overflow-x-hidden">
@@ -82,7 +187,6 @@ export default function MapComponent({
         apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API!}
         libraries={["places"]}
       >
-        {/* GRID CONTAINER */}
         <div
           className="
             grid
@@ -95,7 +199,7 @@ export default function MapComponent({
             items-stretch
           "
         >
-          {/* PRESETS — LEFT */}
+          {/* PRESETS */}
           <div className="h-full">
             <Presets
               onPick={handlePresetPick}
@@ -103,8 +207,8 @@ export default function MapComponent({
             />
           </div>
 
-          {/* MAP — CENTER */}
-          <div className="relative w-full h-full md:col-span-1 lg:col-span-1">
+          {/* MAP */}
+          <div className="relative w-full h-full">
             <Search onPlacePicked={handlePlacePicked} />
 
             <RouteButton
@@ -113,19 +217,6 @@ export default function MapComponent({
               clear={clearRoute}
               disabled={markers.length < 2}
             />
-
-            {summary && (
-              <div className="absolute z-10 top-4 right-4 bg-white rounded-xl shadow-md px-3 py-2 text-sm text-gray-900">
-                <div>
-                  <span className="font-medium">Distance:</span>{" "}
-                  {summary.distanceText}
-                </div>
-                <div>
-                  <span className="font-medium">ETA:</span>{" "}
-                  {summary.durationText}
-                </div>
-              </div>
-            )}
 
             <GoogleMap
               mapId="dcf669e4cab82947951b672b"
@@ -145,14 +236,12 @@ export default function MapComponent({
             </GoogleMap>
           </div>
 
-          {/* MARKERS — RIGHT */}
-          <div className="h-full md:col-span-2 lg:col-span-1">
+          {/* MARKERS */}
+          <div className="h-full">
             <LocationsList
               locations={markers}
               onRemove={removeMarker}
               onClear={clearAllMarkers}
-              startId={startId}
-              onSetStart={setStartId}
             />
           </div>
         </div>
