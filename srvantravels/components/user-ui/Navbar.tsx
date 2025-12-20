@@ -4,8 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import SignOut from "./SignOut";
 import { Menu, X, User } from "lucide-react";
+import { useSession } from "next-auth/react";
 
-export default function Navbar({ session }: { session: any }) {
+export default function Navbar() {
+  const { data: session, status } = useSession();
   const [open, setOpen] = useState(false);
 
   return (
@@ -37,7 +39,7 @@ export default function Navbar({ session }: { session: any }) {
             </div>
 
             {/* USER ACTIONS */}
-            {session?.user && (
+            {status === "authenticated" && session?.user && (
               <div className="flex items-center gap-3">
                 <Link
                   href="/profile"
@@ -56,7 +58,7 @@ export default function Navbar({ session }: { session: any }) {
               </div>
             )}
 
-            {!session?.user && (
+            {status === "unauthenticated" && (
               <Link
                 href="/login"
                 className="px-5 py-2 rounded-xl bg-[#F3B54D] text-white font-semibold"
@@ -77,7 +79,7 @@ export default function Navbar({ session }: { session: any }) {
             <Link href="/help" className="nav-link-main block">Help</Link>
             <Link href="/about" className="nav-link-main block">About Us</Link>
 
-            {session?.user && (
+            {status === "authenticated" && session?.user && (
               <>
                 <Link
                   href="/profile"
@@ -95,7 +97,7 @@ export default function Navbar({ session }: { session: any }) {
               </>
             )}
 
-            {!session?.user && (
+            {status === "unauthenticated" && (
               <Link
                 href="/login"
                 className="px-5 py-2 rounded-xl bg-[#F3B54D] text-white font-semibold block text-center"
