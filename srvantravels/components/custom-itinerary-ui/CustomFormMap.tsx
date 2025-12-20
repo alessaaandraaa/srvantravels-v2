@@ -20,14 +20,6 @@ export default function CustomFormMap() {
         numStops={numStops}
       />
 
-      {/* DIVIDER */}
-      <div className="relative h-24 flex items-center justify-center">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-transparent" />
-        <span className="relative z-10 px-4 py-2 text-sm font-semibold text-white/80 tracking-wide">
-          Route Planner
-        </span>
-      </div>
-
       {/* BOTTOM — MAP */}
       <MapComponent
         onSetRoute={setIsRouted}
