@@ -28,10 +28,22 @@ export default function LocationsList({
   onClear,
 }: Props) {
   return (
-    <div className="w-full lg:w-[400px] h-full bg-white rounded-3xl shadow-xl border border-black/5 flex flex-col">
+        <div
+          className="
+            w-full lg:w-[360px]
+            h-full
+            bg-white
+            text-black
+            rounded-3xl
+            shadow-xl
+            border border-black/5
+            flex flex-col
+            overflow-hidden
+          "
+        >
       <div className="p-5 border-b">
         <div className="flex justify-between items-center">
-          <h2 className="text-xl font-extrabold text-[#36B9CB]">
+          <h2 className="text-xl font-extrabold text-black">
             Markers
           </h2>
           {!!locations.length && onClear && (
@@ -46,8 +58,8 @@ export default function LocationsList({
       </div>
 
       <div className="flex-1 overflow-y-auto p-5">
-        {locations.length === 0 ? (
-          <p className="text-sm text-gray-500">
+          {locations.length === 0 ? (
+          <p className="text-sm text-black">
             Select at least two locations.
           </p>
         ) : (
@@ -59,7 +71,7 @@ export default function LocationsList({
               >
                 <div className="min-w-0">
                   <p className="font-semibold truncate">{l.name}</p>
-                  <p className="text-xs text-gray-500 truncate">
+                  <p className="text-xs text-black truncate">
                     {l.address}
                   </p>
                 </div>

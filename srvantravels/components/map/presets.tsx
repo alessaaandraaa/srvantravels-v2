@@ -37,12 +37,24 @@ export default function Presets({
   }, []);
 
   return (
-    <div className="w-full lg:w-[320px] h-full bg-white rounded-3xl shadow-xl border border-black/5 flex flex-col">
+        <div
+          className="
+            w-full lg:w-[360px]
+            h-full
+            bg-white
+            text-black
+            rounded-3xl
+            shadow-xl
+            border border-black/5
+            flex flex-col
+            overflow-hidden
+          "
+        >
       <div className="p-5 border-b">
-        <h2 className="text-xl font-extrabold text-[#36B9CB]">
+        <h2 className="text-xl font-extrabold text-black">
           Presets
         </h2>
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-black">
           Quick add locations
         </p>
       </div>
@@ -58,7 +70,7 @@ export default function Presets({
               >
                 <div className="min-w-0">
                   <p className="font-semibold truncate">{p.name}</p>
-                  <p className="text-xs text-gray-500 truncate">
+                  <p className="text-xs text-black truncate">
                     {p.address}
                   </p>
                 </div>

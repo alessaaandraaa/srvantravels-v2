@@ -348,10 +348,10 @@ export default function MapComponent({
         className="
           grid
           grid-cols-1
-          lg:grid-cols-[320px_1fr_400px]
+          lg:grid-cols-[360px_1fr_360px]
           gap-4
           w-full
-          h-[360px] lg:h-[460px]
+          h-[360px] lg:h-[520px]
           items-stretch
         "
       >

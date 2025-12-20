@@ -130,10 +130,10 @@ return (
           rounded-3xl
           border
           shadow-xl
-          p-8
+          px-8 py-6
         "
       >
-        <h2 className="text-3xl font-extrabold text-[#36B9CB] mb-8 text-center">
+        <h2 className="text-3xl font-extrabold text-[#36B9CB] mb-6 text-center">
           Travel Details
         </h2>
 
@@ -172,7 +172,7 @@ return (
           </div>
         </div>
 
-        <div className="mt-12 flex justify-end">
+        <div className="mt-8 flex justify-end">
           <button
             type="submit"
             disabled={!canSubmit || isSubmitting}
