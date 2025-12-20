@@ -44,6 +44,8 @@ interface MapComponentProps {
   onNumStops: (stops: number) => void;
 }
 
+/* ---------------- component ---------------- */
+
 export default function MapComponent({
   onSetRoute,
   onTime,
@@ -54,12 +56,11 @@ export default function MapComponent({
   const [startId, setStartId] = useState<string | null>(null);
   const [directions, setDirections] =
     useState<google.maps.DirectionsResult | null>(null);
-  const [summary, setSummary] =
-    useState<{
-      distanceText: string;
-      durationText: string;
-      durationTime: number;
-    } | null>(null);
+  const [summary, setSummary] = useState<{
+    distanceText: string;
+    durationText: string;
+    durationTime: number;
+  } | null>(null);
   const [savedOrderIds, setSavedOrderIds] = useState<string[] | null>(null);
 
   const resetRouteUI = () => {
@@ -73,7 +74,7 @@ export default function MapComponent({
     resetRouteUI();
   }, []);
 
-  /* --- LOGIC BELOW IS UNCHANGED --- */
+  /* ---------- LOGIC BELOW IS UNCHANGED ---------- */
 
   return (
     <div className="w-full mt-6 sm:mt-8 lg:mt-12 overflow-x-hidden">
@@ -81,6 +82,7 @@ export default function MapComponent({
         apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API!}
         libraries={["places"]}
       >
+        {/* GRID CONTAINER */}
         <div
           className="
             grid
@@ -89,16 +91,26 @@ export default function MapComponent({
             lg:grid-cols-[320px_minmax(0,1fr)_320px]
             gap-4 lg:gap-6
             w-full
+            h-[320px] sm:h-[420px] lg:h-[600px]
+            items-stretch
           "
         >
-          {/* MAP */}
-          <div className="relative w-full h-[320px] sm:h-[420px] lg:h-[600px] md:col-span-2 lg:col-span-1">
-            <Search onPlacePicked={() => {}} />
+          {/* PRESETS — LEFT */}
+          <div className="h-full">
+            <Presets
+              onPick={handlePresetPick}
+              isAdded={alreadyInList}
+            />
+          </div>
+
+          {/* MAP — CENTER */}
+          <div className="relative w-full h-full md:col-span-1 lg:col-span-1">
+            <Search onPlacePicked={handlePlacePicked} />
 
             <RouteButton
-              optimize={() => {}}
-              routeInOrder={() => {}}
-              clear={() => {}}
+              optimize={onOptimize}
+              routeInOrder={onMyOrder}
+              clear={clearRoute}
               disabled={markers.length < 2}
             />
 
@@ -121,6 +133,7 @@ export default function MapComponent({
               defaultZoom={17}
               className="w-full h-full rounded-2xl overflow-hidden"
               mapTypeControl={false}
+              onClick={handleMapClick}
             >
               <Directions directions={directions} />
               {markers.map((m) => (
@@ -132,15 +145,16 @@ export default function MapComponent({
             </GoogleMap>
           </div>
 
-          {/* PRESETS */}
-          <Presets onPick={() => {}} isAdded={() => false} />
-
-          {/* LOCATIONS */}
-          <LocationsList
-            locations={markers}
-            onRemove={() => {}}
-            onClear={() => {}}
-          />
+          {/* MARKERS — RIGHT */}
+          <div className="h-full md:col-span-2 lg:col-span-1">
+            <LocationsList
+              locations={markers}
+              onRemove={removeMarker}
+              onClear={clearAllMarkers}
+              startId={startId}
+              onSetStart={setStartId}
+            />
+          </div>
         </div>
       </APIProvider>
     </div>
