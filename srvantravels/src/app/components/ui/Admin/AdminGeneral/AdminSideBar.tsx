@@ -79,27 +79,6 @@ const AdminSideBar = () => {
                                         <span>{item.title}</span>
                                     </Link>
                                 </SidebarMenuButton>
-                                {item.title === "Inbox" && (
-                                  <SidebarMenuBadge>29</SidebarMenuBadge>
-                                )}
-                                {item.title === "Bookings" && (
-                                  <SidebarMenuSub>
-                                    <SidebarMenuSubItem>
-                                      <SidebarMenuSubButton asChild>
-                                        <Link href="/admin/bookings/pending">
-                                          <Plus/> Pending
-                                        </Link>
-                                      </SidebarMenuSubButton>
-                                    </SidebarMenuSubItem>
-                                    <SidebarMenuSubItem>
-                                      <SidebarMenuSubButton asChild>
-                                        <Link href="/admin/bookings/management">
-                                          <Plus/> Approve
-                                        </Link>
-                                      </SidebarMenuSubButton>
-                                    </SidebarMenuSubItem>
-                                  </SidebarMenuSub>
-                                )}
                             </SidebarMenuItem>
                         ))}
                     </SidebarMenu>
@@ -130,23 +109,6 @@ const AdminSideBar = () => {
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
-            {/* <SidebarGroup>
-              <SidebarGroupLabel>Locations</SidebarGroupLabel>
-              <SidebarGroupAction>
-                <span className="sr-only">Add Locations</span>
-              </SidebarGroupAction>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link href="/admin/locations">
-                        <Projector/> See All Locations
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup> */}
         </SidebarContent>
       </Sidebar>
     )
